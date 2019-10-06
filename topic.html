@@ -1,0 +1,89 @@
+<!doctype html>
+<head>
+    <title>Topic Explore</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="./js/get_meta.js"> </script>
+    <script src="./js/get_document.js"> </script>
+    <script src="./js/get_topic_terms.js"> </script>
+    <script src="./js/get_top_documents.js"> </script>
+    <style>
+body { font-family: sans-serif; min-height: 100vh; margin: 0; padding: 0 }
+.doc_container { min-height: 200px; flex-direction: column; display:flex}
+.info {flex-direction: column; font-size: 12px; flex-grow: 1; padding: 5px; margin:auto}
+.doc {flex-direction: column; flex-grow: 3; padding: 5px; margin: auto;}
+.footer {display: flex; align-items: center; margin-top: auto; margin-left: auto; margin-right: auto;}
+.links > a {
+    text-decoration: none;
+    padding: 5px 10px;
+    text-align: center;
+    color: #333;
+    font-size: 20px;
+}
+
+.orange {
+    color: #DE781F;
+}
+
+a.active {
+    color: #1F85DE;
+}
+
+a:hover {
+    color: #1F85DE;
+}
+    </style>
+</head>
+<body onload="get_topic_terms(); get_top_documents()">
+
+    <div class="nav-wrapper" style="border-bottom: 2px solid #cccccc; display: flex; align-content: center; margin: 0; margin-bottom: 30px;  padding: 5px">
+	<div class="nav" style="width: 1000px; padding-top: 10px; padding-bottom: 10px;  flex-direction: row; margin: auto; display: inline-flex; justify-content: space-between">
+	    <div class="links">
+		<a href="index.html" style="padding-right: 15px" class=""> home</a>
+		<a href="index.html" style="padding-right: 15px" class=""> team</a>
+		<a href="index.html" style="padding-right: 15px" class=""> references</a>
+		<a href="index.html" class=""> data </a>
+	    </div>
+	    <div class="links">
+		<a href="topic.html" style="padding-right: 15px;" class="active"> topics</a>
+		<a href="topic.html" style="padding-right: 15px;" class=""> documents</a>
+		<a href="topic.html" style="padding-right: 15px;" class=""> ldaplot </a>
+		<a href="topic.html" style="padding-right: 15px;" class=""> word2vec </a>
+		<a href="index.html" class=""> corpus</a>
+	    </div>
+	</div>
+    </div>
+
+    <div id="main" style="min-height: 100vh; display: flex; width: 1000px; flex-direction: column; margin:auto;" >
+	<div id="search_area" style="margin-top: 10px; margin-right: auto; margin-left: auto;">
+	    Topic: 
+	    <input type="text" id="topicid" value=1>
+	    <button type="button" onclick="get_topic_terms(); get_top_documents()"> Search </button>
+	</div>
+
+	<div id="topic_terms" style="margin-top: 10px; width: 100%;"> </div>
+	<!--<div id="topic_proportions" style="margin-top: 10px; min-height: 100px; width: 100%; border: 2px dotted #333"> </div> -->
+	<div id="top_docs" style="margin-top: 10px; width: 100%;"> </div>
+
+    </div> <!-- /MAIN -->
+
+    <div id="footer-wrapper" style="padding-top: 10px; padding-bottom: 10px; margin-top: 30px;  border-top: 2px solid #cccccc; display:flex; align-content: center"> 
+	<div class="nav" style="width: 1000px; margin: auto; display: inline-flex; justify-content: space-between">
+	    <div class="links" style="width: 200px; font-size: 10px">
+	          webapp Version 0.1.0 <br>
+		  database Version 1.0.0 
+   	    </div>
+	    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+	    <div class="footer-links" style="width: 200px; color: #1F85DE; text-decoration: none">
+		<a href="index.html" style="text-decoration: none; padding-right: 15px" class=""> home</a>
+		<a href="index.html" style="text-decoration: none; padding-right: 15px" class="">github</a>
+		<a href="index.html" style="text-decoration: none;" class=""> datalab</a>
+   	    </div>
+	</div>
+    </div>
+    <script>
+    function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+</script>
+</body>
