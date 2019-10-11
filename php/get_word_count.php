@@ -13,34 +13,22 @@ if (!$corpus_con) {
 
 
 
-$meta = [];
-$names = [];
+$wc = -1;
 $docid = mysqli_real_escape_string($corpus_con, $docid);
 
 
-$query = "SELECT * FROM Metadata WHERE QID = '".$docid."';";
+$query = "SELECT Word_Count FROM Metadata WHERE QID = '".$docid."';";
 if ($result = $corpus_con->query($query)) {
     while ($row = $result->fetch_row()) {
-	$meta[] = $row;
-    }
-} // if query succesful
-$query = "SHOW COLUMNS FROM Metadata;";
-if ($result = $corpus_con->query($query)) {
-    while ($row = $result->fetch_row()) {
-	$names[] = $row[0];
+	$wc = $row[0];
     }
 } // if query succesful
 
-$combined = [];
-for ($i = 0; $i < count($names); $i++) {
-    $combined[$names[$i]] = $meta[0][$i];
-}
 
-
-if (empty($combined))
+if ($wc == -1)
     $results = "";
 else {
-    $results = json_encode($combined);
+    $results = json_encode($wc);
 }
 
 echo ($results);

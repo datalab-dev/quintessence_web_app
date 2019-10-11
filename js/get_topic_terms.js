@@ -17,7 +17,7 @@ function get_topic_terms() {
 	   parse_topic_terms(JSON.parse(xmlHttp.responseText), topicid);
         }// if success
     }//response recieved
-}//get_top_documents
+}//get_topic_terms
 
 function parse_topic_terms(data, topicid) {
    // given the array of document objects File_ID Score
