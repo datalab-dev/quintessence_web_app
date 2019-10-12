@@ -41,7 +41,7 @@ function parse_document(data, docid) {
     if (text.length <= 5000) {
 	var elipsis = document.createElement("p");
 	elipsis.innerHTML = "...";
-	elipsis.style.fontSize = "xx-large";
+	elipsis.style.fontSize = "x-large";
 	elipsis.style.textAlign = "center";
 	container.appendChild(elipsis);
     }

@@ -17,14 +17,18 @@ function get_meta(docid) {
 
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	    if (xmlHttp.responseText) {
 	    parse_meta(JSON.parse(xmlHttp.responseText), docid);
+	    } else {
+		console.log("No response for ", docid);
+	    }
 
 	}// if success
     }//response recieved
 }//get_meta
 
 function parse_meta(data, docid) {
-    var ids = ["File_ID", "STC_ID", "ESTC_ID", "EEBO_Citation", "Proquest_ID", "VID"];
+    var ids = ["QID", "File_ID", "STC_ID", "ESTC_ID", "EEBO_Citation", "Proquest_ID", "VID"];
     var main = ["Title", "Location", "Publisher", "Date", "Word_Count",];
     var container = document.getElementById("info_" + docid);
     container.innerHTML = "";
