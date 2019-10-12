@@ -15,6 +15,7 @@ function get_topic_documents() {
 
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	    console.log(xmlHttp.responseText);
 	    parse_topic_documents(JSON.parse(xmlHttp.responseText));
 
 	}// if success
