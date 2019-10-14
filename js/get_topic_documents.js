@@ -1,5 +1,4 @@
 NDOCS = 5;
-TYPES = ["Raw", "Standardized", "Lemma"]
 
 function get_topic_documents() {
     // get the topic id
@@ -15,7 +14,6 @@ function get_topic_documents() {
 
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-	    console.log(xmlHttp.responseText);
 	    parse_topic_documents(JSON.parse(xmlHttp.responseText));
 
 	}// if success
@@ -37,5 +35,5 @@ function parse_topic_documents(data) {
 	ids[i] = data[i].QID;
     }
 
-    init_documents_results(ids, 20);
+    init_documents_results(ids, NDOCS);
 }

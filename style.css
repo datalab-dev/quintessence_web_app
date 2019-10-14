@@ -5,6 +5,10 @@ body {
     padding: 0;
 }
 
+button {
+    border: 2px solid #888;
+}
+
 #top-button {
     background-color: #F8F8F8;
 }
@@ -97,8 +101,9 @@ a:hover {
 }
 td
 {
+    vertical-align: top;
     padding:0 25px 0 5px;
 }
 .selected {
-    border: 1px dotted #0000ff;
+    border: 2px solid #1F77B4;
 }

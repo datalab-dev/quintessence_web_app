@@ -1,7 +1,6 @@
 <?php
 
 $topicid = $_POST['topicid'];
-$topicid = 1;
 
 require_once("config.php");
 

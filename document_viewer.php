@@ -4,16 +4,8 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="top_documents.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="./js/init_documents_results.js"> </script>
-    <script src="./js/get_meta.js"> </script>
-    <script src="./js/get_full_document.js"> </script>
-    <script src="./js/get_truncated_document.js"> </script>
-    <script src="./js/get_topic_terms.js"> </script>
-    <script src="./js/get_topic_documents.js"> </script>
 </head>
-<body onload="get_topic_terms(); get_topic_documents()">
+<body>
 
     <div class="nav-wrapper">
 	<div class="nav">

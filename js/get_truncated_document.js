@@ -45,12 +45,4 @@ function parse_document(data, docid) {
 	elipsis.style.textAlign = "center";
 	container.appendChild(elipsis);
     }
-
-    get_full_text = document.getElementById("get_full_text_area_" + docid);
-    var getmore = document.createElement("button");
-    getmore.innerHTML = "open entire document";
-    getmore.id = "get_full_" + docid;
-    //getmore.onclick = function({get_full_document(this.id, "XML")});
-    get_full_text.innerHTML = "";
-    get_full_text.appendChild(getmore);
 }
