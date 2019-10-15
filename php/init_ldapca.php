@@ -21,9 +21,29 @@ if ($result = $models_con->query($query)) {
 } // if query succesful
 
 
-$combined = [];
-$combined['proportion'] = $proportion;
-$combined['topic'] = $topic;
+$x = [];
+$y = [];
+$topics = [];
+$query = "SELECT * FROM topic_terms_pca;";
+if ($result = $models_con->query($query)) {
+    while ($row = $result->fetch_row()) {
+	$x[] = $row[0];
+	$y[] = $row[1];
+	$topics[] = $row[2];
+    }
+} // if query succesful
+
+$tp = [];
+$tp['proportion'] = $proportion;
+$tp['topic'] = $topic;
+
+$pca = [];
+$pca['x'] = $x;
+$pca['y'] = $y;
+$pca['topics'] = $topics;
+
+$combined['pca'] = $pca;
+$combined['tp'] = $tp;
 
 if (empty($combined))
     $results = "";

@@ -61,7 +61,7 @@ function init_documents_results(doc_ids_list, NDOCS) {
         getmore.onclick = function(){button_get_full_document(this.id)};
 	get_full_text.appendChild(getmore);
 
-	document.getElementById('top_docs').appendChild(document.createElement("hr"));
 	document.getElementById('top_docs').appendChild(container);
+	document.getElementById('top_docs').appendChild(document.createElement("hr"));
     }
 }

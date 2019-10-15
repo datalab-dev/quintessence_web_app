@@ -47,7 +47,11 @@ function plot_ldapca(tp, pca) {
 	mode: 'markers+text',
 	type: 'scatter',
 	marker: {
-	    size: sizes
+	    size: sizes,
+	    line: {
+		color: 'black',
+		width: 2
+	    }
 	}
     };
 

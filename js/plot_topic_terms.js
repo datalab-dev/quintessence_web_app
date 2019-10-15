@@ -36,7 +36,7 @@ function plot_topic_terms(data, topicid) {
 	title: 'Topic Terms ' + topicid,
 	staticPlot: true,
 	autosize: false,
-	height: 900,
+	height: 600,
 	width: 300,
 	yaxis: {autorange:"reversed"},
 	margin: {
