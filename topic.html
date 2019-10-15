@@ -12,10 +12,11 @@
     <script src="./js/get_truncated_document.js"> </script>
     <script src="./js/get_topic_terms.js"> </script>
     <script src="./js/get_topic_documents.js"> </script>
+    <script src="./js/get_ldapca.js"> </script>
     <script src="./js/plot_ldapca.js"> </script>
     <script src="./js/plot_topic_terms.js"> </script>
 </head>
-<body onload="get_topic_terms(); get_topic_documents()">
+<body onload="get_ldapca(); get_topic_terms(); get_topic_documents()">
 
     <div class="nav-wrapper">
 	<div class="nav">
@@ -35,7 +36,10 @@
     </div>
 
     <div id="main"> 
-	<div id="ldapca">
+	<div id="plot_area">
+	    <button type="button" onclick="get_ldapca()"> plot pca </button>
+	</div>
+	<div id="ldapca"> 
 	</div>
 
 	<div id="search_area">

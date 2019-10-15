@@ -59,6 +59,13 @@ button {
     margin: auto;
 }
 
+#plot_area {
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
 #search_area {
     margin-top: 5px;
     margin-right: auto;
