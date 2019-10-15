@@ -35,16 +35,16 @@ function plot_topic_terms(data, topicid) {
     var layout = {
 	title: 'Topic Terms ' + topicid,
 	staticPlot: true,
-	autosize: "false",
-	height: 800,
-	width: 900,
+	autosize: false,
+	height: 900,
+	width: 300,
 	yaxis: {autorange:"reversed"},
 	margin: {
 	    l: 50,
-	    r: 50,
+	    r: 0,
 	    b: 50,
 	    t: 50,
-	    pad: 4
+	    pad: 0
 	},
     };
 

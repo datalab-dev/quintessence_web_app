@@ -1,11 +1,10 @@
 NTERMS = 30;
 
-function get_topic_terms() {
+function get_topic_terms(topicid) {
     // get the topic id from input value
     // pass to get_topic_terms.php 
     // parse the response
 
-    var topicid = document.getElementById("topicid").value;
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "./php/get_topic_terms.php", true);

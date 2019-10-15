@@ -1,11 +1,10 @@
 NDOCS = 5;
 
-function get_topic_documents() {
+function get_topic_documents(topicid) {
     // get the topic id
     // pass to get_topic_documents.php 
     // parse the response
 
-    var topicid = document.getElementById("topicid").value;
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "./php/get_topic_documents.php", true);

@@ -1,4 +1,21 @@
-function plot_ldapca(data) { 
+function init_plot_ldapca() {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", "./php/init_ldapca.php", true);
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send();
+
+    xmlHttp.onreadystatechange = function ()  {
+	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	    data = JSON.parse(xmlHttp.responseText);
+	    console.log(data);
+	    plot_ldapca(data['tp'], data['pca']);
+	}// if success
+    }//response recieved
+}
+
+
+
+function plot_ldapca(tp, pca) { 
     // needs proportions
     // x and y of each topic
 
@@ -9,21 +26,35 @@ function plot_ldapca(data) {
     var ldapca = document.getElementById("ldapca");
     ldapca.innerHTML = "";
 
-    console.log(data);
+    sizes = [];
+    texts = [];
+    for (var i = 0; i < tp['proportion'].length; i++)
+    {
+	s = tp['proportion'][i] * 10;
+	sizes.push(s)
+	texts.push( String(pca['topics'][i].substr(1)));
+    }
+
+    console.log(tp['proportion']);
+    console.log(pca['x']);
     var plot_data = {
-	  x: data['x'],
-	  y: data['y'],
-	  text: data['topics'],
-	  textposition: 'bottom',
-	  mode: 'markers+text',
-	  type: 'scatter'
+	x: pca['x'],
+	y: pca['y'],
+	text: texts,
+	hovertemplate: 'Proportion: %{marker.size:.2f}' +
+	'<br>Topic: %{text}',
+	textposition: 'bottom',
+	mode: 'markers+text',
+	type: 'scatter',
+	marker: {
+	    size: sizes
+	}
     };
 
     var layout = {
 	title: 'LDA PCA',
 	autosize: "false",
 	height: 900,
-	width: 1000,
 	margin: {
 	    l: 0,
 	    r: 0,
@@ -36,6 +67,15 @@ function plot_ldapca(data) {
     var data = [plot_data];
 
     Plotly.newPlot('ldapca', data, layout);
+    ldapca.on('plotly_click', function(data){
+	var pts = '';
+	for(var i=0; i < data.points.length; i++){
+	    pts = data.points[i].text 
+	}
+
+	get_topic_terms(pts);
+	get_topic_documents(pts);
+    });
 
 }
 
