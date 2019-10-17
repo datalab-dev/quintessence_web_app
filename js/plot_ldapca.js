@@ -30,7 +30,7 @@ function plot_ldapca(tp, pca) {
     texts = [];
     for (var i = 0; i < tp['proportion'].length; i++)
     {
-	s = tp['proportion'][i] * 10;
+	s = tp['proportion'][i] * 20;
 	sizes.push(s)
 	texts.push( String(pca['topics'][i].substr(1)));
     }
@@ -72,13 +72,13 @@ function plot_ldapca(tp, pca) {
 
     Plotly.newPlot('ldapca', data, layout);
     ldapca.on('plotly_click', function(data){
-	var pts = '';
+	var id = 0;
 	for(var i=0; i < data.points.length; i++){
-	    pts = data.points[i].text 
+	    id= data.points[i].text 
 	}
 
-	get_topic_terms(pts);
-	get_topic_documents(pts);
+	document.getElementById("topic_terms").setAttribute("name", id);
+	get_topic_terms();
     });
 
 }

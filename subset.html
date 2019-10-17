@@ -1,9 +1,12 @@
 <!doctype html>
 <head>
-    <title>Topic Explore</title>
+    <title>Subset Corpus</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="top_documents.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="./js/init_documents_results.js"> </script>
@@ -16,8 +19,37 @@
     <script src="./js/get_ldapca.js"> </script>
     <script src="./js/plot_ldapca.js"> </script>
     <script src="./js/plot_topic_terms.js"> </script>
+    <script>
+	$( function() {
+	    $( "#slider-range" ).slider({
+		range: true,
+		min: 1470,
+		max: 1700,
+		values: [ 1470, 1700 ],
+		slide: function( event, ui ) {
+		    $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+		}
+	    });
+	    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+		" - " + $( "#slider-range" ).slider( "values", 1 ) );
+	    console.log($('#slider-range').slider("values", 0));
+	    console.log($('#slider-range').slider("values", 1));
+	} );
+    </script>
+    <style> 
+.ui-slider .ui-slider-handle {
+    height: 25px;
+    width: 5px;
+    padding-left: 5px;
+}
+	#slider-range {
+	    height: 100px;
+	    width: 400px;
+	    margin: 20px;
+	    }
+    </style>
 </head>
-<body onload="init_plot_ldapca(); get_topic_terms(); get_topic_documents()">
+<body>
 
     <div class="nav-wrapper">
 	<div class="nav">
@@ -35,27 +67,21 @@
 	</div>
     </div>
 
-	<div id="subset_corpus"> 
-	    <div class="subsetter" id="Time"> Timeline </div>
-	    <div class="subsetter" id="Keywords"> Keywords </div>
-	    <div class="subsetter" id="Authors"> Authors </div>
-	    <div class="subsetter" id="Locations"> Locations </div>
-	    <button type="button" onclick="init_plot_ldapca()"> plot pca </button> 
-	</div>
-    <div id="lda_area"> 
-	<div id="ldapca"> </div>
-	<div id="topic_terms" name="1"> </div>
+    <div id="subset_corpus" style="flex-direction: column"> 
+	<div class="subsetter" style="width: 1000px" id="Time"> Timeline </div>
+	<p>
+	<label for="amount">Price range:</label>
+	<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 300px">
+	</p>
+
+	<div id="slider-range"></div>
+	<div class="subsetter" style="width: 1000px" id="Keywords"> Keywords </div>
+	<div class="subsetter" style="width: 1000px" id="Authors"> Authors </div>
+	<div class="subsetter" style="width: 1000px" id="Locations"> Locations </div>
+	<button type="button" onclick="init_plot_ldapca()"> plot pca </button> 
     </div>
 
-    <hr class="divider">
-    <div id="main"> 
-	<div id="corpus_info"> Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution </div>
-	<div id="topic_info"> Topic Statistics (e.g proportion over time, corpus percentage) </div>
-    <button onclick= "get_topic_documents()" >sort by topic proportion</button>
-
-	<div id="top_docs"> </div>
-
-    </div> <!-- /MAIN -->
+    <div id="main"></div>
 
     <div class="footer-wrapper"> 
 	<div class="nav">
