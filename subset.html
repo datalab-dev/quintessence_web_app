@@ -2,14 +2,15 @@
 <head>
     <title>Subset Corpus</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="top_documents.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./resources/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="./js/init_documents_results.js"> </script>
+    <script src="./js/get_subset.js"> </script>
     <script src="./js/get_meta.js"> </script>
     <script src="./js/get_full_document.js"> </script>
     <script src="./js/get_truncated_document.js"> </script>
@@ -70,7 +71,7 @@
     <div id="subset_corpus" style="flex-direction: column"> 
 	<div class="subsetter" style="width: 1000px" id="Time"> Timeline </div>
 	<p>
-	<label for="amount">Price range:</label>
+	<label for="amount">Date range:</label>
 	<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 300px">
 	</p>
 
@@ -78,10 +79,12 @@
 	<div class="subsetter" style="width: 1000px" id="Keywords"> Keywords </div>
 	<div class="subsetter" style="width: 1000px" id="Authors"> Authors </div>
 	<div class="subsetter" style="width: 1000px" id="Locations"> Locations </div>
-	<button type="button" onclick="init_plot_ldapca()"> plot pca </button> 
+	<button type="button" onclick="get_subset()"> get subset </button> 
     </div>
 
-    <div id="main"></div>
+    <div id="main">
+	<div id="results"> Number of docs: </div>
+    </div>
 
     <div class="footer-wrapper"> 
 	<div class="nav">
