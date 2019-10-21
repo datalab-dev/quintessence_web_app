@@ -5,8 +5,10 @@
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
     <link rel="stylesheet" type="text/css" href="./resources/jquery-ui.css">
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="./js/init_documents_results.js"> </script>
@@ -20,6 +22,8 @@
     <script src="./js/get_ldapca.js"> </script>
     <script src="./js/plot_ldapca.js"> </script>
     <script src="./js/plot_topic_terms.js"> </script>
+    <script src="./js/init_subset_defaults.js"> </script>
+    <script src="./js/data/subset_defaults.js"> </script>
     <script>
 	$( function() {
 	    $( "#slider-range" ).slider({
@@ -36,8 +40,21 @@
 	    console.log($('#slider-range').slider("values", 0));
 	    console.log($('#slider-range').slider("values", 1));
 	} );
-    </script>
-    <style> 
+$( function() {
+    $( "#speed" ).selectmenu();
+
+    $( "#files" ).selectmenu();
+
+    $( "#number" )
+	.selectmenu()
+	.selectmenu( "menuWidget" )
+	.addClass( "overflow" );
+
+    $( "#salutation" ).selectmenu();
+} );
+</script
+</script>
+<style> 
 .ui-slider .ui-slider-handle {
     height: 25px;
     width: 5px;
@@ -47,10 +64,10 @@
 	    height: 100px;
 	    width: 400px;
 	    margin: 20px;
-	    }
-    </style>
+	}
+</style>
 </head>
-<body>
+<body onload="init_subset_defaults()">
 
     <div class="nav-wrapper">
 	<div class="nav">
@@ -61,49 +78,83 @@
 		<a href="data.html">Data</a>
 	    </div>
 	    <div class="links">
-		<a href="lda.html" class="active">LdaPlot</a>
+		<a href="lda.html">LDA</a>
+		<a href="subset.html" class="active">Subset</a>
+		<a href="document.html">Document</a>
 		<a href="word2vec.html">Word2vec </a>
 		<a href="corpus.html">Corpus</a>
 	    </div>
 	</div>
     </div>
 
-    <div id="subset_corpus" style="flex-direction: column"> 
-	<div class="subsetter" style="width: 1000px" id="Time"> Timeline </div>
-	<p>
-	<label for="amount">Date range:</label>
-	<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 300px">
-	</p>
+    <div id="subset_corpus"> 
 
-	<div id="slider-range"></div>
-	<div class="subsetter" style="width: 1000px" id="Keywords"> Keywords </div>
-	<div class="subsetter" style="width: 1000px" id="Authors"> Authors </div>
-	<div class="subsetter" style="width: 1000px" id="Locations"> Locations </div>
-	<button type="button" onclick="get_subset()"> get subset </button> 
-    </div>
+	<!-- Timeline-->
+	<div class="subsetter" id="Time"> 
+	    <h3> Timeline </h3>
+	    <p>
+	    <label for="amount">Date range:</label>
+	    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 300px">
+	    </p>
 
-    <div id="main">
-	<div id="results"> Number of docs: </div>
-    </div>
+	    <div style="height: 20px" id="slider-range"></div>
+	</div>
+	<!-- /Timeline-->
 
-    <div class="footer-wrapper"> 
-	<div class="nav">
-	    <div class="footer-format"> 
-		webapp Version 0.1.0 <br>
-		database Version 1.0.0 
-	    </div>
-	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
-		<a href="index.html">Home</a>
-		<a href="https://github.com/ucdavisdatalab">Github</a>
-		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
+	<!-- /Keywords -->
+	<div class="subsetter" id="Keywords"> 
+	    <h3> Keywords </h3>
+	    <div id="keywords_options">
 	    </div>
 	</div>
-    </div>
-    <script>
-	function topFunction() {
-	    document.body.scrollTop = 0; // For Safari
-	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	}
-    </script>
+	<!-- /Keywords -->
+
+
+	<!-- Authors -->
+	<div class="subsetter" id="Authors">
+	    <h3> Authors </h3>
+	    <div id="authors_options">
+	    </div>
+	</div>
+	<!-- /Authors -->
+
+	<!-- Locations -->
+	<div class="subsetter" id="Locations"> 
+	    <h3> Locations </h3>
+	    <div id="locations_options">
+	    </div>
+	</div>
+	<!-- /Locations -->
+
+	<button type="button" class="subset_button" onclick="get_subset()"> get subset </button> 
+	</div>
+
+	<hr class="divider">
+
+	<div id="main">
+	    <div id="corpus_info"> Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution </div>
+	    <div id="ldapca"> ldapca with modified proportions </div>
+	    <div id="top_docs"> Document Viewer of subset</div>
+	</div>
+
+	<div class="footer-wrapper"> 
+	    <div class="nav">
+		<div class="footer-format"> 
+		    webapp Version 0.1.0 <br>
+		    database Version 1.0.0 
+		</div>
+		<button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
+		<div class="footer-format"> 
+		    <a href="index.html">Home</a>
+		    <a href="https://github.com/ucdavisdatalab">Github</a>
+		    <a href="http://ds.lib.ucdavis.edu/">Datalab</a>
+		</div>
+	    </div>
+	</div>
+	<script>
+	    function topFunction() {
+		document.body.scrollTop = 0; // For Safari
+		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	    }
+	</script>
 </body>

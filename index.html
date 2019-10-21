@@ -1,34 +1,21 @@
 <!doctype html>
 <head>
-    <title>Topic Explore</title>
+    <title>Quintessence Alpha</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="./js/init_documents_results.js"> </script>
-    <script src="./js/get_meta.js"> </script>
-    <script src="./js/get_full_document.js"> </script>
-    <script src="./js/get_truncated_document.js"> </script>
-    <script src="./js/get_topic_terms.js"> </script>
-    <script src="./js/get_topic_documents.js"> </script>
-    <script src="./js/get_topic_proportion.js"> </script>
-    <script src="./js/get_ldapca.js"> </script>
-    <script src="./js/plot_ldapca.js"> </script>
-    <script src="./js/plot_topic_terms.js"> </script>
 </head>
-<body onload="init_plot_ldapca(); get_topic_terms(); get_topic_documents()">
+<body>
 
     <div class="nav-wrapper">
 	<div class="nav">
 	    <div class="links">
-		<a href="index.html">Home</a>
+		<a href="index.html" class="active">Home</a>
 		<a href="team.html">Team</a>
 		<a href="references.html">References</a>
 		<a href="data.html">Data</a>
 	    </div>
 	    <div class="links">
-		<a href="lda.html" class="active">LDA</a>
+		<a href="lda.html">LDA</a>
 		<a href="subset.html">Subset</a>
 		<a href="document.html">Document</a>
 		<a href="word2vec.html">Word2vec </a>
@@ -37,15 +24,7 @@
 	</div>
     </div>
 
-    <div id="lda_area"> 
-	<div id="ldapca"> </div>
-	<div id="topic_terms" name="1"> </div>
-    </div>
-
-    <hr class="divider">
     <div id="main"> 
-	<div id="topic_info"> Topic Statistics (e.g proportion over time, corpus percentage) </div>
-	<div id="top_docs"> </div>
 
     </div> <!-- /MAIN -->
 

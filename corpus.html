@@ -1,9 +1,8 @@
 <!doctype html>
 <head>
-    <title>Topic Explore</title>
+    <title>Document Viewer</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="top_documents.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
 </head>
 <body>
 
@@ -11,28 +10,21 @@
 	<div class="nav">
 	    <div class="links">
 		<a href="index.html">Home</a>
-		<a href="index.html">Team</a>
-		<a href="index.html">References</a>
-		<a href="index.html">Data</a>
+		<a href="team.html">Team</a>
+		<a href="references.html">References</a>
+		<a href="data.html">Data</a>
 	    </div>
 	    <div class="links">
-		<a href="topic.html" class="active">Topics</a>
-		<a href="topic.html">Ldaplot </a>
-		<a href="topic.html">Word2vec </a>
-		<a href="index.html">Corpus</a>
+		<a href="lda.html">LDA</a>
+		<a href="subset.html">Subset</a>
+		<a href="document.html">Document</a>
+		<a href="word2vec.html">Word2vec </a>
+		<a href="corpus.html" class="active">Corpus</a>
 	    </div>
 	</div>
     </div>
 
     <div id="main"> 
-	<div id="search_area">
-	    Topic: 
-	    <input type="text" id="topicid" value=1>
-	    <button type="button" onclick="get_topic_terms(); get_topic_documents()"> Search </button>
-	</div>
-
-	<div id="topic_terms"> </div>
-	<div id="top_docs"> </div>
 
     </div> <!-- /MAIN -->
 
@@ -45,8 +37,8 @@
 	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
 	    <div class="footer-format"> 
 		<a href="index.html">Home</a>
-		<a href="index.html">Github</a>
-		<a href="index.html">Datalab</a>
+		<a href="https://github.com/ucdavisdatalab">Github</a>
+		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
 	    </div>
 	</div>
     </div>
