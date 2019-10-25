@@ -4,7 +4,7 @@ function init_subset_defaults() {
     for (var i = 0; i < 20; i++) {
 	var kw = Keywords[i];
 	var input = document.createElement("input");
-	input.setAttribute("name", kw);
+	input.setAttribute("name", "keywords_checkbox");
 	input.setAttribute("type", "checkbox");
 	input.setAttribute("value", kw);
 	var label = document.createElement("Label");
@@ -19,7 +19,7 @@ function init_subset_defaults() {
     for (var i = 0; i < 20; i++) {
 	var au = Authors[i];
 	var input = document.createElement("input");
-	input.setAttribute("name", au);
+	input.setAttribute("name", "authors_checkbox");
 	input.setAttribute("type", "checkbox");
 	input.setAttribute("value", au);
 	var label = document.createElement("Label");
@@ -34,7 +34,7 @@ function init_subset_defaults() {
     for (var i = 0; i < 20; i++) {
 	var lc = Locations[i];
 	var input = document.createElement("input");
-	input.setAttribute("name", lc);
+	input.setAttribute("name", "locations_checkbox");
 	input.setAttribute("type", "checkbox");
 	input.setAttribute("value", lc);
 	var label = document.createElement("Label");

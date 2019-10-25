@@ -1,5 +1,6 @@
 function init_documents_results(doc_ids_list, NDOCS) {
     console.log("init documents results", doc_ids_list, NDOCS);
+    document.getElementById("top_docs").innerHTML = "";
 
     // for each document
     for (var i =0; i < NDOCS; i++) {

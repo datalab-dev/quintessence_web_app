@@ -37,8 +37,6 @@
 	    });
 	    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
 		" - " + $( "#slider-range" ).slider( "values", 1 ) );
-	    console.log($('#slider-range').slider("values", 0));
-	    console.log($('#slider-range').slider("values", 1));
 	} );
 $( function() {
     $( "#speed" ).selectmenu();
@@ -133,7 +131,7 @@ $( function() {
 
 	<div id="main">
 	    <div id="corpus_info"> Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution </div>
-	    <div id="ldapca"> ldapca with modified proportions </div>
+	    <div id="ldapca" style="height: 20px"> ldapca with modified proportions </div>
 	    <div id="top_docs"> Document Viewer of subset</div>
 	</div>
 
