@@ -5,12 +5,16 @@
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
     <link rel="stylesheet" type="text/css" href="./resources/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./resources/selectize.css">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script type="text/javascript" src="./resources/selectize.js"></script>
+
     <script src="./js/init_documents_results.js"> </script>
     <script src="./js/get_subset.js"> </script>
     <script src="./js/get_meta.js"> </script>
@@ -22,9 +26,31 @@
     <script src="./js/get_ldapca.js"> </script>
     <script src="./js/plot_ldapca.js"> </script>
     <script src="./js/plot_topic_terms.js"> </script>
+    <script src="./js/create_subset_options.js"> </script>
     <script src="./js/init_subset_defaults.js"> </script>
+    <script src="./js/get_all_subset_options.js"> </script>
     <script src="./js/data/subset_defaults.js"> </script>
     <script>
+	 //$('#my_selectize_input')[0].selectize.items
+
+	$(function() { 
+	    $('#selected-keywords').selectize({
+		plugins: ['remove_button'],
+});
+});
+	$(function() { 
+	    $('#selected-authors').selectize({
+		plugins: ['remove_button'],
+});
+});
+	$(function() { 
+	    $('#selected-locations').selectize({
+		plugins: ['remove_button'],
+});
+});
+
+
+
 	$( function() {
 	    $( "#slider-range" ).slider({
 		range: true,
@@ -38,19 +64,7 @@
 	    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
 		" - " + $( "#slider-range" ).slider( "values", 1 ) );
 	} );
-$( function() {
-    $( "#speed" ).selectmenu();
 
-    $( "#files" ).selectmenu();
-
-    $( "#number" )
-	.selectmenu()
-	.selectmenu( "menuWidget" )
-	.addClass( "overflow" );
-
-    $( "#salutation" ).selectmenu();
-} );
-</script
 </script>
 <style> 
 .ui-slider .ui-slider-handle {
@@ -65,7 +79,7 @@ $( function() {
 	}
 </style>
 </head>
-<body onload="init_subset_defaults()">
+<body onload="get_all_subset_options()">
 
     <div class="nav-wrapper">
 	<div class="nav">
@@ -102,8 +116,9 @@ $( function() {
 	<!-- /Keywords -->
 	<div class="subsetter" id="Keywords"> 
 	    <h3> Keywords </h3>
-	    <div id="keywords_options">
-	    </div>
+	    <select id="selected-keywords" multiple="multiple">
+		<option value="Broadsides">Broadsides</option>
+	    </select>
 	</div>
 	<!-- /Keywords -->
 
@@ -111,16 +126,16 @@ $( function() {
 	<!-- Authors -->
 	<div class="subsetter" id="Authors">
 	    <h3> Authors </h3>
-	    <div id="authors_options">
-	    </div>
+	    <select id="selected-authors" multiple="multiple">
+	    </select>
 	</div>
 	<!-- /Authors -->
 
 	<!-- Locations -->
 	<div class="subsetter" id="Locations"> 
 	    <h3> Locations </h3>
-	    <div id="locations_options">
-	    </div>
+	    <select id="selected-locations" multiple="multiple">
+	    </select>
 	</div>
 	<!-- /Locations -->
 

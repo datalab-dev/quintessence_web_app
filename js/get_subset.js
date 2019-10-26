@@ -1,15 +1,3 @@
-function get_checked(name) {
-    var boxes = document.getElementsByName(name);
-    var checked = [];
-
-    for (var i = 0; i < boxes.length; i++) {
-	if (boxes[i].checked) { 
-	    checked.push(boxes[i].value); 
-	}
-    }
-    return checked;
-}
-
 function get_subset() {
     // get the topic id from input value
     // pass to get_topic_terms.php 
@@ -22,14 +10,14 @@ function get_subset() {
     ds = "'" + d1 + "','" + d2 + "'";
 
     // KEYWORDS
-    var kws = get_checked("keywords_checkbox");
+    var kws =$("#selected-keywords")[0].selectize.items;
     kws_string = "";
     if (kws.length > 0) {
         var kws_string = "'" + kws.join("','") + "'";
     }
 
     // AUTHORS
-    var aus = get_checked("authors_checkbox");
+    var aus =$("#selected-authors")[0].selectize.items;
     aus_string = "";
     if (aus.length > 0) {
     var aus_string = "'" + aus.join("','") + "'";
@@ -38,7 +26,7 @@ function get_subset() {
 
 
     // LOCATIONS
-    var ls = get_checked("locations_checkbox");
+    var ls =$("#selected-locations")[0].selectize.items;
     ls_string = "";
     if (ls.length > 0) {
     var ls_string = "'" + ls.join("','") + "'";
@@ -57,7 +45,7 @@ function get_subset() {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	    if (xmlHttp.responseText) {
 	     data = JSON.parse(xmlHttp.responseText);
-             console.log(data);
+             console.log(data.length);
              init_documents_results(data, 10);
              //console.log(xmlHttp.responseText);
 	    } 
