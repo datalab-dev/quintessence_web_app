@@ -27,46 +27,44 @@
     <script src="./js/plot_ldapca.js"> </script>
     <script src="./js/plot_topic_terms.js"> </script>
     <script src="./js/create_subset_options.js"> </script>
-    <script src="./js/init_subset_defaults.js"> </script>
     <script src="./js/get_all_subset_options.js"> </script>
-    <script src="./js/data/subset_defaults.js"> </script>
     <script>
-	 //$('#my_selectize_input')[0].selectize.items
+	//$('#my_selectize_input')[0].selectize.items
 
 	$(function() { 
 	    $('#selected-keywords').selectize({
 		plugins: ['remove_button'],
-});
-});
-	$(function() { 
-	    $('#selected-authors').selectize({
-		plugins: ['remove_button'],
-});
-});
-	$(function() { 
-	    $('#selected-locations').selectize({
-		plugins: ['remove_button'],
-});
-});
-
-
-
-	$( function() {
-	    $( "#slider-range" ).slider({
-		range: true,
-		min: 1470,
-		max: 1700,
-		values: [ 1470, 1700 ],
-		slide: function( event, ui ) {
-		    $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-		}
 	    });
-	    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-		" - " + $( "#slider-range" ).slider( "values", 1 ) );
-	} );
+	});
+$(function() { 
+    $('#selected-authors').selectize({
+	plugins: ['remove_button'],
+    });
+});
+$(function() { 
+    $('#selected-locations').selectize({
+	plugins: ['remove_button'],
+    });
+});
 
-</script>
-<style> 
+
+
+$( function() {
+    $( "#slider-range" ).slider({
+	range: true,
+	min: 1470,
+	max: 1700,
+	values: [ 1470, 1700 ],
+	slide: function( event, ui ) {
+	    $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+	}
+    });
+    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+	" - " + $( "#slider-range" ).slider( "values", 1 ) );
+} );
+
+    </script>
+    <style> 
 .ui-slider .ui-slider-handle {
     height: 25px;
     width: 5px;
@@ -77,9 +75,9 @@
 	    width: 400px;
 	    margin: 20px;
 	}
-</style>
+    </style>
 </head>
-<body onload="get_all_subset_options()">
+<body onload="get_all_subset_options(); init_plot_ldapca(); get_topic_terms()">
 
     <div class="nav-wrapper">
 	<div class="nav">
@@ -103,20 +101,18 @@
 
 	<!-- Timeline-->
 	<div class="subsetter" id="Time"> 
-	    <h3> Timeline </h3>
-	    <p>
-	    <label for="amount">Date range:</label>
-	    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 300px">
+	    <h3 style="margin-top: 10px" class="selecter-title"> Dates Range </h3>
+	    <div style="height: 20px; width:80%" id="slider-range"></div>
+	    <p style="width: 20%">
+	    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold">
 	    </p>
-
-	    <div style="height: 20px" id="slider-range"></div>
 	</div>
 	<!-- /Timeline-->
 
 	<!-- /Keywords -->
 	<div class="subsetter" id="Keywords"> 
-	    <h3> Keywords </h3>
-	    <select id="selected-keywords" multiple="multiple">
+	    <h3 class="selecter-title"> Keywords </h3>
+	    <select class="selecter" id="selected-keywords" multiple="multiple">
 		<option value="Broadsides">Broadsides</option>
 	    </select>
 	</div>
@@ -125,49 +121,62 @@
 
 	<!-- Authors -->
 	<div class="subsetter" id="Authors">
-	    <h3> Authors </h3>
-	    <select id="selected-authors" multiple="multiple">
+	    <h3 class="selecter-title"> Authors </h3>
+	    <select class="selecter" id="selected-authors" multiple="multiple">
 	    </select>
 	</div>
 	<!-- /Authors -->
 
 	<!-- Locations -->
 	<div class="subsetter" id="Locations"> 
-	    <h3> Locations </h3>
-	    <select id="selected-locations" multiple="multiple">
+	    <h3 class="selecter-title"> Locations </h3>
+	    <select class="selecter" id="selected-locations" multiple="multiple">
 	    </select>
 	</div>
 	<!-- /Locations -->
 
 	<button type="button" class="subset_button" onclick="get_subset()"> get subset </button> 
-	</div>
+    </div>
 
-	<hr class="divider">
 
-	<div id="main">
-	    <div id="corpus_info"> Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution </div>
-	    <div id="ldapca" style="height: 20px"> ldapca with modified proportions </div>
-	    <div id="top_docs"> Document Viewer of subset</div>
-	</div>
+    <div id="corpus_info" style="width: 1000px; margin:auto">
+	<!-- Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution -->
+	<div id="ndocs"> </div>
+	<div id="year distribution"> </div>
+	<div id="author distribution"> </div>
+	<div id="keyword distribution"> </div>
+	<div id="location distribution"> </div>
+    </div>
+    <hr class="divider">
 
-	<div class="footer-wrapper"> 
-	    <div class="nav">
-		<div class="footer-format"> 
-		    webapp Version 0.1.0 <br>
-		    database Version 1.0.0 
-		</div>
-		<button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-		<div class="footer-format"> 
-		    <a href="index.html">Home</a>
-		    <a href="https://github.com/ucdavisdatalab">Github</a>
-		    <a href="http://ds.lib.ucdavis.edu/">Datalab</a>
-		</div>
+    <div id="lda_area" name="no_top_docs"> 
+	<div id="ldapca"> </div>
+	<div id="topic_terms" name="1"> </div>
+    </div>
+    <hr class="divider">
+
+    <div id="main">
+	<div id="top_docs"> Document Viewer of subset</div>
+    </div>
+
+    <div class="footer-wrapper"> 
+	<div class="nav">
+	    <div class="footer-format"> 
+		webapp Version 0.1.0 <br>
+		database Version 1.0.0 
+	    </div>
+	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
+	    <div class="footer-format"> 
+		<a href="index.html">Home</a>
+		<a href="https://github.com/ucdavisdatalab">Github</a>
+		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
 	    </div>
 	</div>
-	<script>
-	    function topFunction() {
-		document.body.scrollTop = 0; // For Safari
-		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	    }
-	</script>
+    </div>
+    <script>
+	function topFunction() {
+	    document.body.scrollTop = 0; // For Safari
+	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	}
+    </script>
 </body>

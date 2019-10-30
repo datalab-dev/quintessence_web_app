@@ -85,14 +85,25 @@ button {
     width: 900px;
 }
 #subset_corpus {
-    height: 800px;
     width: 1000px;
     display: flex;
     flex-direction: column;
     margin: auto;
 }
 
+.selecter {
+    margin-left: 10px;
+    width: 900px;
+}
+
+.selecter-title {
+    margin: 0;
+    width: 100px;
+}
+
 .subsetter {
+    display: flex;
+    flex-direction: row;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;

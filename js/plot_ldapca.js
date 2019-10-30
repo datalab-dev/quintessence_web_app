@@ -79,7 +79,9 @@ function plot_ldapca(tp, pca) {
 
 	document.getElementById("topic_terms").setAttribute("name", id);
 	get_topic_terms();
-	get_topic_documents();
+	if (document.getElementById("lda_area").getAttribute("name") != "no_top_docs") {
+	    get_topic_documents();
+	}
     });
 
 }

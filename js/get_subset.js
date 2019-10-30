@@ -45,8 +45,8 @@ function get_subset() {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	    if (xmlHttp.responseText) {
 	     data = JSON.parse(xmlHttp.responseText);
-             console.log(data.length);
              init_documents_results(data, 10);
+	     document.getElementById("ndocs").innerHTML = data.length;
              //console.log(xmlHttp.responseText);
 	    } 
 

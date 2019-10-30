@@ -2,6 +2,8 @@
 
 require_once("config.php");
 
+$qids = "'1400','22000'";
+
 // open mysqli conneciton
 $models_con = new mysqli($server, $user, $password, $modelsdb);
 
@@ -9,10 +11,21 @@ if (!$models_con) {
     echo "failed to connect to database!";
 }
 
+$proportion = [];
+$topic = [];
+
+$query = "SELECT * FROM topic_proportions;";
+if ($result = $models_con->query($query)) {
+    while ($row = $result->fetch_row()) {
+	$proportion[] = $row[0] * 100;
+	$topic[] = $row[1];
+    }
+} // if query succesful
+
+
 $x = [];
 $y = [];
 $topics = [];
-
 $query = "SELECT * FROM topic_terms_pca;";
 if ($result = $models_con->query($query)) {
     while ($row = $result->fetch_row()) {
@@ -22,11 +35,17 @@ if ($result = $models_con->query($query)) {
     }
 } // if query succesful
 
+$tp = [];
+$tp['proportion'] = $proportion;
+$tp['topic'] = $topic;
 
-$combined = [];
-$combined['x'] = $x;
-$combined['y'] = $y;
-$combined['topics'] = $topics;
+$pca = [];
+$pca['x'] = $x;
+$pca['y'] = $y;
+$pca['topics'] = $topics;
+
+$combined['pca'] = $pca;
+$combined['tp'] = $tp;
 
 if (empty($combined))
     $results = "";
