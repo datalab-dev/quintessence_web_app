@@ -11,13 +11,16 @@ button {
 
 #top-button {
     background-color: #F8F8F8;
+    height: 20px;
+    margin-top: 15px;
 }
 
 .footer-wrapper {
     font-family: 'Libre Baskerville', serif;
-    background-color: #F8F8F8;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    /*background-color: #F8F8F8; */
+    background-color: #242729;
+    padding-top: 0px;
+    padding-bottom: 0px;
     margin-top: 30px;
     border-top: 2px solid #E7E7E7;
     display: flex;
@@ -41,8 +44,8 @@ button {
     width: 1000px;
     display: inline-flex;
     flex-direction: row;
-    padding-top: 5px; 
-    padding-bottom: 5px;
+    padding-top: 0px; 
+    padding-bottom: 0px;
     margin: auto;
     justify-content: space-between;
     letter-spacing: -1px;
@@ -54,8 +57,9 @@ button {
     align-content: center;
     margin: 0;
     margin-bottom: 30px;
-    padding: 5px;
-    background-color: #F8F8F8;
+    padding: 0px;
+    /*background-color: #F8F8F8; */
+    background-color: #242729;
 }
 
 #main {
@@ -121,8 +125,9 @@ button {
 }
 
 .links > a {
+    display: inline-block;
     text-decoration: none;
-    padding: 5px 5px;
+    padding: 15px 5px;
     text-align: center;
     color: #888;
     font-size: 20px;
@@ -134,6 +139,8 @@ button {
     text-decoration: none;
     font-size: 14px;
     padding-right: 15px;
+    padding: 15px 5px;
+    display: inline-block;
     color: #888;
 }
 
@@ -142,11 +149,24 @@ button {
 }
 
 a.active {
-    color: #555;
+    /*color: #555; */
+    color: #f4f4f4; 
 }
 
 a:hover {
-    color: #555;
+    /*color: #555; */
+    color: #f4f4f4; 
+    background-color: #555;
+}
+
+td
+{
+    vertical-align: top;
+    padding:0 25px 0 5px;
+}
+.selected {
+    border: 2px solid #1F77B4;
+}
 }
 td
 {
