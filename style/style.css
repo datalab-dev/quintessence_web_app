@@ -1,8 +1,14 @@
 body {
+    background-color: #FFFFFF;
     font-family: sans-serif;
     min-height: 100vh;
     margin: 0;
     padding: 0;
+}
+
+h2 {
+    color: #242729; 
+    /*color: #DE781F; */
 }
 
 button {
@@ -56,7 +62,6 @@ button {
     display: flex;
     align-content: center;
     margin: 0;
-    margin-bottom: 30px;
     padding: 0px;
     /*background-color: #F8F8F8; */
     background-color: #242729;
@@ -68,6 +73,21 @@ button {
     flex-direction: column;
     width: 1000px;
     margin: auto;
+}
+
+#topic_info {
+    height: 400px;
+    width: 1000px;
+    margin:auto;
+    display: flex-row;
+}
+#topic_info_wrapper {
+    width: 100%;
+}
+
+
+#lda_wrapper {
+    padding-top: 30px;
 }
 
 #lda_area {
