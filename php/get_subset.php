@@ -1,21 +1,16 @@
 <?php
-// note get rid of all commas and quotes in mysql corpus
-// dates = 'year1','year2'
-// keywords = 'kw1','kw2','kw3' ...
-// locations = 'l1','l2','l3','l4' ...
-// authors = 'a1','a2'
-// needs to compute topic proportions here! otherwise sending all the qids as a post variable times apache out
 
-$proportion = $_POST["proportion"]; // flag true to calculate proportion
-$dates_string = $_POST['dates'];
-$keywords_string = $_POST['keywords'];
-$locations_string = $_POST['locations'];
-$authors_string = $_POST['authors'];
+//$proportion = $_POST["proportion"]; // flag true to calculate proportion
+//$dates_string = $_POST['dates'];
+//$keywords_string = $_POST['keywords'];
+//$locations_string = $_POST['locations'];
+//$authors_string = $_POST['authors'];
 
-//$dates_string = "'1490','1600'";
-//$keywords_string = "'Description and travel', 'Early works to 1800'";
-//$locations_string = "'amsterdam'";
-//$authors_string = "";
+$proportion = "True";
+$dates_string = "'1490','1600'";
+$keywords_string = "'Description and travel', 'Early works to 1800'";
+$locations_string = "'amsterdam'";
+$authors_string = "";
 
 require_once("config.php");
 
@@ -109,7 +104,7 @@ $proportions = [];
 if (!empty($qids) && $proportion) {
 
     // convert $ids to qids string "'1400','2200'";
-    $qids_string = "'" +  implode($qids, "','") + "'";
+    $qids_string = "'" .  implode($qids, "','") . "'";
 
     // get doc lens
     $dls = [];
@@ -121,13 +116,16 @@ if (!empty($qids) && $proportion) {
     }
 
     // get doc topics
+    $ntopics = 0;
     $dts = [];
     $query = "SELECT * FROM doc_topics Where QID in ($qids_string);";
     if ($result = $models_con->query($query)) {
 	while ($row = $result->fetch_row()) {
 	    $dt = [];
+	    $ntopics = 0;
 	    foreach ($row as $val) {
 		if ($val <= 1) {
+		    $ntopics = $ntopics + 1;
 		    $dt[] = $val;
 		}
 	    }
@@ -141,13 +139,17 @@ if (!empty($qids) && $proportion) {
     $tf = [];
     $sum = 0;
     for ($i = 0; $i < count($dls); $i++) {
-	for ($j = 0; $j < count($dts[1]); $j++) {
-	    $val = $dsl[$i] * $dts[$i][$j];
-	    $tf[$j] = $tf[$j] + $val;
-	    $sum = $sum + $val;
-	}
+        for ($j = 0; $j < $ntopics; $j++) {
+            $val = $dls[$i] * $dts[$i][$j];
+            $tf[$j] = $tf[$j] + $val;
+            $sum = $sum + $val;
+        }
     }
-    $tp = array_map( function($val) { return $val / $sum; }, $tf);
+    echo $sum;
+    $tp = [];
+    for ($i = 0; $i < count($tf); $i++){
+	$tp[] = $tf[$i] / $sum;
+    }
 }
 
 

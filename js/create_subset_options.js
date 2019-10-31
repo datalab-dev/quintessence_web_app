@@ -17,9 +17,10 @@ function create_subset_options(data) {
     }
 
     // loations
+    console.log(data["locations"]);
     var l = $(document.getElementById('selected-locations')).selectize();
     var ls= l[0].selectize;
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < data["locations"].length; i++) {
 	var val = data["locations"][i];
 	ls.addOption({value:val, text:val});
     }
