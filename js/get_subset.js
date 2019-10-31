@@ -32,8 +32,7 @@ function get_subset() {
     var ls_string = "'" + ls.join("','") + "'";
     }
 
-    var params = "dates=" + ds + "&keywords=" + kws_string + "&authors=" + aus_string + "&locations=" + ls_string;
-
+    var params = "proportion=" + "True" + "&dates=" + ds + "&keywords=" + kws_string + "&authors=" + aus_string + "&locations=" + ls_string;
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "./php/get_subset.php", true);
@@ -44,8 +43,10 @@ function get_subset() {
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	    if (xmlHttp.responseText) {
+		console.log(xmlHttp.responseText);
 	     data = JSON.parse(xmlHttp.responseText);
-             init_documents_results(data, 10);
+    	     update_ldapca(data);
+             //init_documents_results(data, 10);
 	     document.getElementById("ndocs").innerHTML = data.length;
              //console.log(xmlHttp.responseText);
 	    } 

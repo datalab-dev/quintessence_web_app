@@ -4,8 +4,9 @@
 // keywords = 'kw1','kw2','kw3' ...
 // locations = 'l1','l2','l3','l4' ...
 // authors = 'a1','a2'
-//
+// needs to compute topic proportions here! otherwise sending all the qids as a post variable times apache out
 
+$proportion = $_POST["proportion"]; // flag true to calculate proportion
 $dates_string = $_POST['dates'];
 $keywords_string = $_POST['keywords'];
 $locations_string = $_POST['locations'];
@@ -20,6 +21,7 @@ require_once("config.php");
 
 // open mysqli conneciton
 $corpus_con = new mysqli($server, $user, $password, $corpusdb);
+$models_con = new mysqli($server, $user, $password, $modelsdb);
 
 if (!$corpus_con) {
     echo "failed to connect to database!";
@@ -44,7 +46,7 @@ if ($dates_string != "") {
 	}
     }
     $nquery = $nquery + 1;
- //   echo ("dates: ". count($matches)."\n");
+    //   echo ("dates: ". count($matches)."\n");
 }
 
 // KEYWORDS
@@ -59,7 +61,7 @@ if ($keywords_string != "") {
     }
     $nquery = $nquery + 1;
     $uniq = array_unique($uniq);
-  //  echo ("keywords: " .count($uniq)."\n");
+    //  echo ("keywords: " .count($uniq)."\n");
     $matches = array_merge($matches, $uniq);
 }
 
@@ -96,13 +98,62 @@ if ($locations_string != "") {
 }
 
 $counts = array_count_values($matches);
-$combined = [];
+$qids = [];
 foreach ($counts as $key => $value) {
     if ($value >= $nquery) {
-	$combined[] = $key;
+	$qids[] = $key;
     }
 }
 
+$proportions = [];
+if (!empty($qids) && $proportion) {
+
+    // convert $ids to qids string "'1400','2200'";
+    $qids_string = "'" +  implode($qids, "','") + "'";
+
+    // get doc lens
+    $dls = [];
+    $query = "SELECT Word_Count FROM Metadata Where QID in ($qids_string);";
+    if ($result = $corpus_con->query($query)) {
+	while ($row = $result->fetch_row()) {
+	    $dls[] = $row[0];
+	}
+    }
+
+    // get doc topics
+    $dts = [];
+    $query = "SELECT * FROM doc_topics Where QID in ($qids_string);";
+    if ($result = $models_con->query($query)) {
+	while ($row = $result->fetch_row()) {
+	    $dt = [];
+	    foreach ($row as $val) {
+		if ($val <= 1) {
+		    $dt[] = $val;
+		}
+	    }
+	    array_push($dts, $dt);
+	}
+    }
+
+    // get topic proportions
+    // tf = colsums(dt * dl)
+    // tp = tf / sum(tf)
+    $tf = [];
+    $sum = 0;
+    for ($i = 0; $i < count($dls); $i++) {
+	for ($j = 0; $j < count($dts[1]); $j++) {
+	    $val = $dsl[$i] * $dts[$i][$j];
+	    $tf[$j] = $tf[$j] + $val;
+	    $sum = $sum + $val;
+	}
+    }
+    $tp = array_map( function($val) { return $val / $sum; }, $tf);
+}
+
+
+$combined = [];
+$combined["qids"] = $qids;
+$combined["proportions"] = $tp;
 if (empty($combined))
     $results = "";
 else {
