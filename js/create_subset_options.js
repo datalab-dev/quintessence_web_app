@@ -3,7 +3,7 @@ function create_subset_options(data) {
     // keywords
     var kw = $(document.getElementById('selected-keywords')).selectize();
     var kws= kw[0].selectize;
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < data["keywords"].length; i++) {
 	var val = data["keywords"][i];
 	kws.addOption({value:val, text:val});
     }
@@ -11,7 +11,7 @@ function create_subset_options(data) {
     // authors
     var a = $(document.getElementById('selected-authors')).selectize();
     var as= a[0].selectize;
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < data["authors"].length; i++) {
 	var val = data["authors"][i];
 	as.addOption({value:val, text:val});
     }

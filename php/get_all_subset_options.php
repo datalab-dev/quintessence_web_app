@@ -19,7 +19,7 @@ if ($result = $corpus_con->query($query)) {
 	$keywords[] = $row[0];
     }
 } // if query succesful
-$keywords = array_unique($keywords);
+$keywords = array_values(array_unique($keywords));
 
 $authors = [];
 $query = "SELECT Author FROM Authors;"; 
@@ -28,7 +28,7 @@ if ($result = $corpus_con->query($query)) {
 	$authors[] = $row[0];
     }
 } // if query succesful
-$authors = array_unique($authors);
+$authors = array_values(array_unique($authors));
 
 $locations = [];
 $query = "SELECT Location FROM Metadata;"; 
@@ -37,7 +37,7 @@ if ($result = $corpus_con->query($query)) {
 	$locations[] = $row[0];
     }
 } // if query succesful
-$locations = array_unique($locations);
+$locations = array_values(array_unique($locations));
 
 
 

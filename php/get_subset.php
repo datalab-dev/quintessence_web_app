@@ -1,16 +1,17 @@
 <?php
+ini_set('memory_limit', '1024M');
 
-//$proportion = $_POST["proportion"]; // flag true to calculate proportion
-//$dates_string = $_POST['dates'];
-//$keywords_string = $_POST['keywords'];
-//$locations_string = $_POST['locations'];
-//$authors_string = $_POST['authors'];
+$proportion = $_POST["proportion"]; // flag true to calculate proportion
+$dates_string = $_POST['dates'];
+$keywords_string = $_POST['keywords'];
+$locations_string = $_POST['locations'];
+$authors_string = $_POST['authors'];
 
-$proportion = "True";
-$dates_string = "'1490','1600'";
-$keywords_string = "'Description and travel', 'Early works to 1800'";
-$locations_string = "'amsterdam'";
-$authors_string = "";
+//$proportion = "True";
+//$dates_string = "'1490','1600'";
+//$keywords_string = "'Description and travel', 'Early works to 1800'";
+//$locations_string = "";
+//$authors_string = "";
 
 require_once("config.php");
 
@@ -106,30 +107,38 @@ if (!empty($qids) && $proportion) {
     // convert $ids to qids string "'1400','2200'";
     $qids_string = "'" .  implode($qids, "','") . "'";
 
-    // get doc lens
-    $dls = [];
-    $query = "SELECT Word_Count FROM Metadata Where QID in ($qids_string);";
-    if ($result = $corpus_con->query($query)) {
-	while ($row = $result->fetch_row()) {
-	    $dls[] = $row[0];
-	}
-    }
-
     // get doc topics
+    $ndocs = 0;
     $ntopics = 0;
     $dts = [];
+    $modeled_qids = [];
     $query = "SELECT * FROM doc_topics Where QID in ($qids_string);";
     if ($result = $models_con->query($query)) {
 	while ($row = $result->fetch_row()) {
+            $ndocs = $ndocs + 1;
 	    $dt = [];
 	    $ntopics = 0;
 	    foreach ($row as $val) {
 		if ($val <= 1) {
 		    $ntopics = $ntopics + 1;
 		    $dt[] = $val;
-		}
+		} else {
+                  $modeled_qids[] = $val;
+                }
 	    }
 	    array_push($dts, $dt);
+	}
+    }
+
+    $modeled_qids_string = "'" . implode($modeled_qids, "','") . "'";
+
+
+    // get doc lens
+    $dls = [];
+    $query = "SELECT Word_Count FROM Metadata Where QID in ($modeled_qids_string);";
+    if ($result = $corpus_con->query($query)) {
+	while ($row = $result->fetch_row()) {
+	    $dls[] = $row[0];
 	}
     }
 
@@ -137,16 +146,17 @@ if (!empty($qids) && $proportion) {
     // tf = colsums(dt * dl)
     // tp = tf / sum(tf)
     $tf = [];
-    $sum = 0;
+    for ($i = 0; $i < $ntopics; $i++){
+        $tf[$i] = 0;
+    }
     for ($i = 0; $i < count($dls); $i++) {
         for ($j = 0; $j < $ntopics; $j++) {
             $val = $dls[$i] * $dts[$i][$j];
             $tf[$j] = $tf[$j] + $val;
-            $sum = $sum + $val;
         }
     }
-    echo $sum;
     $tp = [];
+    $sum = array_sum($tf);
     for ($i = 0; $i < count($tf); $i++){
 	$tp[] = $tf[$i] / $sum;
     }
@@ -162,9 +172,6 @@ else {
     $results = json_encode($combined);
 }
 
-//echo ("nquery: ".$nquery)."\n";
-//echo ("max count: " .max($counts)."\n");
-//echo ("total results: " .count($combined)."\n");
 echo ($results);
 
 mysqli_close($corpus_con);

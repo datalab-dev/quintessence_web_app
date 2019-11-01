@@ -43,12 +43,10 @@ function get_subset() {
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	    if (xmlHttp.responseText) {
-		console.log(xmlHttp.responseText);
 	     data = JSON.parse(xmlHttp.responseText);
     	     update_ldapca(data);
-             //init_documents_results(data, 10);
-	     document.getElementById("ndocs").innerHTML = data.length;
-             //console.log(xmlHttp.responseText);
+             init_documents_results(data["qids"], 10);
+	     document.getElementById("ndocs").innerHTML = data["qids"].length;
 	    } 
 
 	}// if success
