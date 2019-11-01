@@ -10,7 +10,8 @@ function button_get_full_document (id) {
 	    console.log(xmlHttp.responseText);
 	    var name = xmlHttp.responseText;
             name = name + ".headed.xml"; 
-            window.location.href = "/xml/" + name;
+            //window.location.href = "/xml/" + name;
+            window.open("/xml/" + name);
 	}// if success
     }//response recieved
 }
