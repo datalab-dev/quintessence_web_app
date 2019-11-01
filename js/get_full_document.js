@@ -1,5 +1,18 @@
 function button_get_full_document (id) {
-    window.location.href = "/xml/A01584.headed.xml";
+    docid = id.split("_")[2];
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", "./php/get_document_File_ID.php", true);
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send("docid=" + docid); 
+
+    xmlHttp.onreadystatechange = function ()  {
+	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	    console.log(xmlHttp.responseText);
+	    var name = xmlHttp.responseText;
+            name = name + ".headed.xml"; 
+            window.location.href = "/xml/" + name;
+	}// if success
+    }//response recieved
 }
 
 function get_full_document() {
@@ -20,14 +33,3 @@ function get_full_document() {
 	}// if success
     }//response recieved
 }
-
-function get_xml_document() {
-    //var html = '<html><head></head><body>Foo</body></html>';
-    var iframe = document.createElement('iframe');
-    //iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
-    iframe.src = "/xml/A01584.headed.xml";
-    document.getElementById("document").appendChild(iframe);
-}
-
-    
-
