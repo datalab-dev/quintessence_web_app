@@ -3,6 +3,9 @@
 $docid = $_POST['docid'];
 $type = $_POST['type'];
 
+$docid = 1;
+$type = "XML";
+
 require_once("config.php");
 
 // open mysqli conneciton

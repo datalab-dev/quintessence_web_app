@@ -157,7 +157,6 @@ button {
     text-decoration: none;
     font-size: 14px;
     padding-right: 15px;
-    padding: 15px 5px;
     display: inline-block;
     color: #888;
 }
@@ -183,7 +182,6 @@ td
 }
 .selected {
     border: 2px solid #1F77B4;
-}
 }
 td
 {

@@ -83,20 +83,25 @@ $( function() {
     <div class="nav-wrapper">
 	<div class="nav">
 	    <div class="links">
-		<a href="index.html">Home</a>
-		<a href="about.html">About</a>
+		<a href="index.html">Quintessence</a>
 	    </div>
 	    <div class="links">
 		<a href="lda.html">Topic Model</a>
 		<a href="subset.html" class="active">Subset</a>
 		<a href="document.html">Document</a>
-		<a href="word2vec.html">Embedding </a>
+		<a href="word2vec.html">Embedding</a>
 		<a href="corpus.html">Corpus</a>
 	    </div>
 	</div>
     </div>
 
+    <div id="lda_area" name="no_top_docs"> 
+	<div id="ldapca"> </div>
+	<div id="topic_terms" name="1"> </div>
+    </div>
+
     <div id="subset_corpus"> 
+	 <h2> Define Subset </h2>
 
 	<!-- Timeline-->
 	<div class="subsetter" id="Time"> 
@@ -146,16 +151,11 @@ $( function() {
 	<div id="keyword distribution"> </div>
 	<div id="location distribution"> </div>
     </div>
-    <hr class="divider">
 
-    <div id="lda_area" name="no_top_docs"> 
-	<div id="ldapca"> </div>
-	<div id="topic_terms" name="1"> </div>
-    </div>
-    <hr class="divider">
 
     <div id="main">
-	<div id="top_docs"> Document Viewer of subset</div>
+	 <h2> Documents For Subset </h2>
+	<div id="top_docs"> </div>
     </div>
 
     <div class="footer-wrapper"> 
