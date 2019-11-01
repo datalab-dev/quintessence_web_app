@@ -2,7 +2,18 @@
 <head>
     <title>Document Viewer</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./js/freq.js?2"></script>
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./style/freq_style.css">
+    </head>
+
 </head>
 <body>
 
@@ -21,9 +32,28 @@
 	</div>
     </div>
 
-    <div id="main"> 
+        <div id="main">
 
-    </div> <!-- /MAIN -->
+            <h2>Compare Token Frequencies over Time</h2>
+                <div class="ui-widget">
+                    <input id="tokens">
+                </div>
+
+            <div id="token-disp" class="row">
+                <ul id="token-list"></ul>
+            </div>
+
+                <div id="freqPlot"></div>
+
+                <h2>Total Words per Decade</h2>
+                <div id="wordFreqPlot"></div>
+
+
+                <h2>Total Documents per Decade</h2>
+                <div id="docFreqPlot"></div>
+
+	</div>
+
 
     <div class="footer-wrapper"> 
 	<div class="nav">
