@@ -2,7 +2,16 @@
 <head>
     <title>Document Viewer</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./js/embed.js?2"></script>
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./style/embed_style.css">
 </head>
 <body>
 
@@ -21,18 +30,115 @@
 	</div>
     </div>
 
-    <div id="main"> 
+    <div id="main">
+        <div class="row input-label">Select a token to plot</div>
+        <div class="row">
+            <div class="ui-widget">
+              <input id="tokens">
+            </div>
 
+            <div id="token-msg"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="plot-div">
+                    <div id="nn-plot"></div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="plot-div padding-div">
+                    <div id="dec-hist"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 bottom-row">
+                <div class="plot-div padding-div">
+                    <div id="full-hist" class="plot"></div>
+                </div>
+            </div>
+
+            <div class="col-6 bottom-row">
+                <div class="plot-div">
+                    <form id="sel-filter">
+                        <input type="radio" name="filter" value="author" checked="checked" autocomplete="off"> Author
+                        <input type="radio" name="filter" value="location" autocomplete="off"> Location
+                    </form>
+
+                    <div id="auth-container">
+                        <span class="dropdown-label">Choose an author</span>
+                        <select id="dropdown-auth">
+                            <option value="" selected></option>
+                            <option value="baxter">Baxter, Richard</option>
+                            <option value="prynne">Prynne, William</option>
+                            <option value="purchas">Purchas, Samuel</option>
+                            <option value="owen">Owen, John</option>
+                            <option value="poole">Poole, Matthew</option>
+                            <option value="taylor">Taylor, Jeremy</option>
+                            <option value="foxe">Foxe, John</option>
+                            <option value="heylyn">Heylyn, Peter</option>
+                            <option value="holinshed_etal">Holinshed, Raphael,  Stanyhurst, Richard, ...</option>
+                            <option value="stillingfleet">Stillingfleet, Edward</option>
+                            <option value="dugdale">Dugdale, William, Sir</option>
+                            <option value="hammond">Hammond, Henry</option>
+                            <option value="manton">Manton, Thomas</option>
+                            <option value="rutherford">Rutherford, Samuel</option>
+                            <option value="cooper">Cooper, Thomas</option>
+                            <option value="du_etal">Du Pin, Louis Ellies, Wotton, William</option>
+                            <option value="holinshed">Holinshed, Raphael</option>
+                            <option value="burgess">Burgess, Anthony</option>
+                            <option value="clarke">Clarke, Samuel</option>
+                            <option value="willet">Willet, Andrew</option>
+                        </select>
+                        <div id="auth-hist" class="plot"></div>
+                    </div>
+
+                    <div id="loc-container" style="display: none">
+                        <span class="dropdown-label">Choose a location</span>
+                        <select id="dropdown-loc">
+                            <option value="" selected></option>
+                            <option value="london">London</option>
+                            <option value="oxford">Oxford</option>
+                            <option value="edinburgh">Edinburgh</option>
+                            <option value="cambridge">Cambridge</option>
+                            <option value="amsterdam">Amsterdam</option>
+                            <option value="sl">sl</option>
+                            <option value="westminster">Westminster</option>
+                            <option value="antwerp">Antwerp</option>
+                            <option value="saint_omer">Saint Omer</option>
+                            <option value="paris">Paris</option>
+                            <option value="dublin">Dublin</option>
+                            <option value="roan">Roan</option>
+                            <option value="doway">Doway</option>
+                            <option value="savoy">Savoy</option>
+                        </select>
+                        <div id="loc-hist" class="plot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+        </div>
+
+        <div id="kwic-row" class="row flex-column">
+            <div id="kwic-msg"></div>
+            <ul id="kwic-list" class="list-group">
+            </ul>
+        </div>
     </div> <!-- /MAIN -->
 
-    <div class="footer-wrapper"> 
+    <div class="footer-wrapper">
 	<div class="nav">
-	    <div class="footer-format"> 
+	    <div class="footer-format">
 		webapp Version 0.1.0 <br>
-		database Version 1.0.0 
+		database Version 1.0.0
 	    </div>
 	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
+	    <div class="footer-format">
 		<a href="index.html">Home</a>
 		<a href="https://github.com/ucdavisdatalab">Github</a>
 		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>

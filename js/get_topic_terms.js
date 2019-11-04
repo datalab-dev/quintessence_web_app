@@ -6,7 +6,7 @@ function get_topic_terms() {
     // parse the response
 
     topicid = document.getElementById("topic_terms").getAttribute('name');
-    console.log(topicid);
+    console.log("requesting topic terms: ", topicid);
 
 
     var xmlHttp = new XMLHttpRequest();
@@ -16,6 +16,7 @@ function get_topic_terms() {
 
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      console.log("got topic terms: ", topicid);
 	    plot_topic_terms(JSON.parse(xmlHttp.responseText), topicid);
 	}// if success
     }//response recieved
