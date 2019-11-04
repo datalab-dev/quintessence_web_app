@@ -15,7 +15,7 @@ function init_plot_ldapca() {
 
 
 
-function plot_ldapca(tp, pca) { 
+function plot_ldapca(tp, pca) {
     // needs proportions
     // x and y of each topic
 
@@ -58,6 +58,8 @@ function plot_ldapca(tp, pca) {
     var layout = {
 	title: 'LDA PCA',
 	autosize: "false",
+    hovermode: "closest",
+    hoverdistance: 20,
 	height: 900,
 	margin: {
 	    l: 0,
@@ -76,7 +78,7 @@ function plot_ldapca(tp, pca) {
 	var id = 0;
 
 	for(var i=0; i < data.points.length; i++){
-	    id = data.points[i].text 
+	    id = data.points[i].text
 	}
 
 	document.getElementById("topic_terms").setAttribute("name", id);
@@ -87,4 +89,3 @@ function plot_ldapca(tp, pca) {
     });
 
 }
-
