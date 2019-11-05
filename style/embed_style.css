@@ -1,40 +1,21 @@
 .input-label {
     margin-top: 30px;
-    padding-left: 5px;
 }
 
 #tokens {
-    border: 1px solid #A9A9A9;
-    background: #f2f2f2;
-    border: 1px solid #f2f2f2;
-    color: #757575;
-    cursor: default;
-    font-size: 14px;
-    font-weight: bold;
     width: 250px;
-    padding: 0 16px;
-    height:36px;
+    padding: 0 6px;
     margin-top: 8px;
 }
 
-.ui-menu-item {
-    background: #f2f2f2;
-    color: #757575;
-    border: 0px;
-    padding-left: 8px;
+#search-button {
+    height: max-content;
+    margin-top: 7px;
+    margin-left: 20px;
 }
-
-.ui-widget.ui-widget-content {
-    border: 0px;
-}
-
-/* #nn-plot {
-    margin-top: 15px;
-} */
 
 .plot-div {
     padding: 0px;
-    /* margin-right: 15px; */
     background: rgb(243, 243, 243);
     height: 400px;
 }
@@ -52,10 +33,6 @@ select {
     margin-left: 5px;
     margin-top: 5px;
 }
-
-/* .bottom-row {
-    padding-top: 15px;
-} */
 
 #sel-filter {
     padding-top: 15px;

@@ -260,6 +260,8 @@ $(document).ready(function() {
     var decades = range(1480, 1710, 10);
 
     $.getJSON('./resources/words.json', function(data) {
+
+
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
@@ -268,32 +270,34 @@ $(document).ready(function() {
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
-                var word = ui.item.value;
-                $('#token-msg').text('Requesting token data ...');
-                $('#kwic-msg').text('Requesting keyword in context data ...');
-                $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
-                    plot_timeseries(word, decades, data.wordTimeseries,
-                        data.decNeighbors, data.neighborsTimeseries);
-                    plot_hist('full', null, data.fullNeighbors["full"], word);
-                    $("#dropdown-auth").change(function () {
-                       var author = $(this).val();
-                       var authName = $("#dropdown-auth option:selected").text();
-                       plot_hist('author', authName, data.authNeighbors[author], word);
-                   });
-                   $("#dropdown-loc").change(function () {
-                      var location = $(this).val();
-                      var locName = $("#dropdown-loc option:selected").text();
-                      plot_hist('location', locName, data.locNeighbors[location], word);
-                  });
-                })
-                .done(function() {
-                  $('#token-msg').text('');
-                });
-                $.getJSON(`./php/fetch_kwic.php?word=${word}`, function(data) {
-                    get_kwic(data, word);
-                })
-                .done(function() {
-                    $('#kwic-msg').text('');
+                $('#search-button').click(function() {
+                    var word = ui.item.value;
+                    $('#token-msg').text('Requesting token data ...');
+                    $('#kwic-msg').text('Requesting keyword in context data ...');
+                    $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
+                        plot_timeseries(word, decades, data.wordTimeseries,
+                            data.decNeighbors, data.neighborsTimeseries);
+                        plot_hist('full', null, data.fullNeighbors["full"], word);
+                        $("#dropdown-auth").change(function () {
+                           var author = $(this).val();
+                           var authName = $("#dropdown-auth option:selected").text();
+                           plot_hist('author', authName, data.authNeighbors[author], word);
+                       });
+                       $("#dropdown-loc").change(function () {
+                          var location = $(this).val();
+                          var locName = $("#dropdown-loc option:selected").text();
+                          plot_hist('location', locName, data.locNeighbors[location], word);
+                      });
+                    })
+                    .done(function() {
+                      $('#token-msg').text('');
+                    });
+                    $.getJSON(`./php/fetch_kwic.php?word=${word}`, function(data) {
+                        get_kwic(data, word);
+                    })
+                    .done(function() {
+                        $('#kwic-msg').text('');
+                    });
                 });
             }
         });
