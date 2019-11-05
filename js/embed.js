@@ -92,7 +92,7 @@ function replaceZero(arr) {
 
 function get_nninfo(data) {
     var res = "";
-    for (i = 0; i < 10; i++) {
+    for (i = 19; i > 9; i--) {
         var n = data.neighbors[i];
         var p = (parseFloat(data.scores[i])*100).toFixed(2);
         res = res.concat(n, " - ", p, "%<br>");
@@ -130,7 +130,6 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
 
 
 function plot_hist(category, sel, nn, word) {
-    console.log(nn);
     var trace = {
         x: nn.scores,
         y: nn.neighbors,
@@ -173,7 +172,6 @@ function plot_hist(category, sel, nn, word) {
         title: '',
         dtick: 1
     };
-    console.log(authHistLayout);
     Plotly.newPlot(element, [trace], authHistLayout, {showSendToCloud: true});
 }
 
@@ -279,7 +277,6 @@ $(document).ready(function() {
                     plot_hist('full', null, data.fullNeighbors["full"], word);
                     $("#dropdown-auth").change(function () {
                        var author = $(this).val();
-                       console.log(author);
                        var authName = $("#dropdown-auth option:selected").text();
                        plot_hist('author', authName, data.authNeighbors[author], word);
                    });
