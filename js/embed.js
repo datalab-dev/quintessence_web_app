@@ -249,6 +249,28 @@ function reset() {
 
 
 $(document).ready(function() {
+    /* load the word 'power' as a sample selection */
+    $.getJSON('./resources/power_embed.json', function(data) {
+        $('#tokens').val('power');
+        var word = 'power';
+        plot_timeseries(word, decades, data.wordTimeseries,
+            data.decNeighbors, data.neighborsTimeseries);
+        plot_hist('full', null, data.fullNeighbors["full"], word);
+        $("#dropdown-auth").change(function () {
+           var author = $(this).val();
+           var authName = $("#dropdown-auth option:selected").text();
+           plot_hist('author', authName, data.authNeighbors[author], word);
+        });
+        $("#dropdown-loc").change(function () {
+          var location = $(this).val();
+          var locName = $("#dropdown-loc option:selected").text();
+          plot_hist('location', locName, data.locNeighbors[location], word);
+        });
+        $.getJSON('./resources/power_kwic.json', function(data) {
+            get_kwic(data, word);
+        })
+    });
+
     $('#sel-filter').change(function(){
         var selectedVal = $("input[name='filter']:checked").val();
         // alert(selectedVal);
@@ -260,8 +282,6 @@ $(document).ready(function() {
     var decades = range(1480, 1710, 10);
 
     $.getJSON('./resources/words.json', function(data) {
-
-
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
@@ -304,11 +324,11 @@ $(document).ready(function() {
     })
     .done(function() {
         // $('#autocomplete').val('');
-        Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
-        Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
+        // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
     });
 
     $('#tokens').val('');
