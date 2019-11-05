@@ -28,7 +28,11 @@
         $pos = array_search($word, $arr);
 
         if ($pos) {
-            $words = array_slice($arr, $pos-$n, 2*$n+1);
+            $start = $pos - $n;
+            if ($start < 0) {
+                $start = 0;
+            }
+            $words = array_slice($arr, $start, 2*$n+1);
             return implode(' ', $words);
         } else {
             return '';
@@ -46,6 +50,7 @@
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $lemma);
             mysqli_stmt_fetch($stmt);
+            mysqli_stmt_close($stmt);
 
             /* search text for word */
             return getKwic($lemma, $word, $n);
