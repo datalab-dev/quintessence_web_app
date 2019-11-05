@@ -226,7 +226,6 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
 
 function get_kwic(data, word) {
-    $('#kwic-list').empty();
     Object.keys(data).forEach(function(doc) {
         var kwic = data[doc].replace(word, `<b>${word}</b>`);
         $('#kwic-list').append(
@@ -291,6 +290,7 @@ $(document).ready(function() {
             },
             select: function(e, ui) {
                 $('#search-button').click(function() {
+                    $('#kwic-list').empty();
                     var word = ui.item.value;
                     $('#token-msg').text('Requesting token data ...');
                     $('#kwic-msg').text('Requesting keyword in context data ...');
