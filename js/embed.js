@@ -187,6 +187,7 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
+    wordTimeseries = replaceZero(wordTimeseries);
 
     /* plot word change over time */
     var trace1 = {
