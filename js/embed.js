@@ -226,8 +226,9 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
 
 function get_kwic(data, word) {
+    console.log(data);
     Object.keys(data).forEach(function(doc) {
-        var kwic = data[doc].replace(word, `<b>${word}</b>`);
+        var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
         $('#kwic-list').append(
             `<li class="list-group-item">
                 <h4>${doc}</h4>
@@ -265,7 +266,7 @@ $(document).ready(function() {
           var locName = $("#dropdown-loc option:selected").text();
           plot_hist('location', locName, data.locNeighbors[location], word);
         });
-        $.getJSON('./resources/power_kwic.json', function(data) {
+        $.getJSON('./resources/power_kwic.json?v=2', function(data) {
             get_kwic(data, word);
         })
     });
@@ -289,9 +290,10 @@ $(document).ready(function() {
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
-                $('#search-button').click(function() {
+                $('#search-button').on('click', function() {
                     $('#kwic-list').empty();
                     var word = ui.item.value;
+                    console.log(ui.item.value);
                     $('#token-msg').text('Requesting token data ...');
                     $('#kwic-msg').text('Requesting keyword in context data ...');
                     $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
@@ -314,9 +316,11 @@ $(document).ready(function() {
                     });
                     $.getJSON(`./php/fetch_kwic.php?word=${word}`, function(data) {
                         get_kwic(data, word);
+                        data = [];
                     })
                     .done(function() {
                         $('#kwic-msg').text('');
+                        $('#search-button').off('click');
                     });
                 });
             }

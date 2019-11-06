@@ -23,40 +23,32 @@
 
 
     /* return the context window for the first occurence of word */
-    function getKwic($text, $word, $n) {
-        $arr = explode("\t", $text);
-        $pos = array_search($word, $arr);
+    function getKwic($std, $lemma, $word, $n) {
+        $arrLemma = explode("\t", $lemma);
+        $arrStd = explode("\t", $std);
+        $pos = array_search($word, $arrLemma);
+        $wordStd = $arrStd[$pos];
 
         if ($pos) {
             $start = $pos - $n;
             if ($start < 0) {
                 $start = 0;
             }
-            $words = array_slice($arr, $start, 2*$n+1);
-            return implode(' ', $words);
+            $words = array_slice($arrStd, $start, 2*$n+1);
+            return array('word'=>$wordStd, 'window'=>implode(' ', $words));
         } else {
-            return '';
+            return array('word'=>'', 'window'=>'');
         }
     }
 
 
-    /* given a document get the lemmatized text */
+    /* given a document get the lemmatized kwic window */
     function getLemma($conn, $id, $word, $n) {
-        $sql = "SELECT Lemma FROM Truncated_Corpus WHERE File_ID = '$id';";
-
-        if ($stmt = mysqli_prepare($conn, $sql)) {
-            /* fetch the full text */
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $lemma);
-            mysqli_stmt_fetch($stmt);
-            mysqli_stmt_close($stmt);
-
-            /* search text for word */
-            return getKwic($lemma, $word, $n);
-        }
-
-        return "";
+        $sql = "SELECT Standardized, Lemma FROM Truncated_Corpus WHERE File_ID = '$id';";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
+        return getKwic($row["Standardized"], $row["Lemma"], $word, $n);
     }
 
 
@@ -66,7 +58,7 @@
         $word = $argv[1];
     }
 
-    $N = 4; // window size
+    $N = 20; // window size
 
     /* connect to the database */
     $host = '127.0.0.1';
@@ -84,7 +76,7 @@
     $result = array();
     foreach ($documents as $document) {
         $text = getLemma($connCorpus, $document, $word, $N);
-        if ($text != '') {
+        if ($text['window'] != '') {
             $result[$document] = $text;
         }
     }
