@@ -18,7 +18,7 @@
         $row = mysqli_fetch_assoc($result);
         foreach ($row as $key => $value) {
             $value = (float) $value * 100;
-            $padded = sprintf('%0.2f', $value);
+            $padded = sprintf('%0.4f', $value);
             array_push($frequencies, $padded);
         }
     }
