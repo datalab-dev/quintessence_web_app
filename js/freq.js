@@ -74,7 +74,7 @@ function plotFrequencies(data) {
         // margin: { r: 0, l: 20, b: 10, t: 20 },
         paper_bgcolor: 'rgb(243, 243, 243)',
         plot_bgcolor: 'rgb(243, 243, 243)',
-        showlegend: false,
+        showlegend: true,
         hovermode: 'closest'
     };
 
@@ -176,23 +176,26 @@ $(document).ready(function() {
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
-                $('#token-list').append(`<li><button class='btn'><i class='fa
-                    fa-close'></i></button>${ui.item.value}</li>`);
+                $('#search-button').on('click', function() {
+                    $('#token-list').append(`<li><button class='btn'><i class='fa
+                        fa-close'></i></button>${ui.item.value}</li>`);
 
-                /* add on click listener for deletion */
-                $("#token-disp button").click(function() {
-                    var word = $(this).parent().text();
-                    delete freq_data[word];
-                    $(this).parent().remove();
-                    plotFrequencies(freq_data);
-                });
+                    /* add on click listener for deletion */
+                    $("#token-disp button").click(function() {
+                        var word = $(this).parent().text();
+                        delete freq_data[word];
+                        $(this).parent().remove();
+                        plotFrequencies(freq_data);
+                    });
 
-                /* fetch data */
-                $.getJSON(`./php/fetch_freq.php?word=${ui.item.value}`, function(data) {
-                    freq_data[ui.item.value] = data;
-                }).done(function() {
-                    /* replot */
-                    plotFrequencies(freq_data);
+                    /* fetch data */
+                    $.getJSON(`./php/fetch_freq.php?word=${ui.item.value}`, function(data) {
+                        freq_data[ui.item.value] = data;
+                    }).done(function() {
+                        /* replot */
+                        plotFrequencies(freq_data);
+                        $('#search-button').off('click');
+                    });
                 });
             }
         });
