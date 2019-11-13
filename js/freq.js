@@ -152,7 +152,6 @@ function plotOverallFrequencies(data) {
             ticklen: 1,
             showline: true
         },
-        // margin: { r: 0, l: 20, b: 10, t: 20 },
         paper_bgcolor: 'rgb(243, 243, 243)',
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: false,
