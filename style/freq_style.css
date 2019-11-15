@@ -1,33 +1,17 @@
 .input-label {
-    margin-top: 30px;
-    padding-left: 5px;
+    margin-top: 15px;
 }
 
-input {
-    /* border-radius: 10px 10px 10px 10px; */
-    border: 1px solid #A9A9A9;
-    /* box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2); */
-    background: #f2f2f2;
-    border: 1px solid #f2f2f2;
-    color: #757575;
-    cursor: default;
-    font-size: 14px;
-    font-weight: bold;
+#tokens {
     width: 250px;
-    padding: 0 16px;
-    height:36px;
+    padding: 0 6px;
     margin-top: 8px;
 }
 
-.ui-menu-item {
-    background: #f2f2f2;
-    color: #757575;
-    border: 0px;
-    padding-left: 8px;
-}
-
-.ui-widget.ui-widget-content {
-    border: 0px;
+#search-button {
+    height: max-content;
+    margin-top: 7px;
+    margin-left: 20px;
 }
 
 #token-disp ul {
@@ -61,4 +45,8 @@ input {
 .btn:active,
 .btn:focus {
     outline: none;
+}
+
+.title {
+    margin-top: 30px;
 }

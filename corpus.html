@@ -11,16 +11,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="./js/freq.js?2"></script>
     <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <link rel="stylesheet" type="text/css" href="./style/freq_style.css">
-    </head>
-
+    <link rel="stylesheet" type="text/css" href="./style/freq_style.css?2">
 </head>
+
 <body>
 
     <div class="nav-wrapper">
 	<div class="nav">
 	    <div class="links">
 		<a href="index.html">Quintessence</a>
+		<a href="about.html">About</a>
 	    </div>
 	    <div class="links">
 		<a href="lda.html">Topic Model</a>
@@ -32,44 +32,45 @@
 	</div>
     </div>
 
-        <div id="main">
-
-            <h2>Compare Token Frequencies over Time</h2>
-                <div class="ui-widget">
-                    <input id="tokens">
-                </div>
-
-            <div id="token-disp" class="row">
-                <ul id="token-list"></ul>
+    <div id="main">
+        <h2 class="row title">Compare Token Frequencies over Time</h2>
+        <div class="row input-label">Select a token to plot</div>
+        <div class="row">
+            <div class="ui-widget">
+                <input id="tokens">
             </div>
+            <button type="button" id="search-button"> Search </button>
+            <div id="token-msg"></div>
+        </div>
+        <div id="token-disp" class="row">
+            <ul id="token-list"></ul>
+        </div>
+        <div id="freqPlot" class="row"></div>
 
-                <div id="freqPlot"></div>
+        <h2 class="row title">Total Words per Decade</h2>
+        <div id="wordFreqPlot" class="row"></div>
 
-                <h2>Total Words per Decade</h2>
-                <div id="wordFreqPlot"></div>
-
-
-                <h2>Total Documents per Decade</h2>
-                <div id="docFreqPlot"></div>
-
-	</div>
+        <h2 class="row title">Total Documents per Decade</h2>
+        <div class="row" id="docFreqPlot"></div>
+    </div>
 
 
-    <div class="footer-wrapper"> 
+    <div class="footer-wrapper">
 	<div class="nav">
-	    <div class="footer-format"> 
+	    <div class="footer-format">
 		webapp Version 0.1.0 <br>
 		database Version 1.0.0 <br>
-		models Version 1.0.0 
+		models Version 1.0.0
 	    </div>
 	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
+	    <div class="footer-format">
 		<a href="index.html">Home</a>
 		<a href="https://github.com/ucdavisdatalab">Github</a>
 		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
 	    </div>
 	</div>
     </div>
+
     <script>
 	function topFunction() {
 	    document.body.scrollTop = 0; // For Safari

@@ -92,7 +92,7 @@ function replaceZero(arr) {
 
 function get_nninfo(data) {
     var res = "";
-    for (i = 0; i < 10; i++) {
+    for (i = 19; i > 9; i--) {
         var n = data.neighbors[i];
         var p = (parseFloat(data.scores[i])*100).toFixed(2);
         res = res.concat(n, " - ", p, "%<br>");
@@ -130,7 +130,6 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
 
 
 function plot_hist(category, sel, nn, word) {
-    console.log(nn);
     var trace = {
         x: nn.scores,
         y: nn.neighbors,
@@ -173,7 +172,6 @@ function plot_hist(category, sel, nn, word) {
         title: '',
         dtick: 1
     };
-    console.log(authHistLayout);
     Plotly.newPlot(element, [trace], authHistLayout, {showSendToCloud: true});
 }
 
@@ -189,6 +187,7 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
+    wordTimeseries = replaceZero(wordTimeseries);
 
     /* plot word change over time */
     var trace1 = {
@@ -228,9 +227,9 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
 
 function get_kwic(data, word) {
-    $('#kwic-list').empty();
+    console.log(data);
     Object.keys(data).forEach(function(doc) {
-        var kwic = data[doc].replace(word, `<b>${word}</b>`);
+        var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
         $('#kwic-list').append(
             `<li class="list-group-item">
                 <h4>${doc}</h4>
@@ -251,6 +250,28 @@ function reset() {
 
 
 $(document).ready(function() {
+    /* load the word 'power' as a sample selection */
+    $.getJSON('./resources/power_embed.json', function(data) {
+        $('#tokens').val('power');
+        var word = 'power';
+        plot_timeseries(word, decades, data.wordTimeseries,
+            data.decNeighbors, data.neighborsTimeseries);
+        plot_hist('full', null, data.fullNeighbors["full"], word);
+        $("#dropdown-auth").change(function () {
+           var author = $(this).val();
+           var authName = $("#dropdown-auth option:selected").text();
+           plot_hist('author', authName, data.authNeighbors[author], word);
+        });
+        $("#dropdown-loc").change(function () {
+          var location = $(this).val();
+          var locName = $("#dropdown-loc option:selected").text();
+          plot_hist('location', locName, data.locNeighbors[location], word);
+        });
+        $.getJSON('./resources/power_kwic.json?v=2', function(data) {
+            get_kwic(data, word);
+        })
+    });
+
     $('#sel-filter').change(function(){
         var selectedVal = $("input[name='filter']:checked").val();
         // alert(selectedVal);
@@ -270,44 +291,49 @@ $(document).ready(function() {
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
-                var word = ui.item.value;
-                $('#token-msg').text('Requesting token data ...');
-                $('#kwic-msg').text('Requesting keyword in context data ...');
-                $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
-                    plot_timeseries(word, decades, data.wordTimeseries,
-                        data.decNeighbors, data.neighborsTimeseries);
-                    plot_hist('full', null, data.fullNeighbors["full"], word);
-                    $("#dropdown-auth").change(function () {
-                       var author = $(this).val();
-                       console.log(author);
-                       var authName = $("#dropdown-auth option:selected").text();
-                       plot_hist('author', authName, data.authNeighbors[author], word);
-                   });
-                   $("#dropdown-loc").change(function () {
-                      var location = $(this).val();
-                      var locName = $("#dropdown-loc option:selected").text();
-                      plot_hist('location', locName, data.locNeighbors[location], word);
-                  });
-                })
-                .done(function() {
-                  $('#token-msg').text('');
-                });
-                $.getJSON(`./php/fetch_kwic.php?word=${word}`, function(data) {
-                    get_kwic(data, word);
-                })
-                .done(function() {
-                    $('#kwic-msg').text('');
+                $('#search-button').on('click', function() {
+                    $('#kwic-list').empty();
+                    var word = ui.item.value;
+                    console.log(ui.item.value);
+                    $('#token-msg').text('Requesting token data ...');
+                    $('#kwic-msg').text('Requesting keyword in context data ...');
+                    $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
+                        plot_timeseries(word, decades, data.wordTimeseries,
+                            data.decNeighbors, data.neighborsTimeseries);
+                        plot_hist('full', null, data.fullNeighbors["full"], word);
+                        $("#dropdown-auth").change(function () {
+                           var author = $(this).val();
+                           var authName = $("#dropdown-auth option:selected").text();
+                           plot_hist('author', authName, data.authNeighbors[author], word);
+                       });
+                       $("#dropdown-loc").change(function () {
+                          var location = $(this).val();
+                          var locName = $("#dropdown-loc option:selected").text();
+                          plot_hist('location', locName, data.locNeighbors[location], word);
+                      });
+                    })
+                    .done(function() {
+                      $('#token-msg').text('');
+                    });
+                    $.getJSON(`./php/fetch_kwic.php?word=${word}`, function(data) {
+                        get_kwic(data, word);
+                        data = [];
+                    })
+                    .done(function() {
+                        $('#kwic-msg').text('');
+                        $('#search-button').off('click');
+                    });
                 });
             }
         });
     })
     .done(function() {
         // $('#autocomplete').val('');
-        Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
-        Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
+        // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
+        // Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
     });
 
     $('#tokens').val('');
