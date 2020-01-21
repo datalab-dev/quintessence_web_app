@@ -8,20 +8,24 @@
 
     $word = $_GET['word'];
     $decades = range(1480, 1700, 10);
-    $frequencies = [];
+    $relFreqs = [];
+    $rawFreqs = [];
 
     /* for each decade query table for relative frequency */
     foreach ($decades as $decade) {
         $table = $decade . "_freq";
-        $sql = "SELECT rel_freq FROM $table WHERE word = '$word';";
+        $sql = "SELECT rel_freq, freq FROM $table WHERE word = '$word';";
         $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        foreach ($row as $key => $value) {
-            $value = (float) $value * 100;
-            $padded = sprintf('%0.4f', $value);
-            array_push($frequencies, $padded);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $padded = sprintf('%0.4f', $row['rel_freq']);
+            array_push($relFreqs, $padded);
+            array_push($rawFreqs, $row['freq']);
         }
     }
 
-    echo json_encode($frequencies);
+    $result = array(
+        'relFreqs'=>$relFreqs,
+        'rawFreqs'=>$rawFreqs
+    );
+    echo json_encode($result);
 ?>

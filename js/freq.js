@@ -14,7 +14,7 @@ const range = (start, stop, step = 1) =>
 Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
 
 
-function plotFrequencies(data) {
+function plotFrequencies(data, raw_data) {
     var decades = range(1480, 1700, 10);
     var traces = [];
     var myWords = Object.keys(data);
@@ -38,7 +38,10 @@ function plotFrequencies(data) {
                 }
             },
             line: { opacity: 1 },
-            color: 'steelblue3'
+            color: 'steelblue3',
+            text: raw_data[word],
+            hovertemplate: '(%{x}, %{y})<br>Raw freq: %{text}',
+            hoverlabel: {namelength : 0}
             // width: 800,
             // height: 600
         };
@@ -166,6 +169,7 @@ function plotOverallFrequencies(data) {
 $(document).ready(function() {
     $.getJSON('./resources/words.json', function(data) {
         freq_data = {};
+        raw_data = {};
 
         $('#tokens').autocomplete({
             delay: 0,
@@ -183,16 +187,18 @@ $(document).ready(function() {
                     $("#token-disp button").click(function() {
                         var word = $(this).parent().text();
                         delete freq_data[word];
+                        delete raw_data[word];
                         $(this).parent().remove();
                         plotFrequencies(freq_data);
                     });
 
                     /* fetch data */
                     $.getJSON(`./php/fetch_freq.php?word=${ui.item.value}`, function(data) {
-                        freq_data[ui.item.value] = data;
+                        freq_data[ui.item.value] = data.relFreqs;
+                        raw_data[ui.item.value] = data.rawFreqs;
                     }).done(function() {
                         /* replot */
-                        plotFrequencies(freq_data);
+                        plotFrequencies(freq_data, raw_data);
                         $('#search-button').off('click');
                     });
                 });
