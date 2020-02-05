@@ -4,6 +4,7 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./style/sidebar.css">
     <link rel="stylesheet" type="text/css" href="./resources/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="./resources/selectize.css">
 
@@ -76,6 +77,9 @@ $( function() {
 	    width: 400px;
 	    margin: 20px;
 	}
+  .ui-slider-range {
+      background-color: #1f77b4;
+      }
     </style>
 </head>
 <body onload="get_all_subset_options(); init_plot_ldapca(); get_topic_terms()">
@@ -94,7 +98,9 @@ $( function() {
 	</div>
     </div>
 
-
+    <!-- SIDEBAR -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <div id="subset_corpus"> 
 	 <h2> Define Subset </h2>
 
@@ -103,7 +109,7 @@ $( function() {
 	    <h3 style="margin-top: 10px" class="selecter-title"> Dates Range </h3>
 	    <div style="height: 20px; width:80%" id="slider-range"></div>
 	    <p style="width: 20%">
-	    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+	    <input type="text" id="amount" style="background-color: #242729; font-size: 16px; border:0; color:#f4f4f4; font-weight:bold">
 	    </p>
 	</div>
 	<!-- /Timeline-->
@@ -134,11 +140,11 @@ $( function() {
 	</div>
 	<!-- /Locations -->
 
-	<button type="button" class="subset_button" onclick="get_subset()"> get subset </button> 
+	<button type="button" class="subset_button" onclick="get_subset();"> get subset </button> 
     </div>
 
 
-    <div id="corpus_info" style="width: 1000px; margin:auto">
+    <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
 	<!-- Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution -->
 	<div id="ndocs"> </div>
 	<div id="year distribution"> </div>
@@ -146,11 +152,16 @@ $( function() {
 	<div id="keyword distribution"> </div>
 	<div id="location distribution"> </div>
     </div>
+    </div>
 
+    <!-- SIDEBAR -->
+
+
+                <button style="margin-left: 200px" class="openbtn" onclick="openNav()">☰ Open Subset Controls</button>  
     <div id="lda_area" name="no_top_docs"> 
 	<div id="ldapca"> </div>
 	<div id="topic_terms" name="1"> </div>
-    </div>
+  </div>
 
     <div id="main">
 	 <h2> Documents For Subset </h2>
@@ -177,4 +188,13 @@ $( function() {
 	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 	}
     </script>
+    <script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "1200px";
+        }
+
+        function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+            }
+            </script>
 </body>
