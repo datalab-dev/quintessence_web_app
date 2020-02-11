@@ -78,7 +78,9 @@ function plotFrequencies(data, raw_data) {
         paper_bgcolor: 'rgb(243, 243, 243)',
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: true,
-        hovermode: 'closest'
+        hovermode: 'closest',
+        width: $('#main').width(),
+        height: 0.55*$('#main').width()
     };
 
     var nnPlot = document.getElementById('freqPlot');
@@ -158,7 +160,9 @@ function plotOverallFrequencies(data) {
         paper_bgcolor: 'rgb(243, 243, 243)',
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: false,
-        hovermode: 'closest'
+        hovermode: 'closest',
+        width: $('#main').width(),
+        height: 0.55*$('#main').width()
     };
 
     Plotly.newPlot('wordFreqPlot', [traceWords], layout, {responsive: true});
@@ -167,6 +171,25 @@ function plotOverallFrequencies(data) {
 
 
 $(document).ready(function() {
+    // Configure tabs
+    $('#tabs li a:not(:first)').addClass('inactive');
+    $('.container:not(:first)').hide();
+    $('#tabs li a').click(function(){
+        var t = $(this).attr('href');
+        $('#tabs li a').addClass('inactive');
+        $(this).removeClass('inactive');
+        $('.container').hide();
+        $(t).fadeIn('slow');
+        return false;
+
+        if($(this).hasClass('inactive')) {
+            $('#tabs li a').addClass('inactive');
+            $(this).removeClass('inactive');
+            $('.container').hide();
+            $(t).fadeIn('slow');
+        }
+    })
+
     $('#tokens').val('');
     $.getJSON('./resources/words.json', function(data) {
         freq_data = {};
