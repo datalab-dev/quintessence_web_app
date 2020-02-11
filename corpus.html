@@ -31,8 +31,34 @@
     </div>
 
     <div id="main">
-        <h2 class="row title">Compare Token Frequencies over Time</h2>
-        <div class="row input-label">Select a token to plot</div>
+        <ul id="tabs">
+            <li><a href="#token-freq">Compare Token Frequencies Over Time</a></li>
+            <li><a href="#overall-words">Total Words per Decade</a></li>
+            <li><a href="#overall-docs">Total Documents per Decade</a></li>
+        </ul>
+        <div class="container" id="token-freq">
+            <div class="row input-label">Select a token to plot</div>
+            <div class="row">
+                <div class="ui-widget">
+                    <input id="tokens">
+                </div>
+                <button type="button" id="search-button"> Search </button>
+                <div id="token-msg"></div>
+            </div>
+            <div id="token-disp" class="row">
+                <ul id="token-list"></ul>
+            </div>
+            <div id="freqPlot" class="row"></div>
+        </div>
+        <div class="container" id="overall-words">
+            <div id="wordFreqPlot" class="row"></div>
+        </div>
+        <div class="container" id="overall-docs">
+            <div class="row" id="docFreqPlot"></div>
+        </div>
+
+        <!-- <h2 class="row title">Compare Token Frequencies over Time</h2> -->
+        <!-- <div class="row input-label">Select a token to plot</div>
         <div class="row">
             <div class="ui-widget">
                 <input id="tokens">
@@ -43,13 +69,13 @@
         <div id="token-disp" class="row">
             <ul id="token-list"></ul>
         </div>
-        <div id="freqPlot" class="row"></div>
+        <div id="freqPlot" class="row"></div> -->
 
-        <h2 class="row title">Total Words per Decade</h2>
+        <!-- <h2 class="row title">Total Words per Decade</h2>
         <div id="wordFreqPlot" class="row"></div>
 
         <h2 class="row title">Total Documents per Decade</h2>
-        <div class="row" id="docFreqPlot"></div>
+        <div class="row" id="docFreqPlot"></div> -->
     </div>
 
 

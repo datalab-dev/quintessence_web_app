@@ -4,10 +4,10 @@
     $user = 'q_user';
     $password = 'quintessence';
     $dbname = 'EEBO_Models';
-    $conn = mysqli_connect($host, $user, $password, $dbname); 
+    $conn = mysqli_connect($host, $user, $password, $dbname);
 
     /* document frequency by decade */
-    $sql = "SELECT decade, COUNT(*) FROM EEBO_Metadata GROUP BY decade;";
+    $sql = "SELECT decade, COUNT(*) FROM EEBO_Metadata GROUP BY decade ORDER BY decade;";
     $result = mysqli_query($conn, $sql);
     $docFreqs = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -16,7 +16,7 @@
     $docFreqs = array_slice($docFreqs, 2); // remove unknown and 1470
 
     /* word frequency by decade */
-    $sql = "SELECT decade, SUM(Word_Count) FROM EEBO_Metadata GROUP BY decade;";
+    $sql = "SELECT decade, SUM(Word_Count) FROM EEBO_Metadata GROUP BY decade ORDER BY decade;";
     $result = mysqli_query($conn, $sql);
     $wordFreqs = [];
     while ($row = mysqli_fetch_assoc($result)) {

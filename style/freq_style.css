@@ -50,3 +50,59 @@
 .title {
     margin-top: 30px;
 }
+
+#tabs {
+	border:0px solid #ccc;
+	height:28px;
+    padding-top: 30px;
+    padding-left: 0px;
+    margin-bottom: 30px;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+}
+#tabs li {
+	float:left;
+	list-style:none;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+	margin-right:5px;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+}
+
+#tabs li a {
+    font-family: sans-serif;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	color:#000000;
+	padding:7px 14px 6px 12px;
+	display:block;
+	background:#FFFFFF;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+	text-decoration:none;
+	border-top: 1px solid white;
+	outline:none;
+}
+
+#tabs li a.inactive{
+	padding-top:5px;
+	padding-bottom:5px;
+	color:#666666;
+	border-top: 1px solid white;
+}
+
+#tabs li a:hover, #tabs li a.inactive:hover {
+	border-top: 1px solid #dedede;
+	color:#000000;
+}
+
+#wordFreqPlot {
+    margin-top: 30px;
+}
+
+#docFreqPlot {
+    margin-top: 30px;
+}
