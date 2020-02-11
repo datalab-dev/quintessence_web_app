@@ -6,6 +6,9 @@ const categories = {
 
 
 var timeseriesLayout = {
+    autosize: false,
+    width: 1000,
+    height: 550,
     title: ' ',
     xaxis: {
         title: 'Decades',
@@ -32,14 +35,14 @@ var timeseriesLayout = {
     showlegend: false,
     hovermode: 'closest',
     // width: 930,
-    height: 350,
-    autosize: true,
+    // height: 350,
 };
 
 
 var histLayout = {
-    width: 500,
-    height: 300,
+    autosize: false,
+    width: 1000,
+    height: 550,
     barmode: 'stack',
     title: null,
     xaxis: {
@@ -250,6 +253,25 @@ function reset() {
 
 
 $(document).ready(function() {
+    /* configure tabs */
+    $('#tabs li a:not(:first)').addClass('inactive');
+    $('.container:not(:first)').hide();
+    $('#tabs li a').click(function(){
+        var t = $(this).attr('href');
+        $('#tabs li a').addClass('inactive');
+        $(this).removeClass('inactive');
+        $('.container').hide();
+        $(t).fadeIn('slow');
+        return false;
+
+        if($(this).hasClass('inactive')) {
+            $('#tabs li a').addClass('inactive');
+            $(this).removeClass('inactive');
+            $('.container').hide();
+            $(t).fadeIn('slow');
+        }
+    })
+
     /* load the word 'power' as a sample selection */
     $.getJSON('./resources/power_embed.json', function(data) {
         $('#tokens').val('power');
@@ -270,14 +292,6 @@ $(document).ready(function() {
         $.getJSON('./resources/power_kwic.json?v=2', function(data) {
             get_kwic(data, word);
         })
-    });
-
-    $('#sel-filter').change(function(){
-        var selectedVal = $("input[name='filter']:checked").val();
-        // alert(selectedVal);
-        $( "#auth-container" ).toggle();
-        $( "#loc-container" ).toggle();
-        histLayout.title = "";
     });
 
     var decades = range(1480, 1710, 10);
