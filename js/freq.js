@@ -167,6 +167,7 @@ function plotOverallFrequencies(data) {
 
 
 $(document).ready(function() {
+    $('#tokens').val('');
     $.getJSON('./resources/words.json', function(data) {
         freq_data = {};
         raw_data = {};
@@ -200,6 +201,7 @@ $(document).ready(function() {
                         /* replot */
                         plotFrequencies(freq_data, raw_data);
                         $('#search-button').off('click');
+                        $('#tokens').val(''); // clear the search bar when token selected
                     });
                 });
             }
