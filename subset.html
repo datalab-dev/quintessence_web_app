@@ -1,6 +1,6 @@
 <!doctype html>
 <head>
-    <title>Subset Corpus</title>
+    <title>Topic Model</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
@@ -102,6 +102,9 @@ $( function() {
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <div id="subset_corpus"> 
+	<p style="color: white">
+	These categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter the corpus by any combination of parameters. The topic model will be updated to reflect the distribution of topics in the subset you have selected. In addition, you can open the full documents below.
+	</p>
 	 <h2> Define Subset </h2>
 
 	<!-- Timeline-->
@@ -143,7 +146,6 @@ $( function() {
 	<button type="button" class="subset_button" onclick="get_subset();"> get subset </button> 
     </div>
 
-
     <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
 	<!-- Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution -->
 	<div id="ndocs"> </div>
@@ -156,6 +158,9 @@ $( function() {
 
     <!-- SIDEBAR -->
 
+    <div id="help_text" style="width: 1000px; margin:auto">
+	A key element of our document explorer is the topic model, which is a programmatic method for identifying themes in a corpus by grouping words according to their co-occurrence. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information. 
+    </div>
 
                 <button style="margin-left: 200px" class="openbtn" onclick="openNav()">☰ Open Subset Controls</button>  
     <div id="lda_area" name="no_top_docs"> 
