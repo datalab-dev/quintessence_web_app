@@ -231,14 +231,24 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
 function get_kwic(data, word) {
     console.log(data);
+    var doc_ids_list = [];
+    var kwics = [];
+    Object.keys(data).forEach(function(doc) {
+        $.getJSON(`./php/get_qid.php?fileid=${doc}`, function(qid) {
+            console.log(qid);
+            doc_ids_list.push(qid);
+        });
+    });
+
     Object.keys(data).forEach(function(doc) {
         var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
-        $('#kwic-list').append(
-            `<li class="list-group-item">
-                <h4>${doc}</h4>
-                <p>${kwic}</p>
-            </li>`
-        );
+        kwics.push(kwic);
+    });
+
+    $.getScript("./js/init_documents_results.js", function() {
+        $.getScript("./js/get_meta.js", function() {
+            init_documents_results(doc_ids_list, doc_ids_list.length, kwics);
+        });
     });
 }
 
