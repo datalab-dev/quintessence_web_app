@@ -33,10 +33,11 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	doc_topics.id = "doc_topics_" + qid;
 	container.appendChild(doc_topics);
 
-    var kwic_obj = document.createElement('div');
-    kwic_obj.innerHTML = kwics[i];
-    if (kwics !== undefined)
+    if (kwics !== undefined) {
+        var kwic_obj = document.createElement('div');
+        kwic_obj.innerHTML = kwics[i];
         container.appendChild(kwic_obj);
+    }
 
 	var get_text_buttons = document.createElement('div');
 	get_text_buttons.className = "get_text_buttons";

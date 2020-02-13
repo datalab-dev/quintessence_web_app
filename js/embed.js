@@ -355,8 +355,9 @@ $(document).ready(function() {
         // $('#autocomplete').val('');
         // Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
         // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
-        // Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-        // Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
+        histLayout.title = null;
+        Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
+        Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
         // Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
     });
 
