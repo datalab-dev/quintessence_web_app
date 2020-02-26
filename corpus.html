@@ -15,20 +15,16 @@
 </head>
 
 <body>
+        <!--Navigation bar-->
+	    <div id="nav-placeholder"></div>
+	        <script>
+		    	$("#nav-placeholder").load("nav.html",function(){
+			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+			    	});
+	//    );
+    </script>
 
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-		<a href="index.html">Quintessence</a>
-		<a href="about.html">About</a>
-	    </div>
-	    <div class="links">
-		<a href="subset.html">Topic Model</a>
-		<a href="word2vec.html">Embedding</a>
-		<a href="corpus.html" class="active">Corpus</a>
-	    </div>
-	</div>
-    </div>
+
 
     <div id="main">
 	<p>

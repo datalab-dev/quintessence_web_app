@@ -3,22 +3,17 @@
     <title>Quintessence Alpha</title>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+	        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-		<a href="index.html" class="active">Quintessence</a>
-		<a href="about.html" >About</a>
-	    </div>
-	    <div class="links">
-		<a href="subset.html">Topic Model</a>
-		<a href="word2vec.html">Embedding</a>
-		<a href="corpus.html">Corpus</a>
-	    </div>
-	</div>
-    </div>
+    <!--Navigation bar-->
+        <div id="nav-placeholder"></div>
+	    <script>
+			$("#nav-placeholder").load("nav.html",function(){
+			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+			    	});
+	//    );
+    </script>
 
     <div style="width: 100%; background-color: powderblue; box-shadow: 0px 4px 2px -3px #777;" id="intro_background">
     <p style="font-weight: bold; width: 1000px; margin-left: auto; margin-right: auto; margin-top: -5px; padding-bottom: 40px; padding-top: 40px" id="intro">
