@@ -14,20 +14,15 @@
     <link rel="stylesheet" type="text/css" href="./style/embed_style.css">
 </head>
 <body>
-
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-            <a href="index.html">Quintessence</a>
-            <a href="about.html">About</a>
-	    </div>
-	    <div class="links">
-    		<a href="subset.html">Topic Model</a>
-    		<a href="word2vec.html" class="active">Embedding</a>
-    		<a href="corpus.html">Corpus</a>
-	    </div>
-	</div>
-    </div>
+    <!-- Navigation bar-->
+        <div id="nav-placeholder"></div>
+	    <script>
+			$("#nav-placeholder").load("nav.html",function(){
+			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+			    	});
+	//    );
+    </script>
+    
 
     <div id="main">
 	<p> Word embeddings are approximations of a word’s meaning based on millions of guesses by a neural network. This is best thought of as a measure of the word’s interchangeability. These approximations are represented numerically, which allows us to calculate similarity between words, as well as word meaning change over time, among different authors, and in different print locations. The plots are all representations of these calculations. These words are also shown in context below.
