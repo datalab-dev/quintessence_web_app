@@ -72,7 +72,7 @@ function plot_ldapca(tp, pca) {
 
     var data = [plot_data];
 
-    Plotly.newPlot('ldapca', data, layout);
+    Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
     ldapca.on('plotly_click', function(data){
 	gd = document.getElementById("ldapca");
 	var id = 0;
@@ -86,6 +86,29 @@ function plot_ldapca(tp, pca) {
 	if (document.getElementById("lda_area").getAttribute("name") != "no_top_docs") {
 	    get_topic_documents();
 	}
-    });
 
+	colors = [];
+    var base_color = document.getElementsByClassName('legendpoints')[data.points[0].curveNumber].getElementsByTagName('path')[0].style['stroke']
+    for (var i = 0; i < data.points[0].data.x.length; i += 1) {
+      colors.push(base_color)
+    };
+    colors[data.points[0].pointNumber] = '#c54630';
+    Plotly.restyle(ldapca, 
+                   {'marker':{color: colors}}, 
+                   [data.points[0].curveNumber]
+				  );
+	//Returns other traces to their original color
+	for (i = 0; i < document.getElementsByClassName('plotly')[0].data.length; i += 1) {
+		if (i != data.points[0].curveNumber) {
+			colors = [];
+			base_color = document.getElementsByClassName('legendpoints')[i].getElementsByTagName('path')[0].style['stroke'];
+	for (var p = 0; p < document.getElementsByClassName('plotly')[0].data[i].x.length; p += 1) {
+		colors.push(base_color);
+	}
+	Plotly.restyle(ldapca, 
+		{'marker':{color: colors}}, 
+		[i]);
+		}
+	}
+    });
 }

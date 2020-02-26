@@ -48,5 +48,5 @@ function plot_topic_terms(data, topicid) {
 	},
     };
 
-    Plotly.newPlot('topic_terms_plot', plot_data, layout, {staticPlot: true});
+    Plotly.newPlot('topic_terms_plot', plot_data, layout, {staticPlot: true}, {displayModeBar: false});
 }

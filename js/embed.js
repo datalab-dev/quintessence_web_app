@@ -172,7 +172,7 @@ function plot_hist(category, sel, nn, word) {
         title: '',
         dtick: 1
     };
-    Plotly.newPlot(element, [trace], authHistLayout, {showSendToCloud: true});
+    Plotly.newPlot(element, [trace], authHistLayout, {showSendToCloud: true}, {displayModeBar: false});
 }
 
 
@@ -216,7 +216,7 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     var data1 = [ trace1 ].concat(nntraces);
 
     var nnPlot = document.getElementById('nn-plot');
-    Plotly.newPlot('nn-plot', data1, timeseriesLayout, {showSendToCloud: true});
+    Plotly.newPlot('nn-plot', data1, timeseriesLayout, {showSendToCloud: true}), {displayModeBar: false};
 
     /* plot nearest neighbors histogram on click */
     nnPlot.on('plotly_click', function(data) {
@@ -241,11 +241,11 @@ function get_kwic(data, word) {
 
 
 function reset() {
-    Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
-    Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
-    Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-    Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
-    Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
+    Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true}, {displayModeBar: false});
+    Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true}, {displayModeBar: false});
+    Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true}, {displayModeBar: false});
+    Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true}, {displayModeBar: false});
+    Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true}, {displayModeBar: false});
 }
 
 

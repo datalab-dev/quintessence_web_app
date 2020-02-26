@@ -84,7 +84,7 @@ function plotFrequencies(data, raw_data) {
     };
 
     var nnPlot = document.getElementById('freqPlot');
-    Plotly.newPlot('freqPlot', traces, layout, {responsive: true});
+    Plotly.newPlot('freqPlot', traces, layout, {responsive: true}, {displayModeBar: false});
 }
 
 
@@ -165,8 +165,8 @@ function plotOverallFrequencies(data) {
         height: 0.55*$('#main').width()
     };
 
-    Plotly.newPlot('wordFreqPlot', [traceWords], layout, {responsive: true});
-    Plotly.newPlot('docFreqPlot', [traceDocs], layout, {responsive: true});
+    Plotly.newPlot('wordFreqPlot', [traceWords], layout, {responsive: true}, {displayModeBar: false});
+    Plotly.newPlot('docFreqPlot', [traceDocs], layout, {responsive: true}, {displayModeBar: false});
 }
 
 
