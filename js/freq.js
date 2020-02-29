@@ -109,6 +109,9 @@ function plotOverallFrequencies(data) {
         },
         line: { opacity: 1 },
         color: 'steelblue3',
+        // text: 'test',
+        hovertemplate: '(%{x}, %{y:.3s})',
+        hoverlabel: {namelength : 0},
         // width: 800,
         // height: 600
     };

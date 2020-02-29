@@ -1,4 +1,4 @@
-function init_documents_results(doc_ids_list, NDOCS) {
+function init_documents_results(doc_ids_list, NDOCS, kwics) {
     console.log("init documents results", doc_ids_list, NDOCS);
     document.getElementById("top_docs").innerHTML = "";
 
@@ -33,6 +33,12 @@ function init_documents_results(doc_ids_list, NDOCS) {
 	doc_topics.id = "doc_topics_" + qid;
 	container.appendChild(doc_topics);
 
+    if (kwics !== undefined) {
+        var kwic_obj = document.createElement('div');
+        kwic_obj.innerHTML = kwics[i];
+        container.appendChild(kwic_obj);
+    }
+
 	var get_text_buttons = document.createElement('div');
 	get_text_buttons.className = "get_text_buttons";
 	var TYPES = ["Raw", "Standardized", "Lemma"];
@@ -42,6 +48,11 @@ function init_documents_results(doc_ids_list, NDOCS) {
 	    docbutton.innerHTML = TYPES[j];
 	    docbutton.style.marginRight = '15px';
 	    docbutton.onclick = function(){button_get_truncated_document(this.id)};
+
+        if (kwics !== undefined) {
+            docbutton.style.height = '20px';
+            docbutton.style.fontSize = '12px';
+        }
 
 	    get_text_buttons.appendChild(docbutton);
 	}
@@ -57,6 +68,10 @@ function init_documents_results(doc_ids_list, NDOCS) {
 	get_full_text.className = "get_full_text";
 	container.appendChild(get_full_text);
 	getmore = document.createElement("button");
+    if (kwics !== undefined) {
+        getmore.style.height = '20px';
+        getmore.style.fontSize = '12px';
+    }
 	getmore.innerHTML = "open entire document";
 	getmore.id = "get_full_" + qid;
         getmore.onclick = function(){button_get_full_document(this.id)};

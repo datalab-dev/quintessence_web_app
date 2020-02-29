@@ -6,6 +6,9 @@ const categories = {
 
 
 var timeseriesLayout = {
+    autosize: false,
+    width: 1000,
+    height: 550,
     title: ' ',
     xaxis: {
         title: 'Decades',
@@ -32,14 +35,14 @@ var timeseriesLayout = {
     showlegend: false,
     hovermode: 'closest',
     // width: 930,
-    height: 350,
-    autosize: true,
+    // height: 350,
 };
 
 
 var histLayout = {
-    width: 500,
-    height: 300,
+    autosize: false,
+    width: 1000,
+    height: 550,
     barmode: 'stack',
     title: null,
     xaxis: {
@@ -228,14 +231,24 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 
 function get_kwic(data, word) {
     console.log(data);
+    var doc_ids_list = [];
+    var kwics = [];
+    Object.keys(data).forEach(function(doc) {
+        $.getJSON(`./php/get_qid.php?fileid=${doc}`, function(qid) {
+            console.log(qid);
+            doc_ids_list.push(qid);
+        });
+    });
+
     Object.keys(data).forEach(function(doc) {
         var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
-        $('#kwic-list').append(
-            `<li class="list-group-item">
-                <h4>${doc}</h4>
-                <p>${kwic}</p>
-            </li>`
-        );
+        kwics.push(kwic);
+    });
+
+    $.getScript("./js/init_documents_results.js", function() {
+        $.getScript("./js/get_meta.js", function() {
+            init_documents_results(doc_ids_list, doc_ids_list.length, kwics);
+        });
     });
 }
 
@@ -250,6 +263,25 @@ function reset() {
 
 
 $(document).ready(function() {
+    /* configure tabs */
+    $('#tabs li a:not(:first)').addClass('inactive');
+    $('.container:not(:first)').hide();
+    $('#tabs li a').click(function(){
+        var t = $(this).attr('href');
+        $('#tabs li a').addClass('inactive');
+        $(this).removeClass('inactive');
+        $('.container').hide();
+        $(t).fadeIn('slow');
+        return false;
+
+        if($(this).hasClass('inactive')) {
+            $('#tabs li a').addClass('inactive');
+            $(this).removeClass('inactive');
+            $('.container').hide();
+            $(t).fadeIn('slow');
+        }
+    })
+
     /* load the word 'power' as a sample selection */
     $.getJSON('./resources/power_embed.json', function(data) {
         $('#tokens').val('power');
@@ -270,14 +302,6 @@ $(document).ready(function() {
         $.getJSON('./resources/power_kwic.json?v=2', function(data) {
             get_kwic(data, word);
         })
-    });
-
-    $('#sel-filter').change(function(){
-        var selectedVal = $("input[name='filter']:checked").val();
-        // alert(selectedVal);
-        $( "#auth-container" ).toggle();
-        $( "#loc-container" ).toggle();
-        histLayout.title = "";
     });
 
     var decades = range(1480, 1710, 10);
@@ -331,8 +355,9 @@ $(document).ready(function() {
         // $('#autocomplete').val('');
         // Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
         // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
-        // Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-        // Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
+        histLayout.title = null;
+        Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
+        Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
         // Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
     });
 

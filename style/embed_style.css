@@ -14,12 +14,6 @@
     margin-left: 20px;
 }
 
-.plot-div {
-    padding: 0px;
-    background: rgb(243, 243, 243);
-    height: 400px;
-}
-
 .bottom {
     padding: 10px 0px 0px 20px;
 }
@@ -39,15 +33,6 @@ select {
     padding-left: 15px;
 }
 
-.plot {
-    width: auto;
-    height: 350px;
-}
-
-.dropdown-label {
-    padding-left: 15px;
-}
-
 #kwic-row {
     padding-top: 50px;
     margin-bottom: 50px;
@@ -60,4 +45,67 @@ select {
 #token-msg {
     margin-left: 20px;
     margin-top: 10px;
+}
+
+#tabs {
+	border:0px solid #ccc;
+	height:28px;
+    padding-top: 30px;
+    padding-left: 0px;
+    margin-bottom: 30px;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+}
+#tabs li {
+	float:left;
+	list-style:none;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+	margin-right:5px;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+}
+
+#tabs li a {
+    font-family: sans-serif;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	color:#000000;
+	padding:7px 14px 6px 12px;
+	display:block;
+	background:#FFFFFF;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+	text-decoration:none;
+	border-top: 1px solid white;
+	outline:none;
+}
+
+#tabs li a.inactive{
+	padding-top:5px;
+	padding-bottom:5px;
+	color:#666666;
+	border-top: 1px solid white;
+}
+
+#tabs li a:hover, #tabs li a.inactive:hover {
+	border-top: 1px solid #dedede;
+	color:#000000;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 30px;
+}
+
+.plot {
+    margin-top: 30px;
 }
