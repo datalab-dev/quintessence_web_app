@@ -41,6 +41,28 @@
         }
     }
 
+    /* make every word in the truncated doc a key in a hash using array_flip
+       note: this doesn't give the pos of the first occurence but the pos of
+       last occurence
+       cuts time from abou 1 min to 30 sec */
+    function hashGetKwic($std, $lemma, $word, $n) {
+        $arrLemma = explode("\t", $lemma);
+        $arrStd = explode("\t", $std);
+        $arrLemmaFlip = array_flip($arrLemma);
+        $pos = $arrLemmaFlip[$word];
+
+        if ($pos) {
+            $start = $pos - $n;
+            if ($start < 0) {
+                $start = 0;
+            }
+            $words = array_slice($arrStd, $start, 2*$n+1);
+            return array('word'=>$wordStd, 'window'=>implode(' ', $words));
+        } else {
+            return array('word'=>'', 'window'=>'');
+        }
+    }
+
 
     /* given a document get the lemmatized kwic window */
     function getLemma($conn, $id, $word, $n) {
@@ -48,7 +70,8 @@
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         mysqli_free_result($result);
-        return getKwic($row["Standardized"], $row["Lemma"], $word, $n);
+        // return getKwic($row["Standardized"], $row["Lemma"], $word, $n);
+        return hashGetKwic($row["Standardized"], $row["Lemma"], $word, $n);
     }
 
 
