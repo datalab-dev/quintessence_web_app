@@ -1,0 +1,146 @@
+body {
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  padding: 4rem 2rem;
+  line-height: 2.5;
+  direction: ltr;
+}
+
+.btn-group {
+  text-align: center;
+  font-size: 0;
+}
+.btn {
+  font-size: 16px;
+  display: inline-block;
+  background: #ddd;
+  border: 1px solid #333;
+  padding: 4px 8px;
+  margin: 0;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #ccc;
+}
+/* .btn:not(:first-child):not(last-child) {
+  margin: 0 -4px;
+} */
+.btn:first-child {
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+}
+.btn:last-child {
+  border-radius: 0 8px 8px 0;
+  border-left: none;
+}
+.btn.btn-active {
+  background: #bbb;
+}
+
+
+main, aside {
+  padding-right: 150px;
+}
+
+figure {
+  display: none;
+}
+figure.fig-active {
+  display: block;
+}
+
+#map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  z-index: 100;
+}
+
+.tooltip_templates { display: none; }
+
+.word-tag {
+  margin: 0 0.25em;
+  padding: 0.45em 0.6em;
+  line-height: 1;
+  border-radius: 0.35em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.word-tag:hover {
+  text-decoration: underline;
+}
+.word-tag::after {
+  font-size: 0.8em;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 0.35em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+.entity.org {
+  background: #7aecec;
+}
+.entity.org::after {
+  content: "ORG";
+}
+.entity.gpe {
+  background: #feca74;
+}
+.entity.gpe::after {
+  content: "GPE";
+}
+.entity.date {
+  background: #bfe1d9;
+}
+.entity.date::after {
+  content: "DATE";
+}
+.entity.loc {
+  background: #ff9561;
+}
+.entity.loc::after {
+  content: "LOC";
+}
+.entity.norp {
+  background: #c887fb;
+}
+.entity.norp::after {
+  content: "NORP";
+}
+.entity.fac {
+  background: #ddd;
+}
+.entity.fac::after {
+  content: "FAC";
+}
+.pos.noun {
+    background: #0c655e;
+}
+.pos.noun::after {
+    content: "NOUN";
+}
+.pos.verb {
+    background: #845ca1;
+}
+.pos.verb::after {
+    content: "VERB";
+}
+.topic.t5 {
+    background: #cc6d55;
+}
+.topic.t5::after {
+    content: "5";
+}
+.topic.t20 {
+    background: #9b91ac;
+}
+.topic.t20::after {
+    content: "20";
+}
+
+/* .tooltipster-sidetip.tooltipster-borderless .tooltipster-box{border:none;background:#1b1b1b;background:rgba(10,10,10,.9)}.tooltipster-sidetip.tooltipster-borderless.tooltipster-bottom .tooltipster-box{margin-top:8px}.tooltipster-sidetip.tooltipster-borderless.tooltipster-left .tooltipster-box{margin-right:8px}.tooltipster-sidetip.tooltipster-borderless.tooltipster-right .tooltipster-box{margin-left:8px}.tooltipster-sidetip.tooltipster-borderless.tooltipster-top .tooltipster-box{margin-bottom:8px}.tooltipster-sidetip.tooltipster-borderless .tooltipster-arrow{height:8px;margin-left:-8px;width:16px}.tooltipster-sidetip.tooltipster-borderless.tooltipster-left .tooltipster-arrow,.tooltipster-sidetip.tooltipster-borderless.tooltipster-right .tooltipster-arrow{height:16px;margin-left:0;margin-top:-8px;width:8px}.tooltipster-sidetip.tooltipster-borderless .tooltipster-arrow-background{display:none}.tooltipster-sidetip.tooltipster-borderless .tooltipster-arrow-border{border:8px solid transparent}.tooltipster-sidetip.tooltipster-borderless.tooltipster-bottom .tooltipster-arrow-border{border-bottom-color:#1b1b1b;border-bottom-color:rgba(10,10,10,.9)}.tooltipster-sidetip.tooltipster-borderless.tooltipster-left .tooltipster-arrow-border{border-left-color:#1b1b1b;border-left-color:rgba(10,10,10,.9)}.tooltipster-sidetip.tooltipster-borderless.tooltipster-right .tooltipster-arrow-border{border-right-color:#1b1b1b;border-right-color:rgba(10,10,10,.9)}.tooltipster-sidetip.tooltipster-borderless.tooltipster-top .tooltipster-arrow-border{border-top-color:#1b1b1b;border-top-color:rgba(10,10,10,.9)}.tooltipster-sidetip.tooltipster-borderless.tooltipster-bottom .tooltipster-arrow-uncropped{top:-8px}.tooltipster-sidetip.tooltipster-borderless.tooltipster-right .tooltipster-arrow-uncropped{left:-8px} */

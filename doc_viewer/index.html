@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Example</title>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css" integrity="sha256-pH1rXnKT93pKrqWn3yDTgwsQrK/M4sVMFL774/pfaas=" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" type="text/css" href="tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-borderless.min.css" /> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/pagemap/dist/pagemap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js" integrity="sha256-lenj6loHcdfu6tFQPUHN6S2O7G2gv7yX/P9OnRc8lno=" crossorigin="anonymous"></script>
+    <script src="./index.js"></script>
+  </head>
+
+  <body>
+    <aside>
+      <div class="btn-group">
+        <div class="btn">Topics</div>
+        <div class="btn">Parts of Speech</div>
+        <div class="btn btn-active">Named Entities</div>
+      </div>
+    </aside>
+    <main>
+      <div class="tooltip_templates">
+        <span id="tooltip_content"> "You done fucked up, A-Aron."</span>
+      </div>
+      <figure>
+        <p class="entities">
+          Aquatic Botany () - Contents lists available at
+          <mark class="word-tag topic t5">ScienceDirect</mark>
+          Aquatic Botany journal homepage: www.elsevier.com/locate/aquabot
+          Long-term vegetation changes in a tropical coastal lagoon system after
+          interventions in the hydrological conditions Marina Roderstein,, Laura
+          Perdomob, Carlos Villamilb, Torsten Hauffec,
+          <mark class="word-tag topic t5">Marie-Luise Schnetterd’</mark>
+          * a Institutfiir Botanik, Justus-Liebig-Universitat,
+          <mark class="word-tag topic t20">Giessen</mark>
+          ,
+          <mark class="word-tag topic t20">Germany</mark>
+          b
+          <mark class="word-tag topic t5">INVEMAR</mark>
+          , Calle No. -, Playa Salguero, Rodadero,
+          <mark class="word-tag topic t20">Santa Marta</mark>
+          ,
+          <mark class="word-tag topic t20">Colombia</mark>
+          c
+          <mark class="word-tag topic t5">Institut</mark></p>
+      </figure>
+      <figure>
+        <p class="entities">
+          Aquatic Botany () - Contents lists available at
+          <mark class="word-tag pos noun">ScienceDirect</mark>
+          Aquatic Botany journal homepage: www.elsevier.com/locate/aquabot
+          Long-term vegetation changes in a tropical coastal lagoon system after
+          interventions in the hydrological conditions Marina Roderstein,, Laura
+          Perdomob, Carlos Villamilb, Torsten Hauffec,
+          <mark class="word-tag pos noun">Marie-Luise Schnetterd’</mark>
+          * a Institutfiir Botanik, Justus-Liebig-Universitat,
+          <mark class="word-tag pos verb">Giessen</mark>
+          ,
+          <mark class="word-tag pos verb">Germany</mark>
+          b
+          <mark class="word-tag pos noun">INVEMAR</mark>
+          , Calle No. -, Playa Salguero, Rodadero,
+          <mark class="word-tag pos verb">Santa Marta</mark>
+          ,
+          <mark class="word-tag pos verb">Colombia</mark>
+          c
+          <mark class="word-tag pos noun">Institut</mark></p>
+      </figure>
+      <figure class="fig-active">
+        <p class="entities">
+          Aquatic Botany () - Contents lists available at
+          <mark class="word-tag entity org">ScienceDirect</mark>
+          Aquatic Botany journal homepage: www.elsevier.com/locate/aquabot
+          Long-term vegetation changes in a tropical coastal lagoon system after
+          interventions in the hydrological conditions Marina Roderstein,, Laura
+          Perdomob, Carlos Villamilb, Torsten Hauffec,
+          <mark class="word-tag entity org">Marie-Luise Schnetterd’</mark>
+          * a Institutfiir Botanik, Justus-Liebig-Universitat,
+          <mark class="word-tag entity gpe">Giessen</mark>
+          ,
+          <mark class="word-tag entity gpe">Germany</mark>
+          b
+          <mark class="word-tag entity org">INVEMAR</mark>
+          , Calle No. -, Playa Salguero, Rodadero,
+          <mark class="word-tag entity gpe">Santa Marta</mark>
+          ,
+          <mark class="word-tag entity gpe">Colombia</mark>
+          c
+          <mark class="word-tag entity org">Institut</mark>
+          fiir Spezielle Zoologie und
+          <mark class="word-tag entity gpe">Biodiversitatsforschung</mark>
+          ,
+          <mark class="word-tag entity org">Justus-Liebig-Universitat</mark>
+          ,
+          <mark class="word-tag entity org">Heinrich-Buff-Ring-</mark>
+          ,
+          <mark class="word-tag entity gpe">Giessen</mark>
+          ,
+          <mark class="word-tag entity gpe">Germany</mark>
+          d Institut fiir Botanik, Justus-Liebig-Universitat, c/o
+          Hermann-Hoffmann-Akademie,
+          <mark class="word-tag entity gpe">Senckenbergstr.</mark>
+          ,
+          <mark class="word-tag entity gpe">Giessen</mark>
+          ,
+          <mark class="word-tag entity gpe">Germany</mark>
+
+          <mark class="word-tag entity org">CrossMark</mark>
+          a r t i c l e i n f o a b s t r a c t
+          <mark class="word-tag entity org">Article</mark>
+          history: Received
+          <mark class="word-tag entity date">August</mark>
+          Received in revised form
+          <mark class="word-tag entity date">October</mark>
+
+          <mark class="word-tag entity org">Accepted</mark>
+
+          <mark class="word-tag entity date">October</mark>
+          Available online
+          <mark class="word-tag entity date">November</mark>
+          Keywords:
+          <mark class="word-tag entity gpe">Colombia</mark>
+          Hydrological conditions Mangrove Rehabilitation Salinity Typha
+          domingensis Over a period of years, we observed the vegetation changes
+          in the western part of the lagoon system of the Cienaga Grande de Santa
+          Marta, which is situated on the
+          <mark class="word-tag entity loc">Caribbean</mark>
+          coast of
+          <mark class="word-tag entity gpe">Colombia</mark>
+          and is separated from the sea by a sandy barrier. Since the construction
+          of the Barranquilla-Cienaga Road between and , the lagoon system has
+          been exposed to different interventions in its hydrological make-up, as
+          well as changes to the vegetation. During the time of our
+          investigations, four periods with different plant cover were
+          distinguished. In , the road was bordered by dense mangrove forests. The
+          low surface water salinity and the presence of freshwater plants
+          indicated the influence of
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          . At
+          <mark class="word-tag entity date">the beginning of the seventies</mark>
+          , the second period was marked by a decrease in the freshwater in-flow
+          from the river, which led to an increase in salinity and a gradual decay
+          of vegetation. In , the areas formerly covered by mangroves had
+          converted into salt flats. The third period began with the
+          reconstruction of several channels (-) which renewed the freshwater
+          in-flow from the river to the lagoons. The subsequent vegetation
+          development was characterized by the establishment of Typha domingensis
+          Pers. In ,
+          <mark class="word-tag entity date">a year</mark>
+          with an unusually high amount of rainfall, this species covered most of
+          the former mangrove area in the western part of the lagoon system. The
+          very low surface water salinity favored its spread. The last period
+          began in /, when growth conditions for T. domingensis became unfavorable
+          due to an increase in salinity. Instead, conditions for mangrove
+          regeneration improved. This process was slower than expected and is
+          still ongoing. The striking vegetation changes indicate the sensitivity
+          of the coastal lagoon system to hydrological variability. © Elsevier
+          B.V. All rights reserved. . Introduction Tropical forests have been
+          subjected to destructive human activities all over the world. This is
+          also true for mangrove forests (Farnsworth and Ellison, ). With the
+          increased destruction of these forests, interest has grown in finding
+          ways of restoring them, at least in part, to a condition closely
+          resembling the original. Generally, the rehabilitation of tropical
+          forests is considered to be difficult (Brown and Lugo, ). According to
+          Lugo (), mangrove forests are an exception, because the unfavorable *
+          Corresponding author. Tel.: + ; fax: + . E-mail addresses:
+          Marina.Roederstein@gmx.de (M. Roderstein), laura_perdomo@invemar.org.co
+          (L. Perdomo), cvillamile@gmail.com (C. Villamil),
+          torsten.hauffe@gmail.com (T. Hauffe),
+          Reinhard.Schnetter@bot.bio.uni-giessen.de, marie.reinhard@t-online.de
+          (M.-L. Schnetter). Present address: Goethestr. , Grebenau-Schwarz,
+          <mark class="word-tag entity gpe">Germany</mark>
+          . -/$ - see front matter © Elsevier B.V. All rights reserved.
+          http://dx.doi.org/./j.aquabot... growing conditions in the mangrove
+          habitat itself act as a barrier against the invasion of non-mangrove
+          species. In fact, a natural regeneration toward a vegetation similar to
+          the original one has been observed in many sites where mangroves had
+          been destroyed for various reasons. Some examples are the recovery of
+          the vegetation after its destruction by hurricanes (for additional
+          publications see
+          <mark class="word-tag entity org">Piou et al.</mark>
+          , ), the re-colonization of mangrove areas after an oil spill (Lewis, ;
+          Martin et al., ) and the regeneration of mangroves following the
+          restoration of suitable hydrological conditions (Perdomo et al., ).
+          However, natural regeneration has not always occurred. This has been
+          attributed to the rapid spread of Acrostichum aureum L. (Chapman, ), to
+          the establishment of halophytic herbs in former mangrove areas (
+          <mark class="word-tag entity norp">Costa</mark>
+          and Davy, ) and to the absence of propagules (Lewis, ; Ellison, ; Imbert
+          et al., ). We present another recovery scenario observed after the
+          destruction of mangrove forests in the lagoon system of the Cie-naga
+          Grande de Santa Marta (
+          <mark class="word-tag entity gpe">Colombia</mark>
+          ) (Fig. ). Between M. Roderstein etal. / Aquatic Botany () - Fig. . (A)
+          Map of the lagoon system of the Cienaga Grande de Santa Marta. The study
+          area is marked by a rectangle. (B) Map of the study area and location of
+          the study sites. and , the reduction of freshwater in-flow from
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          (Fig. A), caused the death of . of originally . km of mangrove forests
+          in this area, due to an increase in salinity up to
+          <mark class="word-tag entity org">PSU</mark>
+          in channels and lagoons (Giraldo et al., ; Sanchez-Paez et al., ). At
+          the beginning of the s, plans were elaborated for the restoration of
+          historical hydrological conditions. At the same time, a series of
+          investigations started to document the effects of the hydraulic works on
+          flora and fauna. Of general interest was the reduction of the very high
+          salinity (Perdomo et al., ;
+          <mark class="word-tag entity gpe">Blanco et al.</mark>
+          , ; Rivera-Monroy et al., , ). Concerning botanical aspects, particular
+          attention was paid to mangrove regeneration at different sites (Perdomo
+          et al., ; Rivera-Monroy et al., ). Studies were conducted on propagule
+          production and spread (Ensminger, ;
+          <mark class="word-tag entity gpe">Schubert</mark>
+          , ) as well as seedling establishment and growth (Elster et al., ;
+          <mark class="word-tag entity org">Perdomo</mark>
+          and Schnetter, ). Remote sensing data were used to assess the expansion
+          of mangroves (Sanchez-Paez et al., ; Ibarra et al., ) and to produce a
+          canopy height map (Simard et al., ). Models were elaborated to predict
+          the future development of the mangrove forests (
+          <mark class="word-tag entity gpe">Twilley et al.</mark>
+          , ; Rivera-Monroy et al., ). Soon after the beginning of the restoration
+          measures in , it became clear that regeneration in the eastern, more
+          saline part of the lagoon system and the western part differed. While
+          mangroves recovered step by step to the original species composition and
+          zonation in the eastern part, establishment of new mangroves was slow in
+          the western part. Instead, a rapid spread of herbaceous freshwater
+          plants was observed (Perdomo et al., ; Alvarez-Leon et al., ;
+          Sanchez-Paez et al., ). Among the most frequent species was Typha
+          domingensis Pers. (cattail), a native of the freshwater wetlands near
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          (Romero-Castaneda, ). Within
+          <mark class="word-tag entity date">three years</mark>
+          Typha beds occupied large parts of former mangrove areas. But it was not
+          clear how this species had been able to establish itself in still very
+          saline sediments (Alvarez-Leon et al., ). An establishment of T.
+          domingensis after the death of mangrove vegetation was already reported
+          by Rubin et al. (). But in this case it was restricted to sites with low
+          salinity (- PSU). Therefore the successful expansion on saline sediments
+          raised our curiosity, and we wondered whether persistent
+          <mark class="word-tag entity org">Typha</mark>
+          beds would prevent mangrove recolonization.Our hypothesis was that
+          mangrove regeneration would be delayed as long as cattail occupied the
+          former mangrove areas. To answer this question we started a series of
+          studies in aimed at determining the prevailing factors that enabled T.
+          domin-gensis to become established in these areas. We hypothesized that
+          the low surface water salinity together with the presence of large bare
+          areas allowed the establishment of T. domingensis and that variations in
+          salinity of surface water influenced its growth. The influence of the
+          cattail on the growth of mangrove trees was tested with Rhizophora
+          mangle L. seedlings planted in
+          <mark class="word-tag entity date">the year</mark>
+          at km south of the Barranquilla-Cienaga Road (Fig. B) (Sanchez-Paez et
+          al., ). Our hypothesis was that low light intensity inside the
+          <mark class="word-tag entity org">Typha</mark>
+          beds would influence the growth of the seedlings. These studies were
+          completed by data of surface water salinity and vegetation composition
+          recorded in irregular intervals at three sites south of the
+          Barranquilla-Cienaga Road (Fig. B) from to . The comparison of plant
+          lists made it possible to demonstrate similarities and differences
+          between the original vegetation and that which became established after
+          the restoration of suitable hydrological conditions. Moreover, the data
+          enabled us to look for correlations between the different plant cover
+          and the respective hydrological conditions. We hypothesized that
+          variations of surface water salinity were particularly important for
+          vegetation changes. Therefore we tested the influence of different
+          environmental factors together with time on state and extent of the
+          three vegetation types: mangroves, T. domingensis and freshwater herbs
+          without T. domingensis (w.T.d.). These analyses should help us to answer
+          our hypothesis about the possible delay of mangrove regeneration by the
+          presence of T. domingensis. . Materials and methods .. Study area and
+          study sites The lagoon system of the
+          <mark class="word-tag entity org">Cienaga</mark>
+          Grande de Santa Marta (°'-°' N; °'-°' W) (Fig. A) is characterized by
+          numerous lagoons of different sizes, sandy dunes and alluvial M.
+          Roderstein etal. /
+          <mark class="word-tag entity org">Aquatic Botany</mark>
+          () - Fig. . Variation of temperature (◦ C, left ordinate) and rainfall
+          (mm, right ordinate) over the course of
+          <mark class="word-tag entity date">a year</mark>
+          . Rainfall and temperature of
+          <mark class="word-tag entity date">each month</mark>
+          are -year averages (-).
+          <mark class="word-tag entity date">Monthly</mark>
+          rainfall above mm in scale :. Data of rainfall from the meteorological
+          station Sevillano, °' N, ° ' W; data of temperature from the
+          meteorological station La Ye, °' N, ° ' W. Diagram after Walter and
+          Lieth (). Parts with little circles correspond to dry periods, parts
+          with stripes to humid periods and black parts to wet periods. plains. In
+          the north, the lagoon system is separated from the sea by a sandy
+          barrier,
+          <mark class="word-tag entity org">the Isla de Salamanca</mark>
+          . Sea water can enter the lagoon system through
+          <mark class="word-tag entity fac">the Boca de la Barra</mark>
+          located on the eastern end of the barrier island (Fig. A). Several
+          rivers originating in the
+          <mark class="word-tag entity org">Sierra Nevada</mark>
+          provide a continuous supply of freshwater (about m s-) to the Cienaga
+          <mark class="word-tag entity gpe">Grande</mark>
+          lagoon (Mann et al., ). Connections with
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          allowed the in-flow of additional freshwater (up to m s-) to the western
+          part of the lagoon system until and after the termination of the
+          restoration measures (Cotes, ). The climate of the region is hot and
+          dry. With a mean annual temperature of °C and a mean
+          <mark class="word-tag entity date">annual</mark>
+          rainfall of mm in the eastern part of the region and around mm in the
+          western part, evaporation generally exceeds precipitation. Rainfalls
+          occur during two wet seasons of differing intensities (Fig. ). While the
+          duration and distribution of dry and wet seasons is very stable, the
+          total annual rainfall can vary considerably over
+          <mark class="word-tag entity date">the years</mark>
+          (Fig. ). These differences are related to
+          <mark class="word-tag entity org">El Nino-Southern Oscillation</mark>
+          (ENSO) events (
+          <mark class="word-tag entity gpe">Blanco et al.</mark>
+          , ; Rivera-Monroy et al., ). Due to the seasonal distribution of
+          rainfall and the simultaneous variation of river discharge, the lagoons
+          and channels show seasonal changes of water level. Fluctuations in water
+          level due to tides are noticeable only near
+          <mark class="word-tag entity fac">the Boca de la Barra</mark>
+          (Wiedemann, ). Because of the proximity of the sea and the connection
+          between the Fig. .
+          <mark class="word-tag entity date">Annual</mark>
+          rainfall (mm) from to . Data of rainfall from the meteorological station
+          Sevillano, °' N, °' W. sea and the lagoon system, water and soils are
+          saline almost everywhere, although to a varying extent. According to our
+          observations, salt concentration is significantly influenced by the
+          distance from a fresh water source, the duration and level of flooding,
+          and the amount of water exchange among neighboring water bodies. Human
+          interventions began with the construction of
+          <mark class="word-tag entity org">the Barranquilla-Cienaga Road</mark>
+          between and (Fig. A). This road interrupted water exchange between the
+          northern and southern part of
+          <mark class="word-tag entity org">the Isla de Salamanca</mark>
+          (Fig. A). In the s, freshwater flow from
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          to the lagoon system declined greatly, due to silting of channels
+          connecting
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          to the lagoon system and the construction of a road which bordered
+          <mark class="word-tag entity loc">the Magdalena River</mark>
+          at its eastern side (Fig. A). At
+          <mark class="word-tag entity date">the end of the th century</mark>
+          , efforts were made toward a restoration of the original hydrological
+          conditions of the lagoon system. The most important measures were the
+          re-opening of the silted channels Cano Clann, Cano Aguas Negras and Cano
+          Renegado-Condazo (Fig. A) between and . The objectives of these works
+          were the renovation of the fresh water supply and the reduction of the
+          elevated salinity (Perdomo et al., ;
+          <mark class="word-tag entity org">Cotes</mark>
+          , ;
+          <mark class="word-tag entity org">Rivera-Monroy et al.</mark>
+          , ). Water in the channels flows along a natural altitudinal gradient
+          from the river to
+          <mark class="word-tag entity fac">the Boca de la Barra</mark>
+          and the sea. Intense rainfall in , , and (Fig. ) assisted in the
+          reduction of salt concentrations of water and soils (Blanco et al., ;
+          Rivera-Monroy et al., , ). In the years -, salinity increase due to less
+          rainfall (Fig. ) again changed the growth conditions of the vegetation
+          (Blanco et al., ; Rivera-Monroy et al., ). Variable environmental
+          conditions of the lagoon system permit the presence of different plant
+          communities. The spectrum ranges from tropical thorn bush and wetland
+          forests growing near the rivers in soils which are flooded periodically,
+          to communities of wetland and halophytic herbs and mangroves.
+          Depressions without drainage lack vegetation because of high salt
+          concentrations. Among the plant communities, mangroves are most
+          important (Alvarez-Leon et al., ; Sanchez-Paez et al., ). Because of the
+          richness of its plant and animal life, the lagoon system comprises two
+          <mark class="word-tag entity org">National Parks</mark>
+          and has been declared as a
+          <mark class="word-tag entity org">Ramsar</mark>
+          site and
+          <mark class="word-tag entity org">Biosphere Reserve</mark>
+          . All studies reported here took place in a part of the lagoon system
+          located west of the Cienaga Grande lagoon (Fig. A and B). Beginning in ,
+          research about surface water salinity and composition of the vegetation
+          has been carried out at km , km and km south of
+          <mark class="word-tag entity org">the Barranquilla-Cienaga Road</mark>
+          at irregular intervals until
+          <mark class="word-tag entity date">June</mark>
+          (Table , Fig. B). Growth of T. domingensis was investigated
+          <mark class="word-tag entity date">between September</mark>
+          and
+          <mark class="word-tag entity date">February</mark>
+          in nine study sites that received water from the channels Cano Clann or
+          Cano Aguas Negras (Table , Fig. B). Tests about the influence of T.
+          domingensis on the growth of planted seedlings of
+          <mark class="word-tag entity norp">R.</mark>
+          mangle took place from
+          <mark class="word-tag entity date">August</mark>
+          to
+          <mark class="word-tag entity date">April</mark>
+          at km south of
+          <mark class="word-tag entity org">the Barranquilla-Cienaga Road</mark>
+          (Table , Fig. B). The seedlings were planted in
+          <mark class="word-tag entity date">March</mark>
+          by the Asociacion Colombiana de Aforesta-dores (Sanchez-Paez et al., ).
+          Cattail was absent at the site in the moment of planting, but expanded
+          in
+          <mark class="word-tag entity date">the following months</mark>
+          . When the study started, one part of the seedlings grew inside the
+          <mark class="word-tag entity org">Typha</mark>
+          bed and the other part outside in sediment covered mainly by
+          <mark class="word-tag entity org">Sporobolus virginicus</mark>
+          (L.) Kunth. .. Water and soil measurements From
+          <mark class="word-tag entity date">November</mark>
+          to
+          <mark class="word-tag entity date">September</mark>
+          , at intervals of
+          <mark class="word-tag entity date">about three months</mark>
+          , surface water samples were collected at
+          <mark class="word-tag entity gpe">km</mark>
+          , and south of
+          <mark class="word-tag entity org">the Barranquilla-Cienaga Road</mark>
+          , and salinity was determined in the laboratory by measuring the
+          chloride content by titration with silver nitrate. From
+          <mark class="word-tag entity date">August</mark>
+          on, a conductivity meter (
+          <mark class="word-tag entity org">WTW LF</mark>
+          ,
+          <mark class="word-tag entity org">TetraCon</mark>
+          -.) was used to determine salinity and water temperature. In /, these
+          data were M. Roderstein etal. /
+          <mark class="word-tag entity org">Aquatic Botany</mark>
+        </p>
+      </figure>
+      <canvas id="map"></canvas>
+    </main>
+  </body>
+</html>

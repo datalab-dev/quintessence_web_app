@@ -1,0 +1,73 @@
+body {
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  padding: 4rem 2rem;
+  direction: ltr;
+}
+#main {
+  padding-right: 150px;
+}
+
+#map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  z-index: 100;
+}
+.entity {
+  padding: 0.45em 0.6em;
+  margin: 0 0.25em;
+  line-height: 1;
+  border-radius: 0.35em;
+}
+.entity::after {
+  font-size: 0.8em;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 0.35em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+.entity.org {
+  background: #7aecec;
+}
+.entity.org::after {
+  content: "ORG";
+}
+.entity.gpe {
+  background: #feca74;
+}
+.entity.gpe::after {
+  content: "GPE";
+}
+.entity.date {
+  background: #bfe1d9;
+}
+.entity.date::after {
+  content: "DATE";
+}
+.entity.loc {
+  background: #ff9561;
+}
+.entity.loc::after {
+  content: "LOC";
+}
+.entity.norp {
+  background: #c887fb;
+}
+.entity.norp::after {
+  content: "NORP";
+}
+.entity.fac {
+  background: #ddd;
+}
+.entity.fac::after {
+  content: "FAC";
+}
+
+/*# sourceMappingURL=/Doc_Viewer.9ad09f98.css.map */

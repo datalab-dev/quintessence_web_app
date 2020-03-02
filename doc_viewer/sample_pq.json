@@ -1,0 +1,37 @@
+{
+  "text": "false, deceived, deceive, subtle, cunning, counterfeit, falsehood, feigned, hypocrisy, deceit, betray, fraud, craft, pretences, deceitful, subtlety, flattery, tempt, flatter, crafty, snare, snares, blinded, devilish, trick, plots, flattering, cheat, devises, disguise, satans, seduced, treacherous, invent, tricks, forged, deluded, cunningly, disguised, dissimulation, spy, devices, shifts, bait, dissembling, plausible, pervert, allure, guile, contrive, beguile, specious, tempting, artifice, suggestions, sleight, delude, deceits, detected, hypocritical, seduce, mask, deceiving, credulous, imposture, policies, beguiled, sly, forge, entice, baits, credulity, feigning, stratagems, lurking, craftily, undermine, allurements, subtleties, tempter, misled, artifices, cozen, cheated, sophistry, trap, subtly, juggling, wiles, enticed, politicians, cheats, entangle, counterfeited, frauds, fraudulent, pry, detect, knavery, contrivances, flatteries, impostures, transform, seducing, insinuating, counterfeiting, officious, crafts, forswear, cheating, lurk, wily, plotting, intrigues, alluring, enticing, vizard",
+  "markup": {
+    "word-0": {
+      "id": 0,
+      "token": "vizard",
+      "type": "TYPE1",
+      "topic": 5,
+      "part": "noun",
+      "start": [1103]
+    },
+    "word-1": {
+        "id": 0,
+        "token": "tempter",
+        "type": "TYPE2",
+        "topic": 6,
+        "part": "noun",
+        "start": [740]
+      },
+    "word-2": {
+      "id": 0,
+      "token": "dissembling",
+      "type": "TYPE3",
+      "topic": 7,
+      "part": "verb",
+      "start": [398]
+    },
+    "word-3": {
+        "id": 0,
+        "token": "seducing",
+        "type": "TYPE4",
+        "topic": 8,
+        "part": "verb",
+        "start": [972]
+      }
+  }
+}
