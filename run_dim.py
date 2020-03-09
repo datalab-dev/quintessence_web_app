@@ -170,24 +170,6 @@ dtm_path = "/dsl/quintessence/dtm-linux64"
 model = DtmModel(dtm_path, corpus, time_seq, num_topics=65,
                  id2word=dictionary, initialize_lda=True, model='fixed', rng_seed=9001)
 
-topics = model.show_topic(topicid=1, time=1, num_words=10)
-
-
-print(topics)
-
-doc_number = 1
-num_topics = 2
-
-for i in range(0, num_topics):
-    print ("Distribution of Topic %d %f" % (i, model.gamma_[doc_number, i]))
-
-
-document_no = 1 #document 2
-topic_no = 0 #topic number 1
-time_slice = 0 #time slice 1
-
-print(model.influences_time[time_slice][document_no][topic_no])
-
 model.save("/dsl/quintessence/dim_combined.model")
 file = open("/dsl/quintessence/dim_combined_model.obj", 'w')
 pickle.dump(model, file)
