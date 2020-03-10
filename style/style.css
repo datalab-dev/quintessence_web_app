@@ -7,11 +7,41 @@ body {
     color : #333333;
 }
 
+.more-about {
+    text-align: right;
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 14px;
+    color: steelblue;
+    font-style: bold;
+}
+
+
+.block-quote {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.block-quote-citation {
+    display: block;
+    margin-left: 280px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Helvetica', 'sans-serif';
+    width: 280px;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
 .intro-bar {
     width: 100%;
     height: 500px;
-    margin: 0;
-    background-color: grey;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 34px;
+    margin-top: 34px;
+    background-color: #E1E4E8;
 }
 
 .text-block {
@@ -76,7 +106,6 @@ button {
     letter-spacing: -1px;
 }
 .nav-wrapper {
-    margin-bottom: 34px;
     font-family: 'Libre Baskerville', serif;
     font-size: 14px;
     color: #BCBCBC;
@@ -84,6 +113,7 @@ button {
     display: flex;
     align-content: center;
     margin: 0;
+    margin-bottom: 34px;
     padding: 0px;
     height: 70px;
     /*background-color: #F8F8F8; */
