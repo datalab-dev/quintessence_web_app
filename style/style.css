@@ -58,11 +58,14 @@ button {
 }
 .nav-wrapper {
     font-family: 'Libre Baskerville', serif;
+    font-size: 14px;
+    color: #BCBCBC;
     border-bottom: 2px solid #E7E7E7;
     display: flex;
     align-content: center;
     margin: 0;
     padding: 0px;
+    height: 70px;
     /*background-color: #F8F8F8; */
     background-color: #242729;
 }
