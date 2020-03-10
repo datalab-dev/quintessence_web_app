@@ -7,6 +7,44 @@ body {
     color : #333333;
 }
 
+.preview-card:hover {
+       border: 2px solid steelblue;
+       color: #333333;
+}
+
+.preview-card-description {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.preview-card-description p {
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 16px;
+}
+.preview-card-description h2 {
+    font-family: 'Libre Baskerville', 'serif';
+    font-size: 18px;
+}
+
+.preview-wrapper {
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.preview-card {
+    border: 2px solid #E1E4E8;
+    text-decoration: none;
+    color: #333333;
+    display: block;
+    height: 330px;
+    width: 330px;
+    background-color: #FFFFFF;
+}
+
 .more-about {
     text-align: right;
     font-family: 'Helvetica', 'sans-serif';
@@ -36,12 +74,14 @@ body {
 
 .intro-bar {
     width: 100%;
-    height: 500px;
+    height: 330px;
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 34px;
     margin-top: 34px;
     background-color: #E1E4E8;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 
 .text-block {
