@@ -4,11 +4,30 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    color : #333333;
+}
+
+.intro-bar {
+    width: 100%;
+    height: 500px;
+    margin: 0;
+    background-color: grey;
+}
+
+.text-block {
+    margin: auto;
+    width: 560px;
 }
 
 h2 {
-    color: #242729; 
-    /*color: #DE781F; */
+    font-size: 20px;
+    font-family: 'Libre Baskerville', serif;
+}
+
+p {
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 16px;
+    line-height: 1.4;
 }
 
 button {
@@ -57,6 +76,7 @@ button {
     letter-spacing: -1px;
 }
 .nav-wrapper {
+    margin-bottom: 34px;
     font-family: 'Libre Baskerville', serif;
     font-size: 14px;
     color: #BCBCBC;
