@@ -316,7 +316,7 @@ $(document).ready(function() {
             },
             select: function(e, ui) {
                 $('#search-button').on('click', function() {
-                    $('#kwic-list').empty();
+                    $('#top_docs').toggle()
                     var word = ui.item.value;
                     console.log(ui.item.value);
                     $('#token-msg').text('Requesting token data ...');
@@ -345,6 +345,7 @@ $(document).ready(function() {
                     })
                     .done(function() {
                         $('#kwic-msg').text('');
+                        $('#top_docs').toggle()
                         $('#search-button').off('click');
                     });
                 });
