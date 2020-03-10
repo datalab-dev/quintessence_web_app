@@ -101,25 +101,11 @@
 	</p>
     </div>
 
-    <div class="footer-wrapper"> 
-	<div class="nav">
-	    <div class="footer-format"> 
-		webapp Version 0.1.0 <br>
-		database Version 1.0.0 <br>
-		models Version 1.0.0 
-	    </div>
-	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
-		<a href="index.html">Home</a>
-		<a href="https://github.com/ucdavisdatalab">Github</a>
-		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
-	    </div>
-	</div>
-    </div>
-    <script>
-	function topFunction() {
-	    document.body.scrollTop = 0; // For Safari
-	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	}
-    </script>
+    <!--Footer -->
+        <div id="footer-placeholder"></div>
+	    <script>
+			$("#footer-placeholder").load("footer.html");
+	    </script>
+    <!-- Footer -->
+
 </body>

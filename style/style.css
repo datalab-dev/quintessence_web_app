@@ -105,9 +105,17 @@ button {
 }
 
 #top-button {
+    background-color: #BCBCBC;
+    margin: 0px;
+    height: 50px;
+    border-radius: 50%;
+    border-color: #242729;
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 14px;
+}
+
+#top-button:hover {
     background-color: #F8F8F8;
-    height: 20px;
-    margin-top: 15px;
 }
 
 .footer-wrapper {
@@ -130,9 +138,9 @@ button {
 }
 
 .footer-format {
-    width: 200px;
-    font-size: 10px;
-    color: #888;
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 14px;
+    color: #BCBCBC;
 }
 
 .nav {
@@ -252,7 +260,15 @@ button {
     font-size: 14px;
     padding-right: 15px;
     display: inline-block;
-    color: #888;
+    color: #BCBCBC;
+}
+
+.footer-format > div {
+    text-decoration: none;
+    font-size: 14px;
+    padding-right: 15px;
+    display: inline-block;
+    color: #BCBCBC;
 }
 
 .orange {
