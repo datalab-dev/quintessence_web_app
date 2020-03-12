@@ -25,22 +25,22 @@ hr {
 .range-slider {
     width: 400px;
 }
-    .irs--flat .irs-handle>i:first-child {
-	    background-color: steelblue!important;
-	}
-	.irs--flat .irs-bar {
-	        background-color: steelblue!important;
-	    }
-	    .irs--flat .irs-from, .irs--flat .irs-to, .irs--flat .irs-single {
-		    background-color: steelblue!important;
-		}
-		.irs--flat .irs-from:before, .irs--flat .irs-to:before, .irs--flat .irs-single:before {
-		        border-top-color: steelblue!important;
-		    }
+.irs--flat .irs-handle>i:first-child {
+    background-color: steelblue!important;
+}
+.irs--flat .irs-bar {
+    background-color: steelblue!important;
+}
+.irs--flat .irs-from, .irs--flat .irs-to, .irs--flat .irs-single {
+    background-color: steelblue!important;
+}
+.irs--flat .irs-from:before, .irs--flat .irs-to:before, .irs--flat .irs-single:before {
+    border-top-color: steelblue!important;
+}
 
 .preview-card:hover {
-       border: 2px solid steelblue;
-       color: #333333;
+    border: 2px solid steelblue;
+    color: #333333;
 }
 
 .preview-card-description {
@@ -230,6 +230,7 @@ button {
 }
 
 #lda_area {
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 1200px;
@@ -352,4 +353,24 @@ td
 }
 .selected {
     border: 2px solid #1F77B4;
+}
+
+#overlay {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
 }

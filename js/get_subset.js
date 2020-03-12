@@ -41,6 +41,11 @@ function get_subset() {
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlHttp.send(params); 
     console.log("get subset: ", params);
+    document.getElementById("ndocs").innerHTML = "";
+    document.getElementById("status").innerHTML = "Fetching Results ...";
+
+
+    document.getElementById("overlay").style.display = "block";
 
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
@@ -50,7 +55,9 @@ function get_subset() {
 	     data = JSON.parse(xmlHttp.responseText);
     	     update_ldapca(data);
              init_documents_results(data["qids"], 10);
-	     document.getElementById("ndocs").innerHTML = data["qids"].length;
+	     document.getElementById("ndocs").innerHTML = data["qids"].length + " results";
+             document.getElementById("status").innerHTML = "Loaded";
+             document.getElementById("overlay").style.display = "none";
 	    } 
 
 	}// if success
