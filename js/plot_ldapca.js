@@ -58,9 +58,20 @@ function plot_ldapca(tp, pca) {
 
     var layout = {
 	autosize: "false",
-        hovermode: "closest",
-        hoverdistance: 20,
+	hovermode: "closest",
+	hoverdistance: 20,
 	plot_bgcolor: 'rgb(243,243,243)',
+	scrollZoom: "false",
+	yaxis: {
+	    fixedrange: true,
+	    showgrid: false,
+	},
+	xaxis : {
+	    fixedrange: true,
+	    showgrid: false,
+	    ticks: '',
+	    showticklabels: false
+	},
 	height: 900,
 	margin: {
 	    l: 0,
@@ -100,12 +111,12 @@ function plot_ldapca(tp, pca) {
 	// get colors and sizes from data
 	var pn = '', tn = '';
 	for (var i =0; i < data.points.length; i++) {
-	      pn = data.points[i].pointNumber;
-	        tn = data.points[i].curveNumber;
-	      };
-	  colors[pn] = '#a91111';
+	    pn = data.points[i].pointNumber;
+	    tn = data.points[i].curveNumber;
+	};
+	colors[pn] = '#a91111';
 	console.log("pn: "+ pn);
-	  var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
-	  Plotly.restyle('ldapca', update, [tn]);
+	var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
+	Plotly.restyle('ldapca', update, [tn]);
     });
 }

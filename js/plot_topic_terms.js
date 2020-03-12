@@ -43,14 +43,31 @@ function plot_topic_terms(data, topicid) {
 	height: 900,
 	width: 300,
 	plot_bgcolor: 'rgb(243,243,243)',
-	yaxis: {autorange:"reversed"},
 	margin: {
-	    l: 50,
+	    l: 120,
 	    r: 0,
 	    b: 50,
 	    t: 50,
 	    pad: 0
 	},
+	  xaxis: {
+	          autorange: true,
+	          showgrid: false,
+	          zeroline: false,
+	          showline: false,
+	          autotick: true,
+	          ticks: '',
+	          showticklabels: false
+	        },
+	  yaxis: {
+	          autorange: "reversed",
+	          showgrid: false,
+	          zeroline: false,
+	          showline: false,
+	          autotick: true,
+	          ticks: '',
+	          showticklabels: true
+	        }
     };
 
     Plotly.newPlot('topic_terms_plot', plot_data, layout, {staticPlot: true});
