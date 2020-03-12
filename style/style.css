@@ -22,6 +22,11 @@ hr {
     margin-bottom: 34px;
 }
 
+.text-block hr {
+    width: 560px;
+}
+
+
 .range-slider {
     width: 400px;
 }
@@ -230,6 +235,7 @@ button {
 }
 
 #lda_area {
+    background-color: rgb(243,243,243);
     position: relative;
     display: flex;
     flex-direction: row;

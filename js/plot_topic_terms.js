@@ -42,6 +42,7 @@ function plot_topic_terms(data, topicid) {
 	autosize: false,
 	height: 900,
 	width: 300,
+	plot_bgcolor: 'rgb(243,243,243)',
 	yaxis: {autorange:"reversed"},
 	margin: {
 	    l: 50,

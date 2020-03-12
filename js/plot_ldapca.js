@@ -57,10 +57,10 @@ function plot_ldapca(tp, pca) {
     };
 
     var layout = {
-	title: 'LDA PCA',
 	autosize: "false",
-    hovermode: "closest",
-    hoverdistance: 20,
+        hovermode: "closest",
+        hoverdistance: 20,
+	plot_bgcolor: 'rgb(243,243,243)',
 	height: 900,
 	margin: {
 	    l: 0,
