@@ -1,6 +1,11 @@
 function init_documents_results(doc_ids_list, NDOCS, kwics) {
     console.log("init documents results", doc_ids_list, NDOCS);
     document.getElementById("top_docs").innerHTML = "";
+    document.getElementById("hideme").style.display = "inline";
+
+    title = document.createElement("h3");
+    title.innerHTML = "Document Results (" + doc_ids_list.length + ")";
+    document.getElementById("top_docs").appendChild(title);
 
     // for each document
     for (var i =0; i < NDOCS; i++) {

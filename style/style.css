@@ -130,6 +130,17 @@ h2 {
     font-family: 'Libre Baskerville', serif;
     font-style: bold;
 }
+h3 {
+    font-size: 16px;
+    font-family: 'Libre Baskerville', serif;
+    font-style: bold;
+}
+
+#top_docs hr {
+    width: 560px;
+    border: 1px dotted #BCBCBC;
+}
+
 
 h4 { 
     font-family: 'Helvetica', 'sans-serif';
