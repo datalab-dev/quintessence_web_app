@@ -1,10 +1,25 @@
+html {
+    height: 100%;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
     background-color: #FFFFFF;
     font-family: sans-serif;
     min-height: 100vh;
     margin: 0;
     padding: 0;
     color : #333333;
+}
+
+hr {
+    color: #BCBCBC;
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 34px;
+    margin-bottom: 34px;
 }
 
 .preview-card:hover {
@@ -216,12 +231,6 @@ button {
     height: 900px;
     width: 900px;
 }
-#subset_corpus {
-    width: 1000px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-}
 
 .selecter {
     margin-left: 10px;
@@ -231,10 +240,13 @@ button {
 .selecter-title {
     margin: 0;
     width: 100px;
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 14px;
+    font-style: bold;
 }
 
 .subsetter {
-    color: #f4f4f4;
+    color: #333333;
     display: flex;
     flex-direction: row;
     margin-top: 10px;

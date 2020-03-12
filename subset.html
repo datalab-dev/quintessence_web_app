@@ -94,19 +94,22 @@ $( function() {
 	//    );
     </script>
     
-
-    <!-- SIDEBAR -->
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <div id="subset_corpus"> 
-	<p style="color: white">
-	These categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter the corpus by any combination of parameters. The topic model will be updated to reflect the distribution of topics in the subset you have selected. In addition, you can open the full documents below.
+    <div class="text-block">
+	<h2> Text Topics </h2>
+	<p>
+	Programmatically identify themes in a corpus by grouping words according to their co-occurrence. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information. 
 	</p>
-	 <h2> Define Subset </h2>
+    </div>
+
+    <hr>
+
+
+    <div class="text-block"> 
+	<p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
 
 	<!-- Timeline-->
 	<div class="subsetter" id="Time"> 
-	    <h3 style="margin-top: 10px" class="selecter-title"> Dates Range </h3>
+	    <h3 style="margin-top: 10px" class="selecter-title"> Date Range </h3>
 	    <div style="height: 20px; width:80%" id="slider-range"></div>
 	    <p style="width: 20%">
 	    <input type="text" id="amount" style="background-color: #242729; font-size: 16px; border:0; color:#f4f4f4; font-weight:bold">
@@ -151,15 +154,8 @@ $( function() {
 	<div id="keyword distribution"> </div>
 	<div id="location distribution"> </div>
     </div>
-    </div>
 
-    <!-- SIDEBAR -->
 
-    <div id="help_text" style="width: 1000px; margin:auto">
-	A key element of our document explorer is the topic model, which is a programmatic method for identifying themes in a corpus by grouping words according to their co-occurrence. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information. 
-    </div>
-
-                <button style="margin-left: 200px" class="openbtn" onclick="openNav()">☰ Open Subset Controls</button>  
     <div id="lda_area" name="no_top_docs"> 
 	<div id="ldapca"> </div>
 	<div id="topic_terms" name="1"> </div>
@@ -178,14 +174,4 @@ $( function() {
 	    </script>
     <!-- Footer -->
 
-
-    <script>
-    function openNav() {
-      document.getElementById("mySidebar").style.width = "1200px";
-        }
-
-        function closeNav() {
-          document.getElementById("mySidebar").style.width = "0";
-            }
-            </script>
 </body>
