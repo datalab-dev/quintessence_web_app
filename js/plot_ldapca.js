@@ -32,7 +32,8 @@ function plot_ldapca(tp, pca) {
     {
 	s = tp['proportion'][i] * 10;
 	sizes.push(s)
-	texts.push( String(pca['topics'][i].substr(1)));
+	text = "Topic ID: " + String(i) + "<br> Proportion: " + String(tp['proportion'][i].toFixed(2)) + "%";
+	texts.push(text);
     }
 
     console.log(tp['proportion']);
@@ -41,10 +42,9 @@ function plot_ldapca(tp, pca) {
 	x: pca['x'],
 	y: pca['y'],
 	text: texts,
-	hovertemplate: 'Proportion: %{marker.size:.2f}' +
-	'<br>Topic: %{text}',
+	hovertemplate: '%{text} ',
 	textposition: 'bottom',
-	mode: 'markers+text',
+	mode: 'markers',
 	type: 'scatter',
 	marker: {
 	    size: sizes,
