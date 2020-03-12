@@ -103,7 +103,7 @@ function plot_ldapca(tp, pca) {
 	      pn = data.points[i].pointNumber;
 	        tn = data.points[i].curveNumber;
 	      };
-	  colors[pn] = '#ff7f0e';
+	  colors[pn] = '#a91111';
 	console.log("pn: "+ pn);
 	  var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
 	  Plotly.restyle('ldapca', update, [tn]);

@@ -29,7 +29,11 @@ function plot_topic_terms(data, topicid) {
 	    x: scores,
 	    y: terms,
 	    type: 'bar',
-	    orientation: 'h'
+	    orientation: 'h',
+	    opacity: 0.7,
+	    marker: {
+	    color: '#a91111'
+	    }
 	}
     ];
     var layout = {
