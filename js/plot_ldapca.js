@@ -90,6 +90,9 @@ function plot_ldapca(tp, pca) {
     }
     document.getElementById("sinfo").innerHTML = JSON.stringify(sizes) ;
     document.getElementById("cinfo").innerHTML = JSON.stringify(colors);
+    document.getElementById("xinfo").innerHTML = JSON.stringify(pca['x']);
+    document.getElementById("yinfo").innerHTML = JSON.stringify(pca['y']);
+
     Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
 
     colors[0] = '#a91111';
