@@ -48,6 +48,7 @@ function plot_ldapca(tp, pca) {
 	type: 'scatter',
 	marker: {
 	    size: sizes,
+	    color: "#1f77b4",
 	    line: {
 		color: 'black',
 		width: 2
@@ -72,8 +73,17 @@ function plot_ldapca(tp, pca) {
 
     var data = [plot_data];
 
+    colors = [];
+    for (var i = 0; i < sizes.length; i++) {
+	colors.push("#1f77b4");
+    }
+    document.getElementById("sinfo").innerHTML = JSON.stringify(sizes) ;
+    document.getElementById("cinfo").innerHTML = JSON.stringify(colors);
     Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
+
     ldapca.on('plotly_click', function(data){
+	colors = JSON.parse(document.getElementById("cinfo").innerHTML);
+	sizes = JSON.parse(document.getElementById("sinfo").innerHTML);
 	gd = document.getElementById("ldapca");
 	var id = 0;
 
@@ -87,35 +97,15 @@ function plot_ldapca(tp, pca) {
 	    get_topic_documents();
 	}
 
-	colors = [];
-	sizes = [];
-
-    var base_color = document.getElementsByClassName('points')[data.points[0].curveNumber].getElementsByTagName('path')[0].style['stroke']
-	var base_sizes = document.getElementsByClassName('points')[data.points[0].data.marker.size]
-	//var base_sizes = document.getElementsByClassName('points')[data.points[0].pointNumber] data.marker.size
-	
-	for (var i = 0; i < data.points[0].data.x.length; i += 1) {
-	  colors.push(base_color)
-	  sizes.push(base_sizes)
-    };
-    colors[data.points[0].pointNumber] = '#c54630';
-    Plotly.restyle(ldapca, 
-                   {'marker':{color: colors}}, 
-                   [data.points[0].curveNumber]
-				  );
-
-	//Returns other traces to their original color
-	for (i = 0; i < document.getElementsByClassName('plotly')[0].data.length; i += 1) {
-		if (i != data.points[0].curveNumber) {
-			colors = [];
-			base_color = document.getElementsByClassName('points')[i].getElementsByTagName('path')[0].style['stroke'];
-	for (var p = 0; p < document.getElementsByClassName('plotly')[0].data[i].x.length; p += 1) {
-		colors.push(base_color);
-	}
-	Plotly.restyle(ldapca, 
-		{'marker':{color: colors, size: sizes}}, 
-		[i]);
-		}
-	}
+	// get colors and sizes from data
+	var pn = '', tn = '';
+	for (var i =0; i < data.points.length; i++) {
+	      pn = data.points[i].pointNumber;
+	        tn = data.points[i].curveNumber;
+	      };
+	  colors[pn] = '#ff7f0e';
+	console.log("pn: "+ pn);
+	  var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
+	  Plotly.restyle('ldapca', update, [tn]);
     });
 }
