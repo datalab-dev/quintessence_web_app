@@ -32,7 +32,7 @@ function plot_ldapca(tp, pca) {
     {
 	s = tp['proportion'][i] * 10;
 	sizes.push(s)
-	text = "Topic ID: " + String(i) + "<br> Proportion: " + String(tp['proportion'][i].toFixed(2)) + "%";
+	text = "Topic ID: " + String(i+1) + "<br> Proportion: " + String(tp['proportion'][i].toFixed(2)) + "%";
 	texts.push(text);
     }
 
@@ -91,6 +91,10 @@ function plot_ldapca(tp, pca) {
     document.getElementById("sinfo").innerHTML = JSON.stringify(sizes) ;
     document.getElementById("cinfo").innerHTML = JSON.stringify(colors);
     Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
+
+    colors[0] = '#a91111';
+    var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
+    Plotly.restyle('ldapca', update, 0);
 
     ldapca.on('plotly_click', function(data){
 	colors = JSON.parse(document.getElementById("cinfo").innerHTML);
