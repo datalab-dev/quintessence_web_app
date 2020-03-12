@@ -167,9 +167,9 @@ dtm_path = "/dsl/quintessence/dtm-linux64"
 # doc_lengths (list of int) – Length of each documents in corpus.
 # term_frequency (numpy.ndarray) – Frequency of each word from vocab.
 # vocab (list of str) – List of words from docpus.
-model = DtmModel(dtm_path, corpus, time_seq, num_topics=65,
+model = DtmModel(dtm_path, corpus, time_seq, num_topics=60,
                  id2word=dictionary, initialize_lda=True, model='fixed', rng_seed=9001)
 
 model.save("/dsl/quintessence/dim_combined.model")
-file = open("/dsl/quintessence/dim_combined_model.obj", 'w')
+file = open("/dsl/quintessence/dim_combined_model.obj", 'wb')
 pickle.dump(model, file)
