@@ -48,6 +48,7 @@ function plot_ldapca(tp, pca) {
 	type: 'scatter',
 	marker: {
 	    size: sizes,
+	    color: "#1f77b4",
 	    line: {
 		color: 'black',
 		width: 2
@@ -72,8 +73,17 @@ function plot_ldapca(tp, pca) {
 
     var data = [plot_data];
 
-    Plotly.newPlot('ldapca', data, layout);
+    colors = [];
+    for (var i = 0; i < sizes.length; i++) {
+	colors.push("#1f77b4");
+    }
+    document.getElementById("sinfo").innerHTML = JSON.stringify(sizes) ;
+    document.getElementById("cinfo").innerHTML = JSON.stringify(colors);
+    Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
+
     ldapca.on('plotly_click', function(data){
+	colors = JSON.parse(document.getElementById("cinfo").innerHTML);
+	sizes = JSON.parse(document.getElementById("sinfo").innerHTML);
 	gd = document.getElementById("ldapca");
 	var id = 0;
 
@@ -86,6 +96,16 @@ function plot_ldapca(tp, pca) {
 	if (document.getElementById("lda_area").getAttribute("name") != "no_top_docs") {
 	    get_topic_documents();
 	}
-    });
 
+	// get colors and sizes from data
+	var pn = '', tn = '';
+	for (var i =0; i < data.points.length; i++) {
+	      pn = data.points[i].pointNumber;
+	        tn = data.points[i].curveNumber;
+	      };
+	  colors[pn] = '#ff7f0e';
+	console.log("pn: "+ pn);
+	  var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
+	  Plotly.restyle('ldapca', update, [tn]);
+    });
 }

@@ -20,6 +20,8 @@ function update_ldapca(data) {
 	}
     }
     
+    document.getElementById("sinfo").innerHTML = "";
+    document.getElementById("sinfo").innerHTML = JSON.stringify(sizes) ;
     Plotly.restyle(graphDiv, update, 0);
 
 }
