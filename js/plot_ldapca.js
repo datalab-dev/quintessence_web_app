@@ -99,7 +99,9 @@ function plot_ldapca(tp, pca) {
 	var id = 0;
 
 	for(var i=0; i < data.points.length; i++){
-	    id = data.points[i].text
+	    text = data.points[i].text;
+	    text = text.split("<br")[0];
+	    id = text.split(":")[1].trim();
 	}
 
 	document.getElementById("topic_terms").setAttribute("name", id);
