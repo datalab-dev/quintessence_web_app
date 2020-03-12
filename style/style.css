@@ -22,6 +22,22 @@ hr {
     margin-bottom: 34px;
 }
 
+.range-slider {
+    width: 400px;
+}
+    .irs--flat .irs-handle>i:first-child {
+	    background-color: steelblue!important;
+	}
+	.irs--flat .irs-bar {
+	        background-color: steelblue!important;
+	    }
+	    .irs--flat .irs-from, .irs--flat .irs-to, .irs--flat .irs-single {
+		    background-color: steelblue!important;
+		}
+		.irs--flat .irs-from:before, .irs--flat .irs-to:before, .irs--flat .irs-single:before {
+		        border-top-color: steelblue!important;
+		    }
+
 .preview-card:hover {
        border: 2px solid steelblue;
        color: #333333;
@@ -233,8 +249,10 @@ button {
 }
 
 .selecter {
-    margin-left: 10px;
-    width: 900px;
+    margin: 0;
+    height: 60px;
+    width: 80%;
+    border-color: #BCBCBC;
 }
 
 .selecter-title {
@@ -249,12 +267,9 @@ button {
     color: #333333;
     display: flex;
     flex-direction: row;
-    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    padding: 5px;
-    width: 1000px;
-    height: 100px;
+    width: 100%;
 }
 
 .subset_button {
