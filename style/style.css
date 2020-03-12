@@ -272,12 +272,30 @@ button {
     width: 100%;
 }
 
-.subset_button {
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
+#apply-filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin-bottom: 20px;
+    margin-top: 20px;
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 14px;
+    font-style: bold;
+}
+
+#ndocs {
+    font-size: 16px;
+}
+#status {
+    font-size: 16px;
+    font-style: italic;
+}
+
+.subset_button {
+    height: 40px;
+    color: #FFFFFF;
+    background-color: #242729;
+    width: 100px;
 }
 
 .links > a {

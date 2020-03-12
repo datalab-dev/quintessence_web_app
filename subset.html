@@ -103,17 +103,22 @@
 	</div>
 	<!-- /Locations -->
 
-	<button type="button" class="subset_button" onclick="get_subset();"> get subset </button> 
+	<div id="apply-filters">
+	    <div id="status"> Loaded </div>
+	    <div id="ndocs"> 25000 results</div>
+	<button type="button" class="subset_button" onclick="get_subset();"> Apply Filters </button> 
+	</div>
     </div>
 
+    <!--Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution
     <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
-	<!-- Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution -->
 	<div id="ndocs"> </div>
 	<div id="year distribution"> </div>
 	<div id="author distribution"> </div>
 	<div id="keyword distribution"> </div>
 	<div id="location distribution"> </div>
     </div>
+    -->
 
 
     <div id="lda_area" name="no_top_docs"> 
