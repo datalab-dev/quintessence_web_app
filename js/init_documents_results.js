@@ -49,6 +49,7 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	var TYPES = ["Raw", "Standardized", "Lemma"];
 	for (var j = 0; j < TYPES.length; j++) {
 	    var docbutton = document.createElement('button');
+	    docbutton.classList.add("doc_button");
 	    docbutton.id = "button_" + TYPES[j] + "_" + qid;
 	    docbutton.innerHTML = TYPES[j];
 	    docbutton.style.marginRight = '15px';

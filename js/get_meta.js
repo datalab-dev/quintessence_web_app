@@ -4,7 +4,7 @@ function button_get_meta(id) {
 }
 
 function get_meta(docid) {
-    // get the topic id from input value
+    // given doc id, get the metadata
     // pass to get_topic_terms.php 
     // parse the response
 
@@ -36,7 +36,8 @@ function parse_meta(data, docid) {
     var id_table = document.createElement("table");
     var row = id_table.insertRow(0);
     for (var i = 0; i < ids.length; i++) {
-	var cell = row.insertCell(-1).innerHTML = "<b>" + ids[i] + "</b>";
+	var cell = row.insertCell(-1);
+	cell.innerHTML = ids[i];
     }
     
     var tr = id_table.insertRow(1);
@@ -52,8 +53,12 @@ function parse_meta(data, docid) {
 	var key = Object.keys(data)[i];
 	if (main.includes(key)) {
             var row = main_table.insertRow(-1);
-	    row.insertCell(-1).innerHTML = "<b>" + key + " </b>";
-	    row.insertCell(-1).innerHTML = data[key];
+	    var kcell = row.insertCell(-1)
+	    kcell.innerHTML = key;
+	    kcell.classList.add("keys");
+	    var vcell = row.insertCell(-1)
+            vcell.innerHTML = data[key];
+	    vcell.classList.add("values");
 	}
     }
 

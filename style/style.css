@@ -86,7 +86,7 @@ hr {
     font-family: 'Helvetica', 'sans-serif';
     font-size: 14px;
     color: steelblue;
-    font-style: bold;
+    font-weight: bold;
 }
 
 
@@ -128,12 +128,12 @@ hr {
 h2 {
     font-size: 20px;
     font-family: 'Libre Baskerville', serif;
-    font-style: bold;
+    font-weight: bold;
 }
 h3 {
     font-size: 16px;
     font-family: 'Libre Baskerville', serif;
-    font-style: bold;
+    font-weight: bold;
 }
 
 #top_docs hr {
@@ -145,13 +145,26 @@ h3 {
 h4 { 
     font-family: 'Helvetica', 'sans-serif';
     font-size: 18px;
-    font-style: bold;
+    font-weight: bold;
 }
 
 p {
     font-family: 'Helvetica', 'sans-serif';
     font-size: 16px;
     line-height: 1.4;
+}
+
+.keys {
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 14px;
+    font-weight: bold;
+    color: #707070;
+}
+
+.values {
+    font-family: 'Helvetica', 'sans-serif';
+    font-size: 16px;
+    color: #333333
 }
 
 button {
@@ -278,7 +291,7 @@ button {
     width: 100px;
     font-family: 'Helvetica', 'sans-serif';
     font-size: 14px;
-    font-style: bold;
+    font-weight: bold;
 }
 
 .subsetter {
@@ -298,7 +311,7 @@ button {
     margin-top: 20px;
     font-family: 'Helvetica', 'sans-serif';
     font-size: 14px;
-    font-style: bold;
+    font-weight: bold;
 }
 
 #ndocs {
@@ -313,7 +326,16 @@ button {
     height: 40px;
     color: #FFFFFF;
     background-color: #242729;
-    width: 100px;
+    white-space:nowrap;
+    border: 0;
+}
+
+.doc_button {
+    height: 40px;
+    color: #FFFFFF;
+    background-color: #242729;
+    white-space:nowrap;
+    border: 0;
 }
 
 .links > a {
