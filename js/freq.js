@@ -79,8 +79,8 @@ function plotFrequencies(data, raw_data) {
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: true,
         hovermode: 'closest',
-        width: $('#main').width(),
-        height: 0.55*$('#main').width()
+        width: 1024,
+        height: 600
     };
 
     var nnPlot = document.getElementById('freqPlot');
@@ -164,8 +164,8 @@ function plotOverallFrequencies(data) {
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: false,
         hovermode: 'closest',
-        width: $('#main').width(),
-        height: 0.55*$('#main').width()
+        width: 1024,
+        height: 600
     };
 
     Plotly.newPlot('wordFreqPlot', [traceWords], layout, {responsive: true});
