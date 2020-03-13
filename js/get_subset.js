@@ -54,7 +54,7 @@ function get_subset() {
 		console.log("big success");
 	     data = JSON.parse(xmlHttp.responseText);
     	     update_ldapca(data);
-             init_documents_results(data["qids"], 10);
+             init_documents_results(data["qids"], 5);
 	     document.getElementById("ndocs").innerHTML = data["qids"].length + " results";
              document.getElementById("status").innerHTML = "Loaded";
              document.getElementById("overlay").style.display = "none";

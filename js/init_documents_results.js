@@ -15,73 +15,121 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	container.className = "doc_container";
 	container.id = qid;
 
-	// CONTAINER id: 3400
-	//    INFO
-	//    DOC_TOPICS
-	//    GET TEXT BUTTONS
-	//    TEXT
-	//    GET FULL_TEXT
+	// CONTAINER [div] id: QID
+	//    info [div]
+	//    kwic_container (optional) [div]
+	//    top_doc_buttons [div]
+	//       Modal1 Button (ref ids) [button .doc_button]
+	//       Modal2 Button (sample) [button .doc_button]
+	//       Button (full text) [button .doc_button]
+	//    modal_containers [div]
+	//       modal1 [div]
+	//         content
+	//           close [.close] [span]
+	//       modal2 [div]
+	//         content
+	//           close [.close] [span]
 
+	// ADD EMPTY DIVS TO CONTAINER
+
+	// INFO
 	var info = document.createElement('div');
 	info.className = "info";
 	info.id = "info_" + qid;
 
-	//var infobutton = document.createElement('button');
-	//infobutton.id = "info_button_" + qid;
-	//infobutton.innerHTML = "get info";
-	//infobutton.onclick = function(){button_get_meta(this.id)};
-	//info.appendChild(infobutton);
-	container.appendChild(info);
+
+	// TOP DOC BUTTONS
+	var tdbuttons = document.createElement('div');
+	tdbuttons.className = "tdbuttons";
+	tdbuttons.id = "tdbuttons_" + qid;
+
+	//    button1 (Reference Ids)
+	var refidsbtn = document.createElement('button');
+	refidsbtn.className = "doc_button";
+	refidsbtn.id = "refidsbtn_" + qid;
+	refidsbtn.innerHTML = "Reference IDs";
+	refidsbtn.onclick = function() { 
+	    console.log(this.id);
+	    document.getElementById("modal_refs_" + this.id.split("_")[1]).style.display = "block";
+	}
+
+	//    button2 (Sample)
+	var samplebtn = document.createElement('button');
+	samplebtn.className = "doc_button";
+	samplebtn.id = "samplebtn_" + qid;
+	samplebtn.innerHTML = "Sample Text"
+	samplebtn.onclick = function() { 
+	    document.getElementById("modal_sample_" + this.id.split("_")[1]).style.display = "block";
+	}
+
+	//    button3 (Full Text)
+	var fullbtn = document.createElement('button');
+	fullbtn.className = "doc_button";
+	fullbtn.id = "fullbtn_" + qid;
+	fullbtn.innerHTML = "Full Document"
+        fullbtn.onclick = function(){button_get_full_document(this.id)};
+
+	tdbuttons.appendChild(refidsbtn);
+	tdbuttons.appendChild(samplebtn);
+	tdbuttons.appendChild(fullbtn);
+
+	// MODAL CONTAINERS
+	var modal_container = document.createElement('div');
+	modal_container.className = "modal-container";
+	modal_container.id = "modal-container" + qid;
+
+	//    modal1 (Reference IDS)
+	var mrefs = document.createElement('div');
+	mrefs.className = "modal";
+	mrefs.id = "modal_refs_" + qid;
+	var mrefscontent = document.createElement('div');
+	mrefscontent.className = "modal-content";
+	mrefscontent.id = "refs_" + qid;
+	var close1 = document.createElement('span');
+	close1.className = "close";
+	close1.id = "close1_" + qid;
+	close1.innerHTML = "&times";
+	close1.onclick = function() { 
+	    console.log(this.id);
+	    document.getElementById("modal_refs_" + this.id.split("_")[1]).style.display = "none";
+	}
+	mrefscontent.appendChild(close1);
+	mrefs.appendChild(mrefscontent);
+
+
+	//    modal2 (Sample)
+	var msample = document.createElement('div');
+	msample.className = "modal";
+	msample.id = "modal_sample_" + qid;
+	var samplecontent = document.createElement('div');
+	samplecontent.className = "modal-content";
+	samplecontent.id = "sample_" + qid;
+	var close2 = document.createElement('span');
+	close2.className = "close";
+	close2.id = "close2_" + qid;
+	close2.innerHTML = "&times";
+	close2.onclick = function() { 
+	    document.getElementById("modal_sample_" + this.id.split("_")[1]).style.display = "none";
+	}
+	samplecontent.appendChild(close2);
+	msample.appendChild(samplecontent);
+
+	modal_container.appendChild(mrefs);
+	modal_container.appendChild(msample);
+
 	get_meta(qid);
+	get_truncated_document(qid);
+	container.appendChild(info);
 
-	var doc_topics = document.createElement('div');
-	doc_topics.id = "doc_topics_" + qid;
-	container.appendChild(doc_topics);
-
-    if (kwics !== undefined) {
-        var kwic_obj = document.createElement('div');
-        kwic_obj.innerHTML = kwics[i];
-        container.appendChild(kwic_obj);
-    }
-
-	var get_text_buttons = document.createElement('div');
-	get_text_buttons.className = "get_text_buttons";
-	var TYPES = ["Raw", "Standardized", "Lemma"];
-	for (var j = 0; j < TYPES.length; j++) {
-	    var docbutton = document.createElement('button');
-	    docbutton.classList.add("doc_button");
-	    docbutton.id = "button_" + TYPES[j] + "_" + qid;
-	    docbutton.innerHTML = TYPES[j];
-	    docbutton.style.marginRight = '15px';
-	    docbutton.onclick = function(){button_get_truncated_document(this.id)};
-
+	// KWIC
         if (kwics !== undefined) {
-            docbutton.style.height = '20px';
-            docbutton.style.fontSize = '12px';
+            var kwic_obj = document.createElement('div');
+            kwic_obj.innerHTML = kwics[i];
+            container.appendChild(kwic_obj);
         }
 
-	    get_text_buttons.appendChild(docbutton);
-	}
-	container.appendChild(get_text_buttons);
-
-	var text = document.createElement('div');
-	text.className = "text";
-	text.id = "text_" + qid;
-	container.appendChild(text);
-
-	var get_full_text = document.createElement('div');
-	get_full_text.id = "get_full_text_area_" + qid;
-	get_full_text.className = "get_full_text";
-	container.appendChild(get_full_text);
-	getmore = document.createElement("button");
-    if (kwics !== undefined) {
-        getmore.style.height = '20px';
-        getmore.style.fontSize = '12px';
-    }
-	getmore.innerHTML = "open entire document";
-	getmore.id = "get_full_" + qid;
-        getmore.onclick = function(){button_get_full_document(this.id)};
-	get_full_text.appendChild(getmore);
+	container.appendChild(tdbuttons);
+	container.appendChild(modal_container);
 
 	document.getElementById('top_docs').appendChild(container);
 	document.getElementById('top_docs').appendChild(document.createElement("hr"));
