@@ -94,21 +94,15 @@ function plotOverallFrequencies(data) {
     var traceWords = {
         x: decades,
         y: data.wordFreqs,
-        mode: 'lines+markers',
-        type: 'scatter',
+        type: 'histogram',
         marker: {
-            symbol: 28,
-            sizemode: 'diameter',
-            size: 5,
-            opacity: 1,
+            opacity: 0.8,
             line: {
                 size: 1,
-                color: 'steelblue3',
+                color: 'black',
                 opacity: 1
             }
-        },
-        line: { opacity: 1 },
-        color: 'steelblue3',
+        }
         // width: 800,
         // height: 600
     };
@@ -116,21 +110,15 @@ function plotOverallFrequencies(data) {
     var traceDocs = {
         x: decades,
         y: data.docFreqs,
-        mode: 'lines+markers',
-        type: 'scatter',
+        type: 'histogram',
         marker: {
-            symbol: 28,
-            sizemode: 'diameter',
-            size: 5,
-            opacity: 1,
+            opacity: 0.8,
             line: {
                 size: 1,
-                color: 'steelblue3',
+                color: 'black',
                 opacity: 1
             }
-        },
-        line: { opacity: 1 },
-        color: 'steelblue3',
+        }
         // width: 800,
         // height: 600
     };

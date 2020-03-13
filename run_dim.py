@@ -116,7 +116,9 @@ def get_docs(doc_content):
     doc_content = tokenizer.tokenize(doc_content) # split into words
     return doc_content
 
-docs_cleaned = Parallel(n_jobs=80)(delayed(get_docs)(doc[0]) for doc in docs2)
+docs_cleaned = Parallel(n_jobs=20)(delayed(get_docs)(doc[0]) for doc in docs2)
+print("parallel process finished.")
+print(docs_cleaned[0][0])
 for ds in docs_cleaned:
     for s in ds:
         s = s.lower()
@@ -130,7 +132,7 @@ docs_cleaned = [[token for token in doc if not token.isnumeric()] for doc in doc
 # Remove words that are only one character.
 docs_cleaned = [[token for token in doc if len(token) > 1] for doc in docs_cleaned]
 
-print("docs cleaned")
+print("docs cleaned.")
 print(docs_cleaned[0][0:50])
 
 # ######
