@@ -51,11 +51,12 @@
         <div class="container" id="token-freq">
 	    <div class= "text-block">
             <div class= "search-label">Plot a Word:</div>
-                <div class="ui-widget">
-                    <input id="tokens">
-                </div>
-                <button type="button" id="search-button"> Search </button>
+
+	    <div style="display: flex; flex-direction: row">
+                <input class="freq-input"  id="tokens">
+                <button class=type="button" id="search-button"> Submit </button>
                 <div id="token-msg"></div>
+	    </div>
 
             <div id="token-disp">
                 <ul id="token-list"></ul>

@@ -182,8 +182,14 @@ p {
     color: #333333
 }
 
-button {
-    border: 2px solid #888;
+#search-button {
+    height: 40px;
+    width: 140px;
+    color: #FFFFFF;
+    background-color: #242729;
+    white-space:nowrap;
+    border: 0;
+    margin: 0;
 }
 
 #top-button {
@@ -516,4 +522,17 @@ td
     font-size: 18px;
     font-family: 'Libre Baskerville', serif;
     font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.freq-input {
+    width: 400px;
+    border: 1px solid #BCBCBC;
+    height: 38px; /* with border 1px top and bottom total is 40 like the search button next to it */
+    margin: 0;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
 }
