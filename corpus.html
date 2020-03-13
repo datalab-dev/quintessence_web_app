@@ -1,18 +1,20 @@
 <!doctype html>
 <head>
     <title>Quintessence Alpha: Word Frequency</title>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="./js/freq.js?2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./style/freq_style.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <link rel="stylesheet" type="text/css" href="./style/freq_style.css?2">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="./js/freq.js?2"></script>
+
 </head>
 
 <body>
@@ -38,8 +40,8 @@
 
     <hr>
 
-        <ul class="button-tabs">
-            <li><a class="active" href="#token-freq">Frequency Over Time</a></li>
+        <ul id="tabs" class="button-tabs">
+            <li><a href="#token-freq">Frequency Over Time</a></li>
             <li><a href="#overall-words">Words per Decade</a></li>
             <li><a href="#overall-docs">Documents per Decade</a></li>
         </ul>
@@ -47,24 +49,28 @@
 	<hr>
 
         <div class="container" id="token-freq">
-            <div class="row input-label">Select a token to plot</div>
-            <div class="row">
+	    <div class= "text-block">
+            <div class= "search-label">Plot a Word:</div>
                 <div class="ui-widget">
                     <input id="tokens">
                 </div>
                 <button type="button" id="search-button"> Search </button>
                 <div id="token-msg"></div>
-            </div>
-            <div id="token-disp" class="row">
+
+            <div id="token-disp">
                 <ul id="token-list"></ul>
             </div>
-            <div id="freqPlot" class="row"></div>
+
+	    </div>
+            <div id="freqPlot"></div>
         </div>
+
         <div class="container" id="overall-words">
-            <div id="wordFreqPlot" class="row"></div>
+            <div id="wordFreqPlot"></div>
         </div>
+
         <div class="container" id="overall-docs">
-            <div class="row" id="docFreqPlot"></div>
+            <div id="docFreqPlot"></div>
         </div>
     </div>
 

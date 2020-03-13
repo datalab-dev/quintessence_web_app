@@ -26,6 +26,21 @@ hr {
     width: 560px;
 }
 
+#freqPlot {
+    width: 1024px;
+    margin: auto;
+}
+
+#wordFreqPlot {
+    width: 1024px;
+    margin: auto;
+}
+
+#docFreqPlot {
+    width: 1024px;
+    margin: auto;
+}
+
 
 .range-slider {
     width: 400px;
@@ -478,16 +493,16 @@ td
 .button-tabs a {
     text-decoration: none;
     display: block;
-    background-color: #FFFFFF;
-    color: steelblue;
     white-space:nowrap;
     padding: 10px;
     border: 0;
-}
-
-.button-tabs li a.active{
     color: white;
     background-color: steelblue;
+}
+
+.button-tabs li a.inactive{
+    background-color: #FFFFFF;
+    color: steelblue;
 }
 
 .button-tabs li a:hover {
@@ -495,3 +510,10 @@ td
     background-color: steelblue;
 }
 
+.search-label {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-family: 'Libre Baskerville', serif;
+    font-weight: bold;
+}
