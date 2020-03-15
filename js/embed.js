@@ -364,5 +364,5 @@ $(document).ready(function() {
     $('#tokens').val('');
     $('#dropdown-auth').val('');
     $('#dropdown-loc').val('');
-    $( "#tabs" ).tabs();
+    //$( "#tabs" ).tabs();
 });

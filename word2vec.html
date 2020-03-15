@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <link rel="stylesheet" type="text/css" href="./style/embed_style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./style/embed_style.css"> -->
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -57,12 +57,14 @@
 	    </div>
     </div>
 
-        <ul id="tabs">
+    <hr>
+        <ul id="tabs" class="button-tabs">
             <li><a href="#word-change">Word Change</a></li>
             <li><a href="#all-nn">Most Similar Words (All Text)</a></li>
             <li><a href="#auth-nn">Most Similar Words (Author)</a></li>
             <li><a href="#loc-nn">Most Similar Words (Location)</a></li>
         </ul>
+    <hr>
 
         <div class="container" id="word-change">
             <div id="nn-plot" class="plot"></div>
