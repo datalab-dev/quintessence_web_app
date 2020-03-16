@@ -4,7 +4,12 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
     document.getElementById("hideme").style.display = "inline";
 
     title = document.createElement("h3");
-    title.innerHTML = "Document Results (" + doc_ids_list.length + ")";
+    if (kwics !== undefined) {
+        title.innerHTML = 'Examples of "' + document.getElementById("tokens").value + '" in Context';
+    } else {
+        title.innerHTML = "Document Results (" + doc_ids_list.length + ")";
+    }
+
     document.getElementById("top_docs").appendChild(title);
 
     // for each document
