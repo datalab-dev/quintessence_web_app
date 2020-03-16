@@ -91,7 +91,6 @@ hr {
     text-decoration: none;
     color: #333333;
     display: block;
-    height: 330px;
     width: 330px;
     background-color: #FFFFFF;
 }
@@ -125,7 +124,7 @@ hr {
 
 .intro-bar {
     width: 100%;
-    height: 330px;
+    height:400px;
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 34px;
@@ -133,6 +132,9 @@ hr {
     background-color: #E1E4E8;
     padding-bottom: 50px;
     padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
 }
 
 .text-block {
@@ -560,13 +562,13 @@ td
 }
 
 #token-disp .btn {
-  border: none;
-  color: white;
-  padding: 0px;
-  margin-right: 5px;
-  font-size: 12px;
-  cursor: pointer;
-  outline: none;
+    border: none;
+    color: white;
+    padding: 0px;
+    margin-right: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
 }
 
 .btn:active,
@@ -592,4 +594,20 @@ td
     color: #888;
 }
 
+.preview-arrow {
+    display: none;
+}
 
+.preview-card:hover .preview-arrow {
+    color: steelblue;
+    float:right;
+    display: inline;
+}
+
+a [class^="icon-"], a [class*=" icon-"] {
+        display: none;
+}
+
+.more-about a [class^="icon-"], .more-about a [class*=" icon-"] {
+    display: inline;
+}
