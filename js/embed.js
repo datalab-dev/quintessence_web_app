@@ -7,7 +7,7 @@ const categories = {
 
 var timeseriesLayout = {
     autosize: false,
-    width: 1000,
+    width: 1024,
     height: 550,
     title: ' ',
     xaxis: {
@@ -34,14 +34,12 @@ var timeseriesLayout = {
     plot_bgcolor: 'rgb(243, 243, 243)',
     showlegend: false,
     hovermode: 'closest',
-    // width: 930,
-    // height: 350,
 };
 
 
 var histLayout = {
     autosize: false,
-    width: 1000,
+    width: 1024,
     height: 550,
     barmode: 'stack',
     title: null,
