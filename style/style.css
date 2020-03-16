@@ -612,3 +612,8 @@ td
 .preview-card [class^="icon-"], .preview-card [class*=" icon-"] {
         display: none;
 }
+
+.preview-card img {
+    width: 100%;
+    height: 50%;
+}
