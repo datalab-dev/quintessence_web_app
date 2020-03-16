@@ -280,10 +280,10 @@ $(document).ready(function() {
         }
     })
 
-    /* load the word 'power' as a sample selection */
-    $.getJSON('./resources/power_embed.json', function(data) {
-        $('#tokens').val('power');
-        var word = 'power';
+    /* load the word 'history' as a sample selection */
+    $.getJSON('./resources/sample_embed.json', function(data) {
+        $('#tokens').val('history');
+        var word = 'history';
         plot_timeseries(word, decades, data.wordTimeseries,
             data.decNeighbors, data.neighborsTimeseries);
         plot_hist('full', null, data.fullNeighbors["full"], word);
@@ -297,7 +297,7 @@ $(document).ready(function() {
           var locName = $("#dropdown-loc option:selected").text();
           plot_hist('location', locName, data.locNeighbors[location], word);
         });
-        $.getJSON('./resources/power_kwic.json?v=2', function(data) {
+        $.getJSON('./resources/sample_kwic.json?v=2', function(data) {
             get_kwic(data, word);
         })
     });
