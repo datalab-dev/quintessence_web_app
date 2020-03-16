@@ -573,3 +573,23 @@ td
 .btn:focus {
     outline: none;
 }
+
+.more-about {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    color: steelblue;
+    font-size: 15px;
+}
+
+.more-about a {
+    text-decoration: none;
+    text-align: center;
+    color: steelblue;
+    font-size: 20px;
+    margin-right: 0;
+}
+.more-about a:hover {
+    color: #888;
+}
+
+
