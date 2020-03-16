@@ -609,10 +609,6 @@ td
     display: inline;
 }
 
-a [class^="icon-"], a [class*=" icon-"] {
+.preview-card [class^="icon-"], .preview-card [class*=" icon-"] {
         display: none;
-}
-
-.more-about a [class^="icon-"], .more-about a [class*=" icon-"] {
-    display: inline;
 }
