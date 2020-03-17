@@ -43,6 +43,7 @@ function plot_ldapca(tp, pca) {
 	y: pca['y'],
 	text: texts,
 	hovertemplate: '%{text} ',
+	hoverlabel: {namelength: -1},
 	textposition: 'bottom',
 	mode: 'markers',
 	type: 'scatter',
@@ -95,7 +96,7 @@ function plot_ldapca(tp, pca) {
 
     Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
 
-    colors[0] = '#a91111';
+    colors[10] = '#a91111';
     var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
     Plotly.restyle('ldapca', update, 0);
 
