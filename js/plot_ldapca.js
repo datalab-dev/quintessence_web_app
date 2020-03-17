@@ -32,7 +32,8 @@ function plot_ldapca(tp, pca) {
     {
 	s = tp['proportion'][i] * 10;
 	sizes.push(s)
-	texts.push( String(pca['topics'][i].substr(1)));
+	text = "Topic ID: " + String(i+1) + "<br> Proportion: " + String(tp['proportion'][i].toFixed(2)) + "%";
+	texts.push(text);
     }
 
     console.log(tp['proportion']);
@@ -41,13 +42,14 @@ function plot_ldapca(tp, pca) {
 	x: pca['x'],
 	y: pca['y'],
 	text: texts,
-	hovertemplate: 'Proportion: %{marker.size:.2f}' +
-	'<br>Topic: %{text}',
+	hovertemplate: '%{text} ',
+	hoverlabel: {namelength: -1},
 	textposition: 'bottom',
-	mode: 'markers+text',
+	mode: 'markers',
 	type: 'scatter',
 	marker: {
 	    size: sizes,
+	    color: "#1f77b4",
 	    line: {
 		color: 'black',
 		width: 2
@@ -56,10 +58,21 @@ function plot_ldapca(tp, pca) {
     };
 
     var layout = {
-	title: 'LDA PCA',
 	autosize: "false",
-    hovermode: "closest",
-    hoverdistance: 20,
+	hovermode: "closest",
+	hoverdistance: 20,
+	plot_bgcolor: 'rgb(243,243,243)',
+	scrollZoom: "false",
+	yaxis: {
+	    fixedrange: true,
+	    showgrid: false,
+	},
+	xaxis : {
+	    fixedrange: true,
+	    showgrid: false,
+	    ticks: '',
+	    showticklabels: false
+	},
 	height: 900,
 	margin: {
 	    l: 0,
@@ -72,13 +85,31 @@ function plot_ldapca(tp, pca) {
 
     var data = [plot_data];
 
-    Plotly.newPlot('ldapca', data, layout);
+    colors = [];
+    for (var i = 0; i < sizes.length; i++) {
+	colors.push("#1f77b4");
+    }
+    document.getElementById("sinfo").innerHTML = JSON.stringify(sizes) ;
+    document.getElementById("cinfo").innerHTML = JSON.stringify(colors);
+    document.getElementById("xinfo").innerHTML = JSON.stringify(pca['x']);
+    document.getElementById("yinfo").innerHTML = JSON.stringify(pca['y']);
+
+    Plotly.newPlot('ldapca', data, layout, {displayModeBar: false});
+
+    colors[10] = '#a91111';
+    var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
+    Plotly.restyle('ldapca', update, 0);
+
     ldapca.on('plotly_click', function(data){
+	colors = JSON.parse(document.getElementById("cinfo").innerHTML);
+	sizes = JSON.parse(document.getElementById("sinfo").innerHTML);
 	gd = document.getElementById("ldapca");
 	var id = 0;
 
 	for(var i=0; i < data.points.length; i++){
-	    id = data.points[i].text
+	    text = data.points[i].text;
+	    text = text.split("<br")[0];
+	    id = text.split(":")[1].trim();
 	}
 
 	document.getElementById("topic_terms").setAttribute("name", id);
@@ -86,6 +117,16 @@ function plot_ldapca(tp, pca) {
 	if (document.getElementById("lda_area").getAttribute("name") != "no_top_docs") {
 	    get_topic_documents();
 	}
-    });
 
+	// get colors and sizes from data
+	var pn = '', tn = '';
+	for (var i =0; i < data.points.length; i++) {
+	    pn = data.points[i].pointNumber;
+	    tn = data.points[i].curveNumber;
+	};
+	colors[pn] = '#a91111';
+	console.log("pn: "+ pn);
+	var update = {'marker':{color: colors, size:sizes, line: { color: 'black', width: 2}}};
+	Plotly.restyle('ldapca', update, [tn]);
+    });
 }

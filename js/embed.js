@@ -1,6 +1,6 @@
 var timeseriesLayout = {
     autosize: false,
-    width: 1000,
+    width: 1024,
     height: 550,
     title: ' ',
     xaxis: {
@@ -26,15 +26,15 @@ var timeseriesLayout = {
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
     showlegend: false,
+    hoverlabel: {bgcolor: 'steelblue'},
     hovermode: 'closest',
-    // width: 930,
-    // height: 350,
+    displayModeBar: false
 };
 
 
 var histLayout = {
     autosize: false,
-    width: 1000,
+    width: 1024,
     height: 550,
     barmode: 'stack',
     title: null,
@@ -44,7 +44,8 @@ var histLayout = {
         showgrid: false,
         showline: false,
         showticklabels: false,
-        zeroline: false
+        zeroline: false,
+	hoverformat: '.2%'
     },
     yaxis: {
         showticklabels: false,
@@ -55,7 +56,8 @@ var histLayout = {
     legend: { orientation: 'h' },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
-    autosize: true
+    autosize: true,
+    displayModeBar: false
 };
 
 
@@ -111,12 +113,13 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
             line: {
                 opacity: 0.7,
                 color: 'rgb(128, 128, 128)',
-                width: 0.5
+                width: 0.5,
+		shape: 'spline'		
             },
             hovertext: word,
             hoverinfo: 'text',
             // hovertemplate: '%{text}',
-            hoverlabel: {namelength :-1},
+            hoverlabel: {namelength :-1}
         }
         traces.push(trace);
     });
@@ -127,11 +130,13 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
 
 function plot_hist(category, sel, nn, word) {
     var trace = {
-        x: nn.scores,
+	x: nn.scores,
         y: nn.neighbors,
         type: 'bar',
         orientation: 'h',
-        marker: {
+        hovertemplate: '%{x} similarity',
+	hoverlabel: {namelength : 0},
+	marker: {
             color: 'steelblue3',
             opacity: 0.65,
             line: {
@@ -168,7 +173,7 @@ function plot_hist(category, sel, nn, word) {
         title: '',
         dtick: 1
     };
-    Plotly.newPlot(element, [trace], authHistLayout, {showSendToCloud: true});
+    Plotly.newPlot(element, [trace], authHistLayout, {displayModeBar: false}, {showSendToCloud: true});
 }
 
 
@@ -184,27 +189,31 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
     wordTimeseries = replaceZero(wordTimeseries);
-
+    var colors = [];
+    for (var i = 0; i < decades.length; i++) {
+        colors.push('rgb(243, 243, 243)');
+    }
     /* plot word change over time */
     var trace1 = {
         x: decades,
         y: wordTimeseries,
         mode: 'lines+markers',
         type: 'scatter',
-        marker: {
-            symbol: 28,
+	color: 'steelblue',
+        line: { opacity: 1, shape: 'spline', color: 'steelblue' },
+	marker: {
+	    color: colors,
+	    symbol: 'circle',
             sizemode: 'diameter',
-            size: 5,
+            size: 8,
             opacity: 1,
-            line: {
-                size: 1,
-                color: 'steelblue3',
-                opacity: 1
-            }
+	    line: {
+		width: 1,
+		opacity: 1,
+		color: 'steelblue'
+	    }
         },
-        line: { opacity: 1 },
-        color: 'steelblue3',
-        text: nninfo,
+	text: nninfo,
         hovertemplate: '<br>Most similar words:<br>%{text}',
         hoverlabel: {namelength : 0}
     };
@@ -212,13 +221,31 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     var data1 = [ trace1 ].concat(nntraces);
 
     var nnPlot = document.getElementById('nn-plot');
-    Plotly.newPlot('nn-plot', data1, timeseriesLayout, {showSendToCloud: true});
+    Plotly.newPlot('nn-plot', data1, timeseriesLayout, {displayModeBar: false}, {showSendToCloud: true});
 
-    /* plot nearest neighbors histogram on click */
+    /* plot nearest neighbors histogram on click
     nnPlot.on('plotly_click', function(data) {
         var decade = data.points[0].x;
         plot_hist('decade', decade, decNeighbors[decade], word);
-    });
+    }); */
+    
+    // get colors and sizes from data
+    nnPlot.on('plotly_hover', function(data) {        
+    var pn = '', 
+	tn = ''
+	colors = [];
+          for (var i =0; i < data.points.length; i++) {
+                         pn = data.points[i].pointNumber;
+                         tn = data.points[i].curveNumber;
+                };
+    	  for (var i = 0; i < decades.length; i++) {
+        		colors.push('rgb(243, 243, 243)');
+    		};
+          colors[pn] = 'steelblue';
+          console.log("pn: "+ pn);
+       var update = {'marker':{color: colors, size: 8, line:{color:'steelblue', width:1}}};
+       Plotly.restyle('nn-plot', update, [tn]);
+    }); 
 }
 
 
@@ -247,11 +274,11 @@ function get_kwic(data, word) {
 
 
 function reset() {
-    Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
-    Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
-    Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-    Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
-    Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
+    Plotly.newPlot('nn-plot', null, timeseriesLayout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot('dec-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot('auth-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot('loc-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot('full-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
 }
 
 
@@ -277,11 +304,11 @@ $(document).ready(function() {
 
     var auth_options = $("#dropdown-auth").html();
     var loc_options = $("#dropdown-loc").html();
-
-    /* load the word 'power' as a sample selection */
-    $.getJSON('./resources/power_embed.json', function(data) {
-        $('#tokens').val('power');
-        var word = 'power';
+  
+    /* load the word 'history' as a sample selection */
+    $.getJSON('./resources/sample_embed.json', function(data) {
+        $('#tokens').val('history');
+        var word = 'history';
         plot_timeseries(word, decades, data.wordTimeseries,
             data.decNeighbors, data.neighborsTimeseries);
         plot_hist('full', null, data.fullNeighbors["full"], word);
@@ -295,7 +322,7 @@ $(document).ready(function() {
           var locName = $("#dropdown-loc option:selected").text();
           plot_hist('location', locName, data.locNeighbors[location], word);
         });
-        $.getJSON('./resources/power_kwic.json?v=2', function(data) {
+        $.getJSON('./resources/sample_kwic.json?v=2', function(data) {
             get_kwic(data, word);
         })
     });
@@ -366,13 +393,13 @@ $(document).ready(function() {
         // Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
         // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
         histLayout.title = null;
-        Plotly.newPlot('auth-hist', null, histLayout, {showSendToCloud: true});
-        Plotly.newPlot('loc-hist', null, histLayout, {showSendToCloud: true});
+        Plotly.newPlot('auth-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
+        Plotly.newPlot('loc-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
         // Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
     });
 
     $('#tokens').val('');
     $('#dropdown-auth').val('');
     $('#dropdown-loc').val('');
-    $( "#tabs" ).tabs();
+    //$( "#tabs" ).tabs();
 });

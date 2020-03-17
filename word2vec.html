@@ -1,53 +1,70 @@
 <!doctype html>
 <head>
-    <title>Document Viewer</title>
+    <title>Quintessence Alpha: Word Meanings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./style/embed_style.css"> -->
+    <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="./js/embed.js?2"></script>
     <script src="./js/get_truncated_document.js"> </script>
-    <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <link rel="stylesheet" type="text/css" href="./style/embed_style.css">
-    <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
+
 </head>
 
 <body>
+    <!-- Navigation bar-->
+        <div id="nav-placeholder"></div>
+	    <script>
+			$("#nav-placeholder").load("nav.html",function(){
+			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+			    	});
+	//    );
+    </script>
+    
 
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-            <a href="index.html">Quintessence</a>
-            <a href="about.html">About</a>
-	    </div>
-	    <div class="links">
-    		<a href="subset.html">Topic Model</a>
-    		<a href="word2vec.html" class="active">Embedding</a>
-    		<a href="corpus.html">Corpus</a>
-	    </div>
-	</div>
+    <div class="text-block">
+	<h2> Word Meanings </h2>
+
+	<p>
+	We use word embedding to evaluate the interchangeability of words and how
+	meaning evolves over time. Word embeddings are approximations of a word’s
+	meaning based on millions of guesses by a neural network. These
+	approximations are represented numerically, which allows us to calculate
+	similarity between words, as well as word meaning change over time, among
+	different authors, and in different print locations. The plots are all
+	representations of these calculations. The plotted word is also shown in
+	context below the graphs.
+	</p>
     </div>
 
-    <div id="main">
-        <div class="row input-label">Select a token to plot</div>
-        <div class="row">
-            <div class="ui-widget">
-              <input id="tokens">
-            </div>
-            <button type="button" id="search-button"> Search </button>
-            <div id="token-msg"></div>
-        </div>
+    <hr>
 
-        <ul id="tabs">
+
+    <div class="text-block">
+        <div class="search-label">Plot a Word:</div>
+	    <div style="display: flex; flex-direction: row">
+                <input class="freq-input"  id="tokens">
+                <button class=type="button" id="search-button"> Submit </button>
+                <div id="token-msg"></div>
+	    </div>
+    </div>
+
+    <hr>
+        <ul id="tabs" class="button-tabs">
             <li><a href="#word-change">Word Change</a></li>
             <li><a href="#all-nn">Most Similar Words (All Text)</a></li>
             <li><a href="#auth-nn">Most Similar Words (Author)</a></li>
             <li><a href="#loc-nn">Most Similar Words (Location)</a></li>
         </ul>
+    <hr>
 
         <div class="container" id="word-change">
             <div id="nn-plot" class="plot"></div>
@@ -117,29 +134,19 @@
             </ul>
         </div>
 
-        <div id="top_docs"> </div>
-    </div> <!-- /MAIN -->
 
-    <div class="footer-wrapper">
-    	<div class="nav">
-    	    <div class="footer-format">
-        		webapp Version 0.1.0 <br>
-        		database Version 1.0.0 <br>
-        		models Version 1.0.0
-    	    </div>
-    	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-    	    <div class="footer-format">
-        		<a href="index.html">Home</a>
-        		<a href="https://github.com/ucdavisdatalab">Github</a>
-        		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
-    	    </div>
-    	</div>
-    </div>
+        <hr id="hideme" style="display: none">
+        <div class="text-block">
+            <div id="top_docs"> </div>
+	</div>
 
-    <script>
-    	function topFunction() {
-    	    document.body.scrollTop = 0; // For Safari
-    	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    	}
-    </script>
+
+    <!--Footer -->
+        <div id="footer-placeholder"></div>
+	    <script>
+			$("#footer-placeholder").load("footer.html");
+	    </script>
+    <!-- Footer -->
+
+
 </body>

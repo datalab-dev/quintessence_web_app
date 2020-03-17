@@ -1,106 +1,95 @@
 <!doctype html>
 <head>
-    <title>Quintessence Alpha</title>
+    <title>Quintessence Alpha: About</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
 </head>
 <body>
 
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-		<a href="index.html">Quintessence</a>
-		<a href="about.html" class="active">About</a>
-	    </div>
-	    <div class="links">
-		<a href="subset.html">Topic Model</a>
-		<a href="word2vec.html">Embedding</a>
-		<a href="corpus.html">Corpus</a>
-	    </div>
-	</div>
-    </div>
-
-    <div id="main"> 
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+	$("#nav-placeholder").load("nav.html",function(){
+	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+	});
+	//    );
+    </script>
 
 
+
+    <div class="text-block">
 	<h2> Team </h2>
-	<div style="margin-left: 30px">
 	    <h4> General Editors </h4>
-	    <div style="margin-left: 20px">
 		<p> Samuel Pizelo </p>
 		<p> Arthur Koehl </p>
 		<p> Carl Stahmer, PhD </p>
-	    </div>
 
 	    <h4> Developers </h4>
-	    <div style="margin-left: 20px">
 		<p> Chandni Nagda </p>
-	    </div>
 
-	</div>
 
+		<hr>
 	<h2> References </h2>
-	<div style="margin-left: 30px">
 
-	    <h3> Digital Projects </h3>
-	    <div style="margin-left: 20px">
+	    <h4> EEBO</h4>
+	    <p>
+		Early English Books Online Text Creation Partnership, 2011. Web. <a href="https://quod.lib.umich.edu/e/eebogroup/">https://quod.lib.umich.edu/e/eebogroup/.</a>
+	    </p>
+	    <p>
+		Early English Books Online. Web. <a href="https://search.proquest.com/eebo/advanced"> https://search.proquest.com/eebo/advanced.</a>
+	    </p>
+	    <h4> Digital Projects </h4>
 
+	    <p>
 	    Early Modern Print: Text Mining Early Printed English. Humanities Digital Workshop at Washington University in St. Louis.<a style="display: inline" href="https://earlyprint.wustl.edu">https://earlyprint.wustl.edu</a>
-	    <br>
-	    <br>
+	    </p>
 
+	    <p>
 	    Goldstone, Andrew, “dfr-browser”, <a style="display: inline" href="http://agoldst.github.io/dfr-browser/">http://agoldst.github.io/dfr-browser</a>
-	    <br>
-	    </div>
-	    <h3> Software </h3>
-	    <div style="margin-left: 20px">
+	    </p>
+
+	    <h4> Software </h4>
+	    <p>Burns, Philip R. (2013) "MorphAdorner v2: A Java Library for the Morphological Adornment of English Language Texts." Evanston, IL. Northwestern University. Web. https://morphadorner.northwestern.edu/morphadorner/download/morphadorner.pdf.
+	    </p>
+
+	    <p>
 	    Sievert, Carson, 2015. LDAvis: Interactive Visualization of Topic Models. R package version 0.3.2.
-	    </div>
+	    </p>
 
 	    <!-- exported from zotero-->
-	    <h3> Journal Articles </h3>
-	    <div style="margin-left: 20px">
-	    <div class="csl-bib-body" style="line-height: 2; margin-left: 2em; text-indent:-2em;">
-		<div class="csl-entry">Blei, David M., et al. “Latent Dirichlet Allocation.” <i>Journal of Machine Learning Research</i>, vol. 3, Mar. 2003, pp. 993--1022.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Latent%20Dirichlet%20Allocation&amp;rft.jtitle=Journal%20of%20Machine%20Learning%20Research&amp;rft.volume=3&amp;rft.aufirst=David%20M&amp;rft.aulast=Blei&amp;rft.au=David%20M%20Blei&amp;rft.au=Andrew%20Ng&amp;rft.au=Michael%20I.%20Jordan&amp;rft.date=2003-03&amp;rft.pages=993--1022&amp;rft.spage=993"></span>
-		<div class="csl-entry">Blei, David M., and John D. Lafferty. “A Correlated Topic Model of Science.” <i>The Annals of Applied Statistics</i>, vol. 1, June 2007, pp. 17--35, doi:<a href="https://doi.org/10.1214/07-AOAS114">10.1214/07-AOAS114</a>.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.1214%2F07-AOAS114&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=A%20Correlated%20Topic%20Model%20of%20Science&amp;rft.jtitle=The%20Annals%20of%20Applied%20Statistics&amp;rft.volume=1&amp;rft.aufirst=David%20M&amp;rft.aulast=Blei&amp;rft.au=David%20M%20Blei&amp;rft.au=John%20D.%20Lafferty&amp;rft.date=2007-06&amp;rft.pages=17--35&amp;rft.spage=17"></span>
-		<div class="csl-entry">Garg, Nikhil, et al. “Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes.” <i>National Academy of Sciences</i>, vol. Proceedings of the Natioanl Academy of Sciences vol. 115 no. 16 E3635-E3644, Apr. 2018.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Word%20Embeddings%20Quantify%20100%20Years%20of%20Gender%20and%20Ethnic%20Stereotypes&amp;rft.jtitle=National%20Academy%20of%20Sciences&amp;rft.volume=Proceedings%20of%20the%20Natioanl%20Academy%20of%20Sciences%20vol.%20115%20no.%2016%20E3635-E3644&amp;rft.aufirst=Nikhil&amp;rft.aulast=Garg&amp;rft.au=Nikhil%20Garg&amp;rft.au=Londa%20Schiebinger&amp;rft.au=Dan%20Jurafsky&amp;rft.au=James%20Zou&amp;rft.date=2018-04&amp;rft.issn=0027-8424"></span>
-		<div class="csl-entry">Hamilton, William L., et al. “Diachronic Word Embeddings Reveal Stastical Laws of Semantic Change.” <i>Association for Computational Linguistics</i>, vol. Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), Aug. 2016, pp. 1489--1501, doi:<a href="https://doi.org/10.18653/v1/P16-1141">10.18653/v1/P16-1141</a>.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.18653%2Fv1%2FP16-1141&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Diachronic%20Word%20Embeddings%20Reveal%20Stastical%20Laws%20of%20Semantic%20Change&amp;rft.jtitle=Association%20for%20Computational%20Linguistics&amp;rft.volume=Proceedings%20of%20the%2054th%20Annual%20Meeting%20of%20the%20Association%20for%20Computational%20Linguistics%20(Volume%201%3A%20Long%20Papers)&amp;rft.aufirst=William%20L.&amp;rft.aulast=Hamilton&amp;rft.au=William%20L.%20Hamilton&amp;rft.au=Jure%20Leskovec&amp;rft.au=Dan%20Jurafsky&amp;rft.date=2016-08&amp;rft.pages=1489--1501&amp;rft.spage=1489"></span>
-		<div class="csl-entry">Kim, Yoon, et al. “Temporal Analysis of Language through Neural Language Models.” <i>Association for Computational Linguistics</i>, vol. Proceedings of the {ACL} 2014 Workshop on Language Technologies and Computational Social Science, June 2014, pp. 61--65, doi:<a href="https://doi.org/10.3115/v1/W14-2517">10.3115/v1/W14-2517</a>.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.3115%2Fv1%2FW14-2517&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Temporal%20Analysis%20of%20Language%20through%20Neural%20Language%20Models&amp;rft.jtitle=Association%20for%20Computational%20Linguistics&amp;rft.volume=Proceedings%20of%20the%20%7BACL%7D%202014%20Workshop%20on%20Language%20Technologies%20and%20Computational%20Social%20Science&amp;rft.aufirst=Yoon&amp;rft.aulast=Kim&amp;rft.au=Yoon%20Kim&amp;rft.au=Yi-I%20Chiu&amp;rft.au=Henaki%20Kentaro&amp;rft.au=Darshan%20Hedge&amp;rft.au=Slav%20Petrov&amp;rft.date=2014-06&amp;rft.pages=61--65&amp;rft.spage=61"></span>
-		<div class="csl-entry">Kulkarni, Vivek, et al. “Stastically Significant Detection of Linguistic Change.” <i>WWW ’15</i>, vol. Proceedings of the 24th International Conference on World Wide Web, May 2015, pp. 625--635, doi:<a href="https://doi.org/10.1145/2736277.2741627">10.1145/2736277.2741627</a>.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.1145%2F2736277.2741627&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Stastically%20Significant%20Detection%20of%20Linguistic%20Change&amp;rft.jtitle=WWW%20'15&amp;rft.volume=Proceedings%20of%20the%2024th%20International%20Conference%20on%20World%20Wide%20Web&amp;rft.aufirst=Vivek&amp;rft.aulast=Kulkarni&amp;rft.au=Vivek%20Kulkarni&amp;rft.au=Bryan%20Perozzi&amp;rft.au=Rami%20Al-Rfou&amp;rft.au=Steven%20Skiena&amp;rft.date=2015-05&amp;rft.pages=625--635&amp;rft.spage=625"></span>
-		<div class="csl-entry">Miklov, Tomas, et al. <i>Efficient Estimation of Word Representations in Vector Space</i>. 2013, <a href="http://arxiv.org/abs/1301.3781">http://arxiv.org/abs/1301.3781</a>.</div>
-		<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Efficient%20Estimation%20of%20Word%20Representations%20in%20Vector%20Space&amp;rft.aufirst=Tomas&amp;rft.aulast=Miklov&amp;rft.au=Tomas%20Miklov&amp;rft.au=Kai%20Chen&amp;rft.au=Greg%20S.%20Corrado&amp;rft.au=Jeffrey%20Dean&amp;rft.date=2013"></span>
-		<!-- exported from zotero-->
-	    </div>
-	    </div>
-	</div>
+	    <h4> Journal Articles </h4>
+	    <p>
+		Blei, David M., et al. “Latent Dirichlet Allocation.” <i>Journal of Machine Learning Research</i>, vol. 3, Mar. 2003, pp. 993--1022.
+	    </p>
+	    <p>
+	        Blei, David M., and John D. Lafferty. “A Correlated Topic Model of Science.” <i>The Annals of Applied Statistics</i>, vol. 1, June 2007, pp. 17--35, doi:<a href="https://doi.org/10.1214/07-AOAS114">10.1214/07-AOAS114</a>.
+		</p>
 
-    </div> <!-- /MAIN -->
+		<p>
+		Garg, Nikhil, et al. “Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes.” <i>National Academy of Sciences</i>, vol. Proceedings of the Natioanl Academy of Sciences vol. 115 no. 16 E3635-E3644, Apr. 2018.
+		</p>
+		<p>
+		Hamilton, William L., et al. “Diachronic Word Embeddings Reveal Stastical Laws of Semantic Change.” <i>Association for Computational Linguistics</i>, vol. Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), Aug. 2016, pp. 1489--1501, doi:<a href="https://doi.org/10.18653/v1/P16-1141">10.18653/v1/P16-1141</a>.
+		</p>
+		<p>
+		Kim, Yoon, et al. “Temporal Analysis of Language through Neural Language Models.” <i>Association for Computational Linguistics</i>, vol. Proceedings of the {ACL} 2014 Workshop on Language Technologies and Computational Social Science, June 2014, pp. 61--65, doi:<a href="https://doi.org/10.3115/v1/W14-2517">10.3115/v1/W14-2517</a>.
+		</p>
+		<p>Kulkarni, Vivek, et al. “Stastically Significant Detection of Linguistic Change.” <i>WWW ’15</i>, vol. Proceedings of the 24th International Conference on World Wide Web, May 2015, pp. 625--635, doi:<a href="https://doi.org/10.1145/2736277.2741627">10.1145/2736277.2741627</a>.
+		</p>
+		<p>
+		Miklov, Tomas, et al. <i>Efficient Estimation of Word Representations in Vector Space</i>. 2013, <a href="http://arxiv.org/abs/1301.3781">http://arxiv.org/abs/1301.3781</a>.
+		</p>
 
-    <div class="footer-wrapper"> 
-	<div class="nav">
-	    <div class="footer-format"> 
-		webapp Version 0.1.0 <br>
-		database Version 1.0.0 <br>
-		models Version 1.0.0 
-	    </div>
-	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
-		<a href="index.html">Home</a>
-		<a href="https://github.com/ucdavisdatalab">Github</a>
-		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
-	    </div>
-	</div>
-    </div>
-    <script>
-	function topFunction() {
-	    document.body.scrollTop = 0; // For Safari
-	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	}
-    </script>
+    </div> 
+
+    <!--Footer -->
+        <div id="footer-placeholder"></div>
+	    <script>
+			$("#footer-placeholder").load("footer.html");
+	    </script>
+    <!-- Footer -->
+
 </body>

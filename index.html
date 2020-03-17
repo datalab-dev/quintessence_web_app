@@ -1,116 +1,88 @@
 <!doctype html>
 <head>
     <title>Quintessence Alpha</title>
+       <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+	        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
+    <!--Navigation bar-->
+        <div id="nav-placeholder"></div>
+	    <script>
+			$("#nav-placeholder").load("nav.html",function(){
+			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+			    	});
+	//    );
+    </script>
 
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-		<a href="index.html" class="active">Quintessence</a>
-		<a href="about.html" >About</a>
-	    </div>
-	    <div class="links">
-		<a href="subset.html">Topic Model</a>
-		<a href="word2vec.html">Embedding</a>
-		<a href="corpus.html">Corpus</a>
-	    </div>
-	</div>
+
+
+
+    <div class="text-block">
+    <h2> Project Quintessence </h2>
+    <p>
+	This project seeks to add dimension to the study of English texts from the Early Modern period by seamlessly integrating state-of-the-art data analysis with dynamic corpus exploration. Our corpus of approximately sixty thousand texts, based on the English language texts in the EEBO-TCP archive and adorned with Northwestern University’s MorphAdorner, allows for in-depth computational analysis of Early Modern print at varying scales - from individual word meanings to broad textual themes - to any scholars interested in digital archives. 
+    </p>
+    <p>
+	Through attention both to the essences and alchemical transformations of language in this archive, we are attempting to capture the many senses of the word quintessence that animated Early Modern thought.
+    </p>
+
+    <div class="more-about"> <a href="fullintro.html"> More About Quintessence
+		<i class="icon-arrow-right"></i></a> </div>
     </div>
 
-    <div id="main"> 
-    <h2> Introduction </h2>
-    <p style="font-style: italic">
+    <div class="intro-bar" >
+    <div class="preview-wrapper">
+	    <a class="preview-card" href="./subset.html">
+	        <img src="./resources/text-topics.png">
+		<div class="preview-card-description">
+	        <h2> Text Topics </h2>
+	        <p> Identify themes of EEBO-TCP texts by grouping words according to their co-occcurance. </p>
+		<i class="preview-arrow icon-arrow-right"></i>
+		</div>
+	    </a>
+	    <a class="preview-card" href="./word2vec.html">
+	        <img src="./resources/word-meanings.png">
+		<div class="preview-card-description">
+	        <h2> Word Meanings </h2>
+	        <p> Explore changes in word meaning over time by measuring interchangeability. </p>
+		<i class="preview-arrow icon-arrow-right"></i>
+		</div>
+	    </a>
+	    <a class="preview-card" href="./corpus.html">
+	        <img src="./resources/word-frequency.png">
+		<div class="preview-card-description">
+	        <h2> Word Frequency </h2>
+	        <p> Compare the relative frequency of a word or multiple words over time. </p>
+		<i class="preview-arrow icon-arrow-right"></i>
+		</div>
+	    </a>
+
+    </div>
+    </div>
+
+
+    <div class="text-block">
+	<div class="block-quote">
     “Were Plato now alive he’d yield to You <br>
     Confessing something might be Known anew. […] <br>
     Your Pen alone Creates <br>
     New necessary Sciences, This Art <br>
     Lay undiscover’d as the Worlds fifth part.” <br>
-    </p>
-    <p style="text-align: right">
--Introduction to John Wilkins’ Mercury, or the Secret and Swift Messenger, written by Richard West
-    </p>
-
-<p>
-Welcome to Project Quintessence. Seamlessly integrating state-of-the-art data analytics and Natural Language Processing tools with dynamic corpus exploration, Quintessence seeks to add dimension to the study of English texts from the Early Modern period. Based on the English texts in the EEBO-TCP archive and adorned with Northwestern University’s MorphAdorner, our corpus of approximately sixty thousand texts allows for in-depth computational analysis of Early Modern print at varying scales to scholars across the spectrum of programming experience. As the above epigram alludes to, quintessence in the Early Modern period referred to that mysterious fifth part of the world theorized in Aristotelean matter theory. Indicating at the same time essence and transformation, quintessence was just as important a concept for John Wilkins in his invention of his universal language as it was for the “metaphysical poet” par excellence, George Herbert. The concept has also undergirded our ongoing corpus exploration project – in its search for the more essential structures of language in the period through tools like topic modeling, along with its search for the simultaneous transformation of semantic meaning through tools such as word embeddings.
-</p>
-
-<p>
-The neglected conceptual relationship between John Wilkins and George Herbert serves to illustrate this quintessential doubleness. While both men were devout protestants (Wilkins became Bishop of Chester later in his life, and Herbert was a rector at St. Andrews’ Church in Salisbury) who wrote on religious topics, they are often positioned on opposite ends of the discursive spectrum. John Wilkins was the embodiment of the “plain speaking” rational man, a founding member of the Royal Society who aimed to discipline language through scientific empiricism. George Herbert, on the other hand, was second only to John Donne in his commitment to metaphysical ideals. As Herbert describes in The Sinner, “In so much dregs, the quintessence is small, / The spirit and good extract of my heart / Comes to about the many hundredth part,” (236). The quintessence that animates Wilkins’ linguistic experimentation appears, for Herbert, to be overtly spiritual.
-</p>
-
-<p>
-But if we explore the broader contours of these two authors’ oeuvres, clear patterns emerge. In fact, by subsetting our full topic model to just these authors, we can map the similarity of their topics:
-</p>
-
-<center>
-<img src="./resources/image1.png"></img>
-<p style="font-size: 14px; font-weight: bold"> John Wilkins Subset </p>
-</center>
-<br>
-<br>
-
-
-<center>
-<img src="./resources/image2.png"></img>
-<p style="font-size: 14px; font-weight: bold"> George Herbert Subset </p>
-</center>
-<br>
-<br>
-
-<p>
-While crucial differences remain, it is clear that these writers share a strong conceptual relationship – particularly in topics 18 and 29 - 
-</p>
-
-<center>
-<img src="./resources/image3.png"></img>
-<p style="font-size: 14px; font-weight: bold"> Topic 29 </p>
-</center>
-<br>
-<br>
-
-<p>
-Topic 18 is clearly a religiously-inflected topic, which should not surprise us. Topic 29, on the other hand, is characterized by terms like “man,” “think,” reason,” “time” and “life.” And while Herbert’s texts are heavily represented by the existential Topic 35; “good,” “life,” “know,” “death,” and “live,” Wilkins engages a more naturalistic vocabulary with Topic 38; “make,” “thing,” “nature,” “body,” “reason,” “motion,” and “natural.” But the position of both texts in the lower right quadrant of our model is no accident – these topics are positioned according to their vocabulary similarity reduced to its principal components. In other words, the substantial overlap between the models for Herbert and Wilkins indicates a more profound similarity between the topics discussed by the two authors. Emphasizing both mind and body, man and nature, these topics combine both the essential and transformative qualities of quintessence. An examination of the change in the term quintessence over time helps to illuminate why these terms share an uneasy alliance in Topic 29:
-</p>
-<center>
-<img src="./resources/image4.png"></img>
-</center>
-
-<p>
-While quintessence bears a clear relationship with alchemy throughout its presence in the corpus, it changes the most between 1660 and 1700. Most closely associated with “metaphysical” in 1590, quintessence concludes its semantic shift in 1700 by bearing the closest similarity to “empirics.” The essence of English discourse itself appears to have undergone tremendous transformation in this period. 
-</p>
-
-<p>
-Of course, it is important to bear in mind the limitations of our project, both in scope (due to limitations with our digital archive) and in precision (the many behind-the-scenes decisions that have to be made in projects such as this). While this project can be used to answer questions never before tractable for Early Modern scholars, it is still limited in many ways. At the same time, we do our best to make these limitations and decisions transparent, to allow for this project to be referenced and relied upon by researchers. As you navigate around the site, look out for the help icons that display additional information about the tools you’re looking at and how they are built. Finally, any texts you are looking at that we have distributive access to can be downloaded for further analysis. Any good digital project must be paired with in depth historical and textual analysis. 
-</p>
-
-<p>
-Like quintessence in 17th and 18th century England, this project will continue to transform and grow over time. Our goal is to provide for new avenues of computationally-informed research into English textual analysis, and we will continue to sift through the archive in search of linguistic tinctures and elixirs that might, at last, reveal this World’s fifth part.
-</p>
-
-    </div> <!-- /MAIN -->
-
-    <div class="footer-wrapper"> 
-	<div class="nav">
-	    <div class="footer-format"> 
-		webapp Version 0.1.0 <br>
-		database Version 1.0.0 <br>
-		models Version 1.0.0 
-	    </div>
-	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
-		<a href="index.html">Home</a>
-		<a href="https://github.com/ucdavisdatalab">Github</a>
-		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
-	    </div>
-	</div>
     </div>
-    <script>
-	function topFunction() {
-	    document.body.scrollTop = 0; // For Safari
-	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	}
-    </script>
+
+	<div class="block-quote-citation">
+-Introduction to John Wilkins’ Mercury, or the Secret and Swift Messenger, written by Richard West
+    </div>
+
+    </div> 
+
+    <!--Footer -->
+        <div id="footer-placeholder"></div>
+	    <script>
+			$("#footer-placeholder").load("footer.html");
+	    </script>
+    <!-- Footer -->
 </body>

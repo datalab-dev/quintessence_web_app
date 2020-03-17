@@ -1,20 +1,22 @@
 <!doctype html>
 <head>
-    <title>Subset Corpus</title>
+    <title>Quintessence Alpha: Text Topics</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./resources/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
     <link rel="stylesheet" type="text/css" href="./style/sidebar.css">
-    <link rel="stylesheet" type="text/css" href="./resources/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="./resources/selectize.css">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-    <script type="text/javascript" src="./resources/selectize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
     <script src="./js/init_documents_results.js"> </script>
     <script src="./js/update_ldapca.js"> </script>
@@ -31,95 +33,57 @@
     <script src="./js/create_subset_options.js"> </script>
     <script src="./js/get_all_subset_options.js"> </script>
     <script>
-	//$('#my_selectize_input')[0].selectize.items
+	$(document).ready(function() {
+	    // populate subset options
+	    get_all_subset_options();
+	    $('.ui.dropdown') .dropdown();
+	    var $range = $(".js-range-slider");
 
-	$(function() { 
-	    $('#selected-keywords').selectize({
-		plugins: ['remove_button'],
+	    $range.ionRangeSlider({
+		   type: "double",
+		   min: 1470,
+		   max: 1700,
 	    });
+
 	});
-$(function() { 
-    $('#selected-authors').selectize({
-	plugins: ['remove_button'],
-    });
-});
-$(function() { 
-    $('#selected-locations').selectize({
-	plugins: ['remove_button'],
-    });
-});
-
-
-
-$( function() {
-    $( "#slider-range" ).slider({
-	range: true,
-	min: 1470,
-	max: 1700,
-	values: [ 1470, 1700 ],
-	slide: function( event, ui ) {
-	    $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-	}
-    });
-    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-	" - " + $( "#slider-range" ).slider( "values", 1 ) );
-} );
-
     </script>
-    <style> 
-.ui-slider .ui-slider-handle {
-    height: 25px;
-    width: 5px;
-    padding-left: 5px;
-}
-	#slider-range {
-	    height: 100px;
-	    width: 400px;
-	    margin: 20px;
-	}
-  .ui-slider-range {
-      background-color: #1f77b4;
-      }
-    </style>
 </head>
-<body onload="get_all_subset_options(); init_plot_ldapca(); get_topic_terms()">
+<body onload="init_plot_ldapca(); get_topic_terms()">
 
-    <div class="nav-wrapper">
-	<div class="nav">
-	    <div class="links">
-		<a href="index.html">Quintessence</a>
-		<a href="about.html">About</a>
-	    </div>
-	    <div class="links">
-		<a href="subset.html" class="active">Topic Model</a>
-		<a href="word2vec.html">Embedding</a>
-		<a href="corpus.html">Corpus</a>
-	    </div>
-	</div>
+    <!-- navigation bar-->
+        <div id="nav-placeholder"></div>
+	    <script>
+			$("#nav-placeholder").load("nav.html",function(){
+			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+			    	});
+	//    );
+    </script>
+    
+    <div class="text-block">
+	<h2> Text Topics </h2>
+	<p>
+	Explore broader themes in a corpus with our topic model. This model identifies common themes across texts by grouping words according to their co-occurrence with other words. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information. 
+	</p>
     </div>
 
-    <!-- SIDEBAR -->
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <div id="subset_corpus"> 
-	 <h2> Define Subset </h2>
+    <hr>
+
+
+    <div class="text-block"> 
+	<p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
 
 	<!-- Timeline-->
-	<div class="subsetter" id="Time"> 
-	    <h3 style="margin-top: 10px" class="selecter-title"> Dates Range </h3>
-	    <div style="height: 20px; width:80%" id="slider-range"></div>
-	    <p style="width: 20%">
-	    <input type="text" id="amount" style="background-color: #242729; font-size: 16px; border:0; color:#f4f4f4; font-weight:bold">
-	    </p>
+	<div style="margin-bottom: 20px">
+	    <h3 style="margin-top: 10px" class="selecter-title"> Date Range </h3>
+	      <input type="text" id="date-range" class="js-range-slider" name="my_range" value="" />
 	</div>
 	<!-- /Timeline-->
 
 	<!-- /Keywords -->
 	<div class="subsetter" id="Keywords"> 
 	    <h3 class="selecter-title"> Keywords </h3>
-	    <select class="selecter" id="selected-keywords" multiple="multiple">
-		<option value="Broadsides">Broadsides</option>
-	    </select>
+		<select id="selected-keywords" class="ui fluid search dropdown" multiple="">
+		</select>
 	</div>
 	<!-- /Keywords -->
 
@@ -127,7 +91,7 @@ $( function() {
 	<!-- Authors -->
 	<div class="subsetter" id="Authors">
 	    <h3 class="selecter-title"> Authors </h3>
-	    <select class="selecter" id="selected-authors" multiple="multiple">
+	    <select class="ui fluid search dropdown" id="selected-authors" multiple="multiple">
 	    </select>
 	</div>
 	<!-- /Authors -->
@@ -135,66 +99,52 @@ $( function() {
 	<!-- Locations -->
 	<div class="subsetter" id="Locations"> 
 	    <h3 class="selecter-title"> Locations </h3>
-	    <select class="selecter" id="selected-locations" multiple="multiple">
+	    <select class="ui fluid search dropdown" id="selected-locations" multiple="multiple">
 	    </select>
 	</div>
 	<!-- /Locations -->
 
-	<button type="button" class="subset_button" onclick="get_subset();"> get subset </button> 
+	<div id="apply-filters">
+	    <div id="status"> </div>
+	    <div id="ndocs"> 25318 results</div>
+	<button type="button" class="subset_button" onclick="get_subset();"> Apply Filters </button> 
+	</div>
     </div>
 
-
+    <!--Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution
     <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
-	<!-- Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution -->
 	<div id="ndocs"> </div>
 	<div id="year distribution"> </div>
 	<div id="author distribution"> </div>
 	<div id="keyword distribution"> </div>
 	<div id="location distribution"> </div>
     </div>
-    </div>
-
-    <!-- SIDEBAR -->
+    -->
 
 
-                <button style="margin-left: 200px" class="openbtn" onclick="openNav()">☰ Open Subset Controls</button>  
+    <div style="display: none" id="sinfo"></div>
+    <div style="display: none" id="cinfo"></div>
+    <div style="display: none" id="xinfo"></div>
+    <div style="display: none" id="yinfo"></div>
     <div id="lda_area" name="no_top_docs"> 
 	<div id="ldapca"> </div>
-	<div id="topic_terms" name="1"> </div>
-  </div>
+	<div id="topic_terms" name="11"> </div>
+	<div id="overlay">
+	    <div id="text">Loading Data</div>
+	</div>
+    </div>
 
-    <div id="main">
-	 <h2> Documents For Subset </h2>
+    <hr id="hideme" style="display: none">
+    <div class="text-block">
 	<div id="top_docs"> </div>
     </div>
 
-    <div class="footer-wrapper"> 
-	<div class="nav">
-	    <div class="footer-format"> 
-		webapp Version 0.1.0 <br>
-		database Version 1.0.0 
-	    </div>
-	    <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-	    <div class="footer-format"> 
-		<a href="index.html">Home</a>
-		<a href="https://github.com/ucdavisdatalab">Github</a>
-		<a href="http://ds.lib.ucdavis.edu/">Datalab</a>
-	    </div>
-	</div>
-    </div>
-    <script>
-	function topFunction() {
-	    document.body.scrollTop = 0; // For Safari
-	    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	}
-    </script>
-    <script>
-    function openNav() {
-      document.getElementById("mySidebar").style.width = "1200px";
-        }
 
-        function closeNav() {
-          document.getElementById("mySidebar").style.width = "0";
-            }
-            </script>
+    <!--Footer -->
+        <div id="footer-placeholder"></div>
+	    <script>
+			$("#footer-placeholder").load("footer.html");
+	    </script>
+    <!-- Footer -->
+
 </body>

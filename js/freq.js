@@ -37,9 +37,9 @@ function plotFrequencies(data, raw_data) {
                     opacity: 1
                 }
             },
-            line: { opacity: 1 },
+            line: { opacity: 1, shape: 'spline' },
             color: 'steelblue3',
-            text: raw_data[word],
+	    text: raw_data[word],
             hovertemplate: '(%{x}, %{y:.4f})<br>Raw freq: %{text}',
             hoverlabel: {namelength : 0}
             // width: 800,
@@ -79,12 +79,12 @@ function plotFrequencies(data, raw_data) {
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: true,
         hovermode: 'closest',
-        width: $('#main').width(),
-        height: 0.55*$('#main').width()
+        width: 1024,
+        height: 600
     };
 
     var nnPlot = document.getElementById('freqPlot');
-    Plotly.newPlot('freqPlot', traces, layout, {responsive: true});
+    Plotly.newPlot('freqPlot', traces, layout, {displayModeBar: false}, {responsive: true});
 }
 
 
@@ -94,8 +94,7 @@ function plotOverallFrequencies(data) {
     var traceWords = {
         x: decades,
         y: data.wordFreqs,
-        mode: 'lines+markers',
-        type: 'scatter',
+        type: 'bar',
         marker: {
             symbol: 28,
             sizemode: 'diameter',
@@ -103,15 +102,15 @@ function plotOverallFrequencies(data) {
             opacity: 1,
             line: {
                 size: 1,
-                color: 'steelblue3',
+                color: 'black',
                 opacity: 1
             }
         },
         line: { opacity: 1 },
         color: 'steelblue3',
         // text: 'test',
-        hovertemplate: '(%{x}, %{y:.3s})',
-        hoverlabel: {namelength : 0},
+        hovertemplate: '%{y:.3s} total words',
+        hoverlabel: {namelength : 0}
         // width: 800,
         // height: 600
     };
@@ -119,8 +118,7 @@ function plotOverallFrequencies(data) {
     var traceDocs = {
         x: decades,
         y: data.docFreqs,
-        mode: 'lines+markers',
-        type: 'scatter',
+        type: 'bar',
         marker: {
             symbol: 28,
             sizemode: 'diameter',
@@ -134,7 +132,9 @@ function plotOverallFrequencies(data) {
         },
         line: { opacity: 1 },
         color: 'steelblue3',
-        // width: 800,
+	hovertemplate: '%{y:.3s} total documents',
+        hoverlabel: {namelength : 0}
+	// width: 800,
         // height: 600
     };
 
@@ -164,12 +164,12 @@ function plotOverallFrequencies(data) {
         plot_bgcolor: 'rgb(243, 243, 243)',
         showlegend: false,
         hovermode: 'closest',
-        width: $('#main').width(),
-        height: 0.55*$('#main').width()
+        width: 1024,
+        height: 600
     };
 
-    Plotly.newPlot('wordFreqPlot', [traceWords], layout, {responsive: true});
-    Plotly.newPlot('docFreqPlot', [traceDocs], layout, {responsive: true});
+    Plotly.newPlot('wordFreqPlot', [traceWords], layout, {displayModeBar: false}, {responsive: true});
+    Plotly.newPlot('docFreqPlot', [traceDocs], layout, {displayModeBar: false}, {responsive: true});
 }
 
 

@@ -1,5 +1,5 @@
 function button_get_full_document (id) {
-    docid = id.split("_")[2];
+    docid = id.split("_")[1];
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "./php/get_document_File_ID.php", true);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
