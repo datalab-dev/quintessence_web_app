@@ -26,7 +26,6 @@ var timeseriesLayout = {
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
     showlegend: false,
-    hoverlabel: {bgcolor: 'steelblue'},
     hovermode: 'closest',
     displayModeBar: false
 };
