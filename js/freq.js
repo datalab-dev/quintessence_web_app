@@ -40,7 +40,7 @@ function plotFrequencies(data, raw_data) {
             line: { opacity: 1, shape: 'spline' },
             color: 'steelblue3',
 	    text: raw_data[word],
-            hovertemplate: '(%{x}, %{y:.4f})<br>Raw freq: %{text}',
+            hovertemplate: '(%{x}, %{y:.2%})<br>Occurrences: %{text}',
             hoverlabel: {namelength : 0}
             // width: 800,
             // height: 600
