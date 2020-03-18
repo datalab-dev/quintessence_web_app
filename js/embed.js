@@ -29,7 +29,7 @@ var timeseriesLayout = {
         gridwidth: 1,
         showticklabels: false
     },
-    // margin: { r: 0, l: 20, b: 10, t: 20 },
+    margin: { pad: 20 },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
     showlegend: false,
