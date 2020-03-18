@@ -1,10 +1,3 @@
-const categories = {
-    DECADE: 'decade',
-    AUTHOR: 'author',
-    LOCATION: 'location'
-}
-
-
 var timeseriesLayout = {
     autosize: false,
     width: 1024,
@@ -309,6 +302,9 @@ $(document).ready(function() {
         }
     })
 
+    var auth_options = $("#dropdown-auth").html();
+    var loc_options = $("#dropdown-loc").html();
+  
     /* load the word 'history' as a sample selection */
     $.getJSON('./resources/sample_embed.json', function(data) {
         $('#tokens').val('history');
@@ -343,12 +339,25 @@ $(document).ready(function() {
             },
             select: function(e, ui) {
                 $('#search-button').on('click', function() {
-                    $('#kwic-list').empty();
+                    $('#top_docs').toggle()
                     var word = ui.item.value;
                     console.log(ui.item.value);
                     $('#token-msg').text('Requesting token data ...');
                     $('#kwic-msg').text('Requesting keyword in context data ...');
                     $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
+                        /* filter dropdown menus */
+                        for(var author in data.authNeighbors) {
+                            if (data.authNeighbors[author].scores.length == 0) {
+                                $(`#dropdown-auth option[value=\"${author}\"]`).remove();
+                            }
+                        }
+                        for(var location in data.locNeighbors) {
+                            if (data.locNeighbors[location].scores.length == 0) {
+                                $(`#dropdown-loc option[value=\"${location}\"]`).remove();
+                            }
+                        }
+
+                        /* plot */
                         plot_timeseries(word, decades, data.wordTimeseries,
                             data.decNeighbors, data.neighborsTimeseries);
                         plot_hist('full', null, data.fullNeighbors["full"], word);
@@ -372,6 +381,7 @@ $(document).ready(function() {
                     })
                     .done(function() {
                         $('#kwic-msg').text('');
+                        $('#top_docs').toggle()
                         $('#search-button').off('click');
                     });
                 });
