@@ -22,7 +22,7 @@ var timeseriesLayout = {
         gridwidth: 1,
         showticklabels: false
     },
-    margin: { pad: 20 },
+    //margin: { pad: 20 },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
     showlegend: false,
@@ -113,7 +113,7 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
                 opacity: 0.7,
                 color: 'rgb(128, 128, 128)',
                 width: 0.5,
-		shape: 'spline'		
+		shape: 'spline'
             },
             hovertext: word,
             hoverinfo: 'text',
@@ -198,21 +198,21 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
         y: wordTimeseries,
         mode: 'lines+markers',
         type: 'scatter',
-	color: 'steelblue',
+        color: 'steelblue',
         line: { opacity: 1, shape: 'spline', color: 'steelblue' },
-	marker: {
-	    color: colors,
-	    symbol: 'circle',
+        marker: {
+            color: colors,
+            symbol: 'circle',
             sizemode: 'diameter',
             size: 8,
             opacity: 1,
-	    line: {
-		width: 1,
-		opacity: 1,
-		color: 'steelblue'
-	    }
+            line: {
+                width: 1,
+                opacity: 1,
+                color: 'steelblue'
+            }
         },
-	text: nninfo,
+        text: nninfo,
         hovertemplate: '<br>Most similar words:<br>%{text}',
         hoverlabel: {namelength : 0}
     };
@@ -227,10 +227,10 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
         var decade = data.points[0].x;
         plot_hist('decade', decade, decNeighbors[decade], word);
     }); */
-    
+
     // get colors and sizes from data
-    nnPlot.on('plotly_hover', function(data) {        
-    var pn = '', 
+    nnPlot.on('plotly_hover', function(data) {
+    var pn = '',
 	tn = ''
 	colors = [];
           for (var i =0; i < data.points.length; i++) {
@@ -244,29 +244,29 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
           console.log("pn: "+ pn);
        var update = {'marker':{color: colors, size: 8, line:{color:'steelblue', width:1}}};
        Plotly.restyle('nn-plot', update, [tn]);
-    }); 
+    });
 }
 
 
 function get_kwic(data, word) {
-    console.log(data);
     var doc_ids_list = [];
     var kwics = [];
-    Object.keys(data).forEach(function(doc) {
-        $.getJSON(`./php/get_qid.php?fileid=${doc}`, function(qid) {
-            console.log(qid);
-            doc_ids_list.push(qid);
+
+    var file_ids = Object.keys(data);
+    console.log(file_ids);
+
+    $.get("./php/get_qid.php", { 'fileids[]' : file_ids }, function(data) {
+        doc_ids_list = JSON.parse(data);
+    }).done(function() {
+        Object.keys(data).forEach(function(doc) {
+            var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
+            kwics.push(kwic);
         });
-    });
 
-    Object.keys(data).forEach(function(doc) {
-        var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
-        kwics.push(kwic);
-    });
-
-    $.getScript("./js/init_documents_results.js", function() {
-        $.getScript("./js/get_meta.js", function() {
-            init_documents_results(doc_ids_list, doc_ids_list.length, kwics);
+        $.getScript("./js/init_documents_results.js", function() {
+            $.getScript("./js/get_meta.js", function() {
+                init_documents_results(doc_ids_list, doc_ids_list.length, kwics);
+            });
         });
     });
 }
@@ -291,6 +291,7 @@ $(document).ready(function() {
         $(this).removeClass('inactive');
         $('.container').hide();
         $(t).fadeIn('slow');
+
         return false;
 
         if($(this).hasClass('inactive')) {
@@ -303,7 +304,7 @@ $(document).ready(function() {
 
     var auth_options = $("#dropdown-auth").html();
     var loc_options = $("#dropdown-loc").html();
-  
+
     /* load the word 'history' as a sample selection */
     $.getJSON('./resources/sample_embed.json', function(data) {
         $('#tokens').val('history');
@@ -321,8 +322,9 @@ $(document).ready(function() {
           var locName = $("#dropdown-loc option:selected").text();
           plot_hist('location', locName, data.locNeighbors[location], word);
         });
-        $.getJSON('./resources/sample_kwic.json?v=2', function(data) {
+        $.getJSON('./resources/sample_kwic.json?v=3', function(data) {
             get_kwic(data, word);
+            data = [];
         })
     });
 
