@@ -103,7 +103,7 @@ var startingLayout = {
       y: 0.67,
       xref: 'Decades',
       yref: 'Word Change',
-      text: 'abrupt decrease indicates <br> word meaning change',
+      text: 'abrupt increase indicates <br> word meaning change',
       showarrow: true,
       arrowhead: 2,
       ax: -30,
