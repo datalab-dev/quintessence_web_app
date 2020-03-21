@@ -156,7 +156,7 @@ function plot_ldapca(tp, pca) {
       y: 0.0558,
       xref: 'Decades',
       yref: 'Word Change',
-      text: 'click bubble to view <br> topic words',
+      text: 'click bubble to view <br> terms in topic',
       showarrow: true,
       arrowhead: 0,
       ax: -50,
