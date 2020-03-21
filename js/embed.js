@@ -11,6 +11,7 @@ var timeseriesLayout = {
         dtick: 10,
         zerolinewidth: 1,
         ticklen: 1,
+	tickfont: {color: 'gray'},
         gridwidth: 1
     },
     yaxis: {
@@ -23,7 +24,8 @@ var timeseriesLayout = {
         showticklabels: true,
 	tickmode: 'array',
 	tickvals: [.25, .50, .75, 1.0],
-	ticktext: ['25', '50', '75', '100%']
+	ticktext: ['25', '50', '75', '100%'],
+	tickfont: {color: 'gray'}
     },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
@@ -45,6 +47,7 @@ var startingLayout = {
         dtick: 10,
         zerolinewidth: 1,
         ticklen: 1,
+	tickfont: {color: 'gray'},
         gridwidth: 1
     },
     yaxis: {
@@ -57,7 +60,8 @@ var startingLayout = {
         showticklabels: true,
 	tickmode: 'array',
 	tickvals: [.25, .50, .75, 1.0],
-	ticktext: ['25', '50', '75', '100%']
+	ticktext: ['25', '50', '75', '100%'],
+	tickfont: {color: 'gray'}
     },
     annotations: [
     {
