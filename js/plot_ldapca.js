@@ -13,6 +13,31 @@ function init_plot_ldapca() {
     }//response recieved
 }
 
+/* var layout = {
+        autosize: "false",
+        hovermode: "closest",
+        hoverdistance: 20,
+        plot_bgcolor: 'rgb(243,243,243)',
+        scrollZoom: "false",
+        yaxis: {
+            fixedrange: true,
+            showgrid: false,
+        },
+        xaxis : {
+            fixedrange: true,
+            showgrid: false,
+            ticks: '',
+            showticklabels: false
+        },
+        height: 900,
+        margin: {
+            l: 0,
+            r: 0,
+            b: 50,
+            t: 50,
+            pad: 0
+        }
+    }; */
 
 
 function plot_ldapca(tp, pca) {
@@ -58,30 +83,87 @@ function plot_ldapca(tp, pca) {
     };
 
     var layout = {
-	autosize: "false",
-	hovermode: "closest",
-	hoverdistance: 20,
-	plot_bgcolor: 'rgb(243,243,243)',
-	scrollZoom: "false",
-	yaxis: {
-	    fixedrange: true,
-	    showgrid: false,
-	},
-	xaxis : {
-	    fixedrange: true,
-	    showgrid: false,
-	    ticks: '',
-	    showticklabels: false
-	},
-	height: 900,
-	margin: {
-	    l: 0,
-	    r: 0,
-	    b: 50,
-	    t: 50,
-	    pad: 0
-	}
+        autosize: "false",
+        hovermode: "closest",
+        hoverdistance: 20,
+        plot_bgcolor: 'rgb(243,243,243)',
+        scrollZoom: "false",
+        yaxis: {
+            fixedrange: true,
+            showgrid: false,
+        },
+        xaxis : {
+            fixedrange: true,
+            showgrid: false,
+            ticks: '',
+            showticklabels: false
+        },
+        height: 900,
+        margin: {
+            l: 0,
+            r: 0,
+            b: 50,
+            t: 50,
+            pad: 0
+        },
+    annotations: [
+    {
+      x: 0.0372,
+      y: 0.1918,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'each bubble represents <br> one topic',
+      showarrow: true,
+      arrowhead: 0,
+      ax: -41,
+      ay: -40
+    },
+    {
+      x: -0.003,
+      y: -0.1067,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'color indicates <br> topic cluster',
+      showarrow: true,
+      arrowhead: 0,
+      ax: -70,
+      ay: 0
+    },
+    {
+      x: -0.2138,
+      y: 0.0802,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'sizes reflect topic prevalence <br> in chosen subset',
+      showarrow: true,
+      arrowhead: 0,
+      ax: 20,
+      ay: -140
+    },
+    {
+      x: -0.1505,
+      y: 0.1335,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: '',
+      showarrow: true,
+      arrowhead: 0,
+      ax: -50,
+      ay: -48
+    },
+    {
+      x: 0.1229,
+      y: 0.0558,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'click bubble to view <br> topic words',
+      showarrow: true,
+      arrowhead: 0,
+      ax: -50,
+      ay: -75
     }
+    ]
+};
 
     var data = [plot_data];
 
