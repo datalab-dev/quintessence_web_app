@@ -22,6 +22,94 @@ var timeseriesLayout = {
         gridwidth: 1,
         showticklabels: false
     },
+    paper_bgcolor: 'rgb(243, 243, 243)',
+    plot_bgcolor: 'rgb(243, 243, 243)',
+    showlegend: false,
+    hovermode: 'closest',
+    displayModeBar: false
+};
+
+var startingLayout = {
+    autosize: false,
+    width: 1024,
+    height: 550,
+    title: ' ',
+    xaxis: {
+        title: 'Decades',
+        gridcolor: 'rgb(243, 243, 243)',
+        type: 'linear',
+        range: [1470, 1700],
+        dtick: 10,
+        zerolinewidth: 1,
+        ticklen: 1,
+        gridwidth: 1
+    },
+    yaxis: {
+        title: 'Word Change',
+        gridcolor: 'rgb(243, 243, 243)',
+        layer: 'below traces',
+        range: [0, 1.25],
+        dtick: 0.25,
+        gridwidth: 1,
+        showticklabels: false
+    },
+    annotations: [
+    {
+      x: 1700,
+      y: 1,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'each decade is <br> compared with 1700',
+      showarrow: true,
+      arrowhead: 6,
+      ax: 0,
+      ay: -40
+    },
+    {
+      x: 1490,
+      y: 0.4763,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'lowest point is most <br> different from 1700',
+      showarrow: true,
+      arrowhead: 6,
+      ax: 0,
+      ay: 40
+    },
+    {
+      x: 1650,
+      y: 0.4636,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'terms nearest to <br> word in 1700',
+      showarrow: true,
+      arrowhead: 6,
+      ax: 20,
+      ay: 40
+    },
+    {
+      x: 1670,
+      y: 0.572,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: '',
+      showarrow: true,
+      arrowhead: 6,
+      ax: -50,
+      ay: 56
+    },
+    {
+      x: 1505,
+      y: 0.67,
+      xref: 'Decades',
+      yref: 'Word Change',
+      text: 'abrupt decrease indicates <br> word meaning change',
+      showarrow: true,
+      arrowhead: 2,
+      ax: -30,
+      ay: -75
+    }
+  ],
     //margin: { pad: 20 },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
@@ -103,6 +191,10 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
     var traces = [];
 
     neighbors.forEach(function(word) {
+        if (neighborsTimeseries[word] == null) {
+            return;
+        }
+
         var y = replaceZero(neighborsTimeseries[word]);
         var trace = {
             x: decades,
@@ -178,7 +270,7 @@ function plot_hist(category, sel, nn, word) {
 
 /* given a word generate word embeddings plots */
 function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
-    neighborsTimeseries) {
+    neighborsTimeseries, layout) {
     var nninfo = [];
 
     decades.forEach(function(decade) {
@@ -220,7 +312,7 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     var data1 = [ trace1 ].concat(nntraces);
 
     var nnPlot = document.getElementById('nn-plot');
-    Plotly.newPlot('nn-plot', data1, timeseriesLayout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot('nn-plot', data1, layout, {displayModeBar: false}, {showSendToCloud: true});
 
     /* plot nearest neighbors histogram on click
     nnPlot.on('plotly_click', function(data) {
@@ -231,17 +323,22 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     // get colors and sizes from data
     nnPlot.on('plotly_hover', function(data) {
     var pn = '',
-	tn = ''
+	tn = '',
+	x = '',
+	y = '';
 	colors = [];
           for (var i =0; i < data.points.length; i++) {
                          pn = data.points[i].pointNumber;
                          tn = data.points[i].curveNumber;
+			 x = data.points[i].x;
+			 y = data.points[i].y;
                 };
     	  for (var i = 0; i < decades.length; i++) {
         		colors.push('rgb(243, 243, 243)');
     		};
           colors[pn] = 'steelblue';
           console.log("pn: "+ pn);
+	  console.log(x + "+" + y);
        var update = {'marker':{color: colors, size: 8, line:{color:'steelblue', width:1}}};
        Plotly.restyle('nn-plot', update, [tn]);
     });
@@ -310,7 +407,7 @@ $(document).ready(function() {
         $('#tokens').val('history');
         var word = 'history';
         plot_timeseries(word, decades, data.wordTimeseries,
-            data.decNeighbors, data.neighborsTimeseries);
+            data.decNeighbors, data.neighborsTimeseries, startingLayout);
         plot_hist('full', null, data.fullNeighbors["full"], word);
         $("#dropdown-auth").change(function () {
            var author = $(this).val();
@@ -360,7 +457,7 @@ $(document).ready(function() {
 
                         /* plot */
                         plot_timeseries(word, decades, data.wordTimeseries,
-                            data.decNeighbors, data.neighborsTimeseries);
+                            data.decNeighbors, data.neighborsTimeseries, timeseriesLayout);
                         plot_hist('full', null, data.fullNeighbors["full"], word);
                         $("#dropdown-auth").change(function () {
                            var author = $(this).val();
