@@ -7,7 +7,7 @@ var timeseriesLayout = {
         title: 'Decades',
         gridcolor: 'rgb(243, 243, 243)',
         type: 'linear',
-        range: [1470, 1700],
+        range: [1470, 1705],
         dtick: 10,
         zerolinewidth: 1,
         ticklen: 1,
@@ -17,10 +17,13 @@ var timeseriesLayout = {
         title: 'Word Change',
         gridcolor: 'rgb(243, 243, 243)',
         layer: 'below traces',
-        range: [0, 1.25],
+        range: [0, 1.05],
         dtick: 0.25,
         gridwidth: 1,
-        showticklabels: false
+        showticklabels: true,
+	tickmode: 'array',
+	tickvals: [.25, .50, .75, 1.0],
+	ticktext: ['25', '50', '75', '100%']
     },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
@@ -38,7 +41,7 @@ var startingLayout = {
         title: 'Decades',
         gridcolor: 'rgb(243, 243, 243)',
         type: 'linear',
-        range: [1470, 1700],
+        range: [1470, 1705],
         dtick: 10,
         zerolinewidth: 1,
         ticklen: 1,
@@ -48,10 +51,13 @@ var startingLayout = {
         title: 'Word Change',
         gridcolor: 'rgb(243, 243, 243)',
         layer: 'below traces',
-        range: [0, 1.25],
+        range: [0, 1.05],
         dtick: 0.25,
         gridwidth: 1,
-        showticklabels: false
+        showticklabels: true,
+	tickmode: 'array',
+	tickvals: [.25, .50, .75, 1.0],
+	ticktext: ['25', '50', '75', '100%']
     },
     annotations: [
     {
@@ -305,7 +311,7 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
             }
         },
         text: nninfo,
-        hovertemplate: '<br>Most similar words:<br>%{text}',
+        hovertemplate: '<br>Similarity Score: %{y:.2%}<br>Most similar words:<br>%{text}',
         hoverlabel: {namelength : 0}
     };
 
