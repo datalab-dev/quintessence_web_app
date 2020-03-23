@@ -9,11 +9,7 @@ $type = "XML";
 require_once("config.php");
 
 // open mysqli conneciton
-$corpus_con = new mysqli($server, $user, $password, $corpusdb);
-
-if (!$corpus_con) {
-    echo "failed to connect to database!";
-}
+$corpus_con = getCorpusCon();
 
 
 $docid = mysqli_real_escape_string($corpus_con, $docid);
@@ -25,8 +21,8 @@ $query = "SELECT ".$type." FROM ".$type." WHERE QID = '".$docid."';";
     	$doc = $row[0];
         }
     } // if query succesful
-    
-    
+
+
 if (empty($doc))
     $results = "";
 else {

@@ -3,11 +3,7 @@
 require_once("config.php");
 
 // open mysqli conneciton
-$models_con = new mysqli($server, $user, $password, $modelsdb);
-
-if (!$models_con) {
-    echo "failed to connect to database!";
-}
+$models_con = getModelsCon();
 
 $proportion = [];
 $topic = [];

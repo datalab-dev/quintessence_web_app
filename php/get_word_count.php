@@ -5,12 +5,7 @@ $docid = $_POST['docid'];
 require_once("config.php");
 
 // open mysqli conneciton
-$corpus_con = new mysqli($server, $user, $password, $corpusdb);
-
-if (!$corpus_con) {
-    echo "failed to connect to database!";
-}
-
+$corpus_con = getCorpusCon();
 
 
 $wc = -1;

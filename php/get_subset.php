@@ -16,12 +16,8 @@ $authors_string = $_POST['authors'];
 require_once("config.php");
 
 // open mysqli conneciton
-$corpus_con = new mysqli($server, $user, $password, $corpusdb);
-$models_con = new mysqli($server, $user, $password, $modelsdb);
-
-if (!$corpus_con) {
-    echo "failed to connect to database!";
-}
+$corpus_con = getCorpusCon();
+$models_con = getModelsCon();
 
 
 

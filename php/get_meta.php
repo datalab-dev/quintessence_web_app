@@ -9,11 +9,7 @@ if ($_POST) {
 require_once("config.php");
 
 // open mysqli conneciton
-$corpus_con = new mysqli($server, $user, $password, $corpusdb);
-
-if (!$corpus_con) {
-    echo "failed to connect to database!";
-}
+$corpus_con = getCorpusCon();
 
 // $corpus_con->query("SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'");
 mysqli_set_charset($corpus_con, 'utf8');

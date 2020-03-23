@@ -1,4 +1,6 @@
 <?php
+    require_once('config.php');
+    
     $time_start = microtime(true);
 
     /* helper function to form a basic sql query */
@@ -8,9 +10,9 @@
 
 
     /* get the searchable list of words */
-    function getWords($conn) {
+    function getWords($models_con) {
         $sql = "SELECT word FROM timeseries;";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($models_con, $sql);
         $words = [];
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -22,10 +24,10 @@
 
 
     /* get the distance of a word to itself over time */
-    function getTimeseries($conn, $word) {
+    function getTimeseries($models_con, $word) {
         /* query database */
         $sql = getRow('timeseries', $word);
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($models_con, $sql);
         $row = mysqli_fetch_assoc($result);
 
         /* parse row */
@@ -38,13 +40,13 @@
 
 
     /* get the nearest neighbors and distance from word for each slice*/
-    function getNeighbors($conn, $word, $decades) {
+    function getNeighbors($models_con, $word, $decades) {
         $results = array();
 
         foreach ($decades as $decade) {
             $table = $decade . "_neighbors";
             $sql = getRow($table, $word);
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($models_con, $sql);
             $row = mysqli_fetch_assoc($result);
 
             /* parse row */
@@ -79,23 +81,18 @@
     $locations = file('../resources/locations.txt', FILE_IGNORE_NEW_LINES);
 
     /* connect to the database */
-    $host = '127.0.0.1';
-    $user = 'q_user';
-    $password = 'quintessence';
-    $dbname = 'EEBO_Models';
-    // $port = '3307';
-    $conn = mysqli_connect($host, $user, $password, $dbname, $port);
+    $models_con = getModelsCon();
 
-    $words = getWords($conn);
-    $wordTimeseries = getTimeseries($conn, $word);
-    $decNeighbors = getNeighbors($conn, $word, $decades);
-    $authNeighbors = getNeighbors($conn, $word, $authors);
-    $locNeighbors = getNeighbors($conn, $word, $locations);
-    $fullNeighbors = getNeighbors($conn, $word, array("full"));
+    $words = getWords($models_con);
+    $wordTimeseries = getTimeseries($models_con, $word);
+    $decNeighbors = getNeighbors($models_con, $word, $decades);
+    $authNeighbors = getNeighbors($models_con, $word, $authors);
+    $locNeighbors = getNeighbors($models_con, $word, $locations);
+    $fullNeighbors = getNeighbors($models_con, $word, array("full"));
 
     $neighborsTimeseries = array();
     foreach ($decNeighbors[1700]['neighbors'] as $nn) {
-        $ts = getTimeseries($conn, $nn);
+        $ts = getTimeseries($models_con, $nn);
         $neighborsTimeseries[$nn] = $ts;
     }
 

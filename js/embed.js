@@ -281,19 +281,26 @@ function plot_hist(category, sel, nn, word) {
 /* given a word generate word embeddings plots */
 function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     neighborsTimeseries, layout) {
+
     var nninfo = [];
 
     decades.forEach(function(decade) {
         nninfo.push(get_nninfo(decNeighbors[decade]));
     });
+    console.log(nninfo);
+    console.log(decNeighbors);
 
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
+    console.log(nntraces);
+
     wordTimeseries = replaceZero(wordTimeseries);
+
     var colors = [];
     for (var i = 0; i < decades.length; i++) {
         colors.push('rgb(243, 243, 243)');
     }
+
     /* plot word change over time */
     var trace1 = {
         x: decades,
@@ -330,27 +337,25 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
         plot_hist('decade', decade, decNeighbors[decade], word);
     }); */
 
-    // get colors and sizes from data
+    /* change the color of a point hovered on */
     nnPlot.on('plotly_hover', function(data) {
-    var pn = '',
-	tn = '',
-	x = '',
-	y = '';
-	colors = [];
-          for (var i =0; i < data.points.length; i++) {
-                         pn = data.points[i].pointNumber;
-                         tn = data.points[i].curveNumber;
-			 x = data.points[i].x;
-			 y = data.points[i].y;
-                };
-    	  for (var i = 0; i < decades.length; i++) {
-        		colors.push('rgb(243, 243, 243)');
-    		};
-          colors[pn] = 'steelblue';
-          console.log("pn: "+ pn);
-	  console.log(x + "+" + y);
-       var update = {'marker':{color: colors, size: 8, line:{color:'steelblue', width:1}}};
-       Plotly.restyle('nn-plot', update, [tn]);
+    	newColors = [...colors];
+
+        pn = data.points[data.points.length - 1].pointNumber;
+        tn = data.points[data.points.length - 1].curveNumber;
+        x = data.points[data.points.length - 1].x;
+        y = data.points[data.points.length - 1].y;
+        newColors[pn] = 'steelblue';
+
+        // console.log("pn: "+ pn);
+        // console.log(x + "+" + y);
+
+        var update = {'marker': {
+            color: newColors,
+            size: 8,
+            line: {color: 'steelblue', width: 1}
+        }};
+        Plotly.restyle('nn-plot', update, [tn]);
     });
 }
 
