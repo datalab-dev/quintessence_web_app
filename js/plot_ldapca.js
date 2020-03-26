@@ -53,12 +53,11 @@ function plot_ldapca(tp, pca) {
 
     sizes = [];
     texts = [];
-    for (var i = 0; i < tp['proportion'].length; i++)
-    {
-	s = tp['proportion'][i] * 10;
-	sizes.push(s)
-	text = "Topic ID: " + String(i+1) + "<br> Proportion: " + String(tp['proportion'][i].toFixed(2)) + "%";
-	texts.push(text);
+    for (var i = 0; i < tp['proportion'].length; i++) {
+    	s = tp['proportion'][i] * 10;
+    	sizes.push(s)
+    	text = "Topic ID: " + String(i+1) + "<br> Proportion: " + String(tp['proportion'][i].toFixed(2)) + "%";
+    	texts.push(text);
     }
 
     console.log(tp['proportion']);

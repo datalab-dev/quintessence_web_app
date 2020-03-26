@@ -1,8 +1,8 @@
 function get_subset() {
     // get the topic id from input value
-    // pass to get_topic_terms.php 
+    // pass to get_topic_terms.php
     // parse the response
-
+    var maxdocs = 5; // number of top docs to display
 
     // TIMELINE
     var slider = $("#date-range").data("ionRangeSlider");
@@ -25,7 +25,7 @@ function get_subset() {
     aus_string = "";
     if (aus) {
     var aus_string = "'" + aus.join("','") + "'";
-    } 
+    }
 
     // LOCATIONS
     var ls = $('#selected-locations').dropdown('get value');
@@ -39,7 +39,7 @@ function get_subset() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "./php/get_subset.php", true);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttp.send(params); 
+    xmlHttp.send(params);
     console.log("get subset: ", params);
     document.getElementById("ndocs").innerHTML = "";
     document.getElementById("status").innerHTML = "Fetching Results ...";
@@ -48,19 +48,19 @@ function get_subset() {
     document.getElementById("overlay").style.display = "block";
 
     xmlHttp.onreadystatechange = function ()  {
-	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-	    if (xmlHttp.responseText) {
-		console.log("updating plot");
-		console.log("big success");
-	     data = JSON.parse(xmlHttp.responseText);
-    	     update_ldapca(data);
-             init_documents_results(data["qids"], 5);
-	     document.getElementById("ndocs").innerHTML = data["qids"].length + " results";
-             document.getElementById("status").innerHTML = "Loaded";
-             document.getElementById("overlay").style.display = "none";
-	    } 
-
-	}// if success
+    	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            if (xmlHttp.responseText) {
+                console.log("updating plot");
+                console.log("big success");
+                data = JSON.parse(xmlHttp.responseText);
+                update_ldapca(data);
+                // init_documents_results(data["qids"], 5);
+                var ndocs = data["qids"].length < maxdocs ? data["qids"].length : maxdocs;
+                init_documents_results(data["qids"], ndocs);
+                document.getElementById("ndocs").innerHTML = data["qids"].length + " results";
+                document.getElementById("status").innerHTML = "Loaded";
+                document.getElementById("overlay").style.display = "none";
+            }
+    	}// if success
     }//response recieved
 }//get_subset
-

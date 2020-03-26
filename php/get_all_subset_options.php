@@ -3,17 +3,13 @@
 require_once("config.php");
 
 // open mysqli conneciton
-$corpus_con = new mysqli($server, $user, $password, $corpusdb);
+$corpus_con = getCorpusCon();
 mysqli_set_charset($corpus_con, "utf8");
-
-if (!$corpus_con) {
-    echo "failed to connect to database!";
-}
 
 
 
 $keywords = [];
-$query = "SELECT Keyword FROM Keywords;"; 
+$query = "SELECT Keyword FROM Keywords;";
 if ($result = $corpus_con->query($query)) {
     while ($row = $result->fetch_row()) {
 	$keywords[] = $row[0];
@@ -22,7 +18,7 @@ if ($result = $corpus_con->query($query)) {
 $keywords = array_values(array_unique($keywords));
 
 $authors = [];
-$query = "SELECT Author FROM Authors;"; 
+$query = "SELECT Author FROM Authors;";
 if ($result = $corpus_con->query($query)) {
     while ($row = $result->fetch_row()) {
 	$authors[] = $row[0];
@@ -31,7 +27,7 @@ if ($result = $corpus_con->query($query)) {
 $authors = array_values(array_unique($authors));
 
 $locations = [];
-$query = "SELECT Location FROM Metadata;"; 
+$query = "SELECT Location FROM Metadata;";
 if ($result = $corpus_con->query($query)) {
     while ($row = $result->fetch_row()) {
 	$locations[] = $row[0];

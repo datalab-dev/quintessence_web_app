@@ -175,7 +175,6 @@ function addWord(word, freq_data, raw_data) {
     /* add on click listener for deletion */
     $("#token-disp button").click(function() {
         var word = $(this).parent().text();
-        console.log(word);
         delete freq_data[word];
         delete raw_data[word];
         $(this).parent().remove();
