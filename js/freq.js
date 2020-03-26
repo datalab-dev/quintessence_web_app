@@ -39,11 +39,9 @@ function plotFrequencies(data, raw_data) {
             },
             line: { opacity: 1, shape: 'spline' },
             color: 'steelblue3',
-	    text: raw_data[word],
+            text: raw_data[word],
             hovertemplate: '%{y:.2%} of Words Used in %{x} <br>Total Occurrences: %{text:,}',
             hoverlabel: {namelength : 0}
-            // width: 800,
-            // height: 600
         };
         traces.push(trace);
     });
@@ -71,7 +69,7 @@ function plotFrequencies(data, raw_data) {
             rangemode: 'tozero',
             showticklabels: true,
             ticklen: 1,
-	    //tickformat = '.2%',
+            // tickformat = '.2%',
             showline: true
         },
         rangemode: 'nonnegative',
@@ -112,8 +110,6 @@ function plotOverallFrequencies(data) {
         // text: 'test',
         hovertemplate: '%{y:.3s} total words',
         hoverlabel: {namelength : 0}
-        // width: 800,
-        // height: 600
     };
 
     var traceDocs = {
@@ -133,10 +129,8 @@ function plotOverallFrequencies(data) {
         },
         line: { opacity: 1 },
         color: 'steelblue3',
-	hovertemplate: '%{y:.3s} total documents',
+        hovertemplate: '%{y:.3s} total documents',
         hoverlabel: {namelength : 0}
-	// width: 800,
-        // height: 600
     };
 
     var layout = {
@@ -214,10 +208,11 @@ $(document).ready(function() {
                     /* add on click listener for deletion */
                     $("#token-disp button").click(function() {
                         var word = $(this).parent().text();
+                        console.log(word);
                         delete freq_data[word];
                         delete raw_data[word];
                         $(this).parent().remove();
-                        plotFrequencies(freq_data);
+                        plotFrequencies(freq_data, raw_data);
                     });
 
                     /* fetch data */
