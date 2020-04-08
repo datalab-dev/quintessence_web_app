@@ -39,11 +39,9 @@ function plotFrequencies(data, raw_data) {
             },
             line: { opacity: 1, shape: 'spline' },
             color: 'steelblue3',
-	    text: raw_data[word],
+            text: raw_data[word],
             hovertemplate: '%{y:.2%} of Words Used in %{x} <br>Total Occurrences: %{text:,}',
             hoverlabel: {namelength : 0}
-            // width: 800,
-            // height: 600
         };
         traces.push(trace);
     });
@@ -71,7 +69,7 @@ function plotFrequencies(data, raw_data) {
             rangemode: 'tozero',
             showticklabels: true,
             ticklen: 1,
-	    //tickformat = '.2%',
+            // tickformat = '.2%',
             showline: true
         },
         rangemode: 'nonnegative',
@@ -112,8 +110,6 @@ function plotOverallFrequencies(data) {
         // text: 'test',
         hovertemplate: '%{y:.3s} total words',
         hoverlabel: {namelength : 0}
-        // width: 800,
-        // height: 600
     };
 
     var traceDocs = {
@@ -133,10 +129,8 @@ function plotOverallFrequencies(data) {
         },
         line: { opacity: 1 },
         color: 'steelblue3',
-	hovertemplate: '%{y:.3s} total documents',
+        hovertemplate: '%{y:.3s} total documents',
         hoverlabel: {namelength : 0}
-	// width: 800,
-        // height: 600
     };
 
     var layout = {
@@ -174,6 +168,32 @@ function plotOverallFrequencies(data) {
 }
 
 
+function addWord(word, freq_data, raw_data) {
+    $('#token-list').append(`<li><button class='btn'><i class='fa
+        fa-close'></i></button>${word}</li>`);
+
+    /* add on click listener for deletion */
+    $("#token-disp button").click(function() {
+        var word = $(this).parent().text();
+        delete freq_data[word];
+        delete raw_data[word];
+        $(this).parent().remove();
+        plotFrequencies(freq_data, raw_data);
+    });
+
+    /* fetch data */
+    $.getJSON(`./php/fetch_freq.php?word=${word}`, function(data) {
+        freq_data[word] = data.relFreqs;
+        raw_data[word] = data.rawFreqs;
+    }).done(function() {
+        /* replot */
+        plotFrequencies(freq_data, raw_data);
+        $('#search-button').off('click');
+        $('#tokens').val(''); // clear the search bar when token selected
+    });
+}
+
+
 $(document).ready(function() {
     // Configure tabs
     $('#tabs li a:not(:first)').addClass('inactive');
@@ -195,10 +215,12 @@ $(document).ready(function() {
     })
 
     $('#tokens').val('');
-    $.getJSON('./resources/words.json', function(data) {
-        freq_data = {};
-        raw_data = {};
+    freq_data = {};
+    raw_data = {};
 
+    addWord('history', freq_data, raw_data);
+
+    $.getJSON('./resources/words.json', function(data) {
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
@@ -208,34 +230,10 @@ $(document).ready(function() {
             },
             select: function(e, ui) {
                 $('#search-button').on('click', function() {
-                    $('#token-list').append(`<li><button class='btn'><i class='fa
-                        fa-close'></i></button>${ui.item.value}</li>`);
-
-                    /* add on click listener for deletion */
-                    $("#token-disp button").click(function() {
-                        var word = $(this).parent().text();
-                        delete freq_data[word];
-                        delete raw_data[word];
-                        $(this).parent().remove();
-                        plotFrequencies(freq_data);
-                    });
-
-                    /* fetch data */
-                    $.getJSON(`./php/fetch_freq.php?word=${ui.item.value}`, function(data) {
-                        freq_data[ui.item.value] = data.relFreqs;
-                        raw_data[ui.item.value] = data.rawFreqs;
-                    }).done(function() {
-                        /* replot */
-                        plotFrequencies(freq_data, raw_data);
-                        $('#search-button').off('click');
-                        $('#tokens').val(''); // clear the search bar when token selected
-                    });
+                    addWord(ui.item.value, freq_data, raw_data);
                 });
             }
         });
-    })
-    .done(function() {
-        plotFrequencies(freq_data);
     });
 
     $.getJSON('./php/fetch_overall_freq.php', function(data) {

@@ -287,12 +287,9 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     decades.forEach(function(decade) {
         nninfo.push(get_nninfo(decNeighbors[decade]));
     });
-    console.log(nninfo);
-    console.log(decNeighbors);
 
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
-    console.log(nntraces);
 
     wordTimeseries = replaceZero(wordTimeseries);
 
