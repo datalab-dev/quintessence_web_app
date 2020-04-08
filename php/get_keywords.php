@@ -13,7 +13,7 @@ $keywords = [];
 $docid = mysqli_real_escape_string($corpus_con, $docid);
 
 
-$query = "SELECT Keyword FROM Keywords WHERE QID = '.$docid.';";
+$query = "SELECT Keyword FROM Keywords WHERE QID = '$docid';";
 if ($result = $corpus_con->query($query)) {
     while ($row = $result->fetch_row()) {
 	$keywords[] = $row[0];

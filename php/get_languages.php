@@ -12,7 +12,7 @@ $languages = [];
 $docid = mysqli_real_escape_string($corpus_con, $docid);
 
 
-$query = "SELECT Language FROM Languages WHERE QID = '.$docid.';";
+$query = "SELECT Language FROM Languages WHERE QID = '$docid';";
 if ($result = $corpus_con->query($query)) {
     while ($row = $result->fetch_row()) {
 	$languages[] = $row[0];
