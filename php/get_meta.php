@@ -37,6 +37,14 @@ for ($i = 0; $i < count($names); $i++) {
     $combined[$names[$i]] = $meta[0][$i];
 }
 
+$query = "SELECT Author FROM Authors WHERE QID = '".$docid."';";
+
+if ($result = $corpus_con->query($query)) {
+    while ($row = $result->fetch_row()) {
+	$combined["Author"] = $row[0];
+    }
+}
+
 
 if (empty($combined))
     $results = "";

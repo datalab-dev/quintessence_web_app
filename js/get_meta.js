@@ -5,14 +5,14 @@ function button_get_meta(id) {
 
 function get_meta(docid) {
     // given doc id, get the metadata
-    // pass to get_topic_terms.php 
+    // pass to get_topic_terms.php
     // parse the response
 
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "./php/get_meta.php", true);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttp.send("docid=" + docid); 
+    xmlHttp.send("docid=" + docid);
     console.log("get meta: ", docid);
 
     xmlHttp.onreadystatechange = function ()  {
@@ -30,7 +30,7 @@ function get_meta(docid) {
 function parse_meta(data, docid) {
     var title = "";
     var ids = ["QID", "File_ID", "STC_ID", "ESTC_ID", "EEBO_Citation", "Proquest_ID", "VID"];
-    var main = ["Title", "Location", "Publisher", "Date", "Word_Count",];
+    var main = ["Title", "Author", "Location", "Publisher", "Date", "Word_Count",];
     var main_container = document.getElementById("info_" + docid);
     main_container.innerHTML = "";
 
@@ -48,9 +48,9 @@ function parse_meta(data, docid) {
             vcell.innerHTML = data[key];
 	    vcell.classList.add("values");
 
-	    if (key == "Title") { 
+	    if (key == "Title") {
 		title = data[key];
-	    } 
+	    }
 	}
     }
 
