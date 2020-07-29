@@ -12,6 +12,7 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 
     document.getElementById("top_docs").appendChild(title);
 
+
     // for each document
     for (var i =0; i < NDOCS; i++) {
 
@@ -53,7 +54,7 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	refidsbtn.className = "doc_button";
 	refidsbtn.id = "refidsbtn_" + qid;
 	refidsbtn.innerHTML = "Reference IDs";
-	refidsbtn.onclick = function() { 
+	refidsbtn.onclick = function() {
 	    console.log(this.id);
 	    document.getElementById("modal_refs_" + this.id.split("_")[1]).style.display = "block";
 	}
@@ -63,7 +64,7 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	samplebtn.className = "doc_button";
 	samplebtn.id = "samplebtn_" + qid;
 	samplebtn.innerHTML = "Sample Text"
-	samplebtn.onclick = function() { 
+	samplebtn.onclick = function() {
 	    document.getElementById("modal_sample_" + this.id.split("_")[1]).style.display = "block";
 	}
 
@@ -94,7 +95,7 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	close1.className = "close";
 	close1.id = "close1_" + qid;
 	close1.innerHTML = "&times";
-	close1.onclick = function() { 
+	close1.onclick = function() {
 	    console.log(this.id);
 	    document.getElementById("modal_refs_" + this.id.split("_")[1]).style.display = "none";
 	}
@@ -113,7 +114,7 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	close2.className = "close";
 	close2.id = "close2_" + qid;
 	close2.innerHTML = "&times";
-	close2.onclick = function() { 
+	close2.onclick = function() {
 	    document.getElementById("modal_sample_" + this.id.split("_")[1]).style.display = "none";
 	}
 	samplecontent.appendChild(close2);
@@ -122,16 +123,19 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	modal_container.appendChild(mrefs);
 	modal_container.appendChild(msample);
 
-	get_meta(qid);
+	get_meta(qid, kwics[i]);
 	get_truncated_document(qid);
-	container.appendChild(info);
+    container.appendChild(info);
 
-	// KWIC
-        if (kwics !== undefined) {
-            var kwic_obj = document.createElement('div');
-            kwic_obj.innerHTML = kwics[i];
-            container.appendChild(kwic_obj);
-        }
+    // KWIC
+    // var tables = container.getElementsByTagName('table');
+    // console.log(tables);
+    // if (kwics !== undefined) {
+    //     var kwic_obj = document.createElement('div');
+    //     kwic_obj.innerHTML = kwics[i];
+    //     container.appendChild(kwic_obj);
+    // }
+
 
 	container.appendChild(tdbuttons);
 	container.appendChild(modal_container);

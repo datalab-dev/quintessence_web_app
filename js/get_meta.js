@@ -3,7 +3,7 @@ function button_get_meta(id) {
     get_meta(id);
 }
 
-function get_meta(docid) {
+function get_meta(docid, kwic) {
     // given doc id, get the metadata
     // pass to get_topic_terms.php
     // parse the response
@@ -18,7 +18,11 @@ function get_meta(docid) {
     xmlHttp.onreadystatechange = function ()  {
 	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	    if (xmlHttp.responseText) {
-	    parse_meta(JSON.parse(xmlHttp.responseText), docid);
+            var data = JSON.parse(xmlHttp.responseText);
+            if (kwic != undefined) {
+                data["Word in Context"] = kwic;
+            }
+            parse_meta(data, docid);
 	    } else {
 		console.log("No response for ", docid);
 	    }
@@ -30,7 +34,7 @@ function get_meta(docid) {
 function parse_meta(data, docid) {
     var title = "";
     var ids = ["QID", "File_ID", "STC_ID", "ESTC_ID", "EEBO_Citation", "Proquest_ID", "VID"];
-    var main = ["Title", "Author", "Location", "Publisher", "Date", "Word_Count",];
+    var main = ["Title", "Author", "Location", "Publisher", "Date", "Word_Count", "Word in Context"];
     var main_container = document.getElementById("info_" + docid);
     main_container.innerHTML = "";
 
