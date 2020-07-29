@@ -123,7 +123,11 @@ function init_documents_results(doc_ids_list, NDOCS, kwics) {
 	modal_container.appendChild(mrefs);
 	modal_container.appendChild(msample);
 
-	get_meta(qid, kwics[i]);
+    if (kwics !== undefined) {
+        get_meta(qid, kwics[i]);
+    } else {
+        get_meta(qid);
+    }
 	get_truncated_document(qid);
     container.appendChild(info);
 
