@@ -9,6 +9,7 @@ if ($_GET) {
 
 echo $term . "\n";
 
+/* get neighbors to terms */
 $con = new MongoDB\Client("mongodb://localhost:27017");
 $db = $con->test;
 $collection = $db->{'terms.neighbors'};
@@ -28,5 +29,25 @@ $cursor = $collection->find(
 );
 $res = $cursor->toArray()[0];
 
+/* get timeseries */
+$collection = $db->{'terms.timeseries'};
+$cursor = $collection->aggregate(
+    [
+        [
+            '$match' => ['_id' => ['$in' => $res['decades'][1480]['neighbors']]]
+        ],
+        [
+            '$project' => [
+                '_id' => 0,
+                'term' => '$_id',
+                'timeseries' => 1
+            ]
+        ]
+    ]
+);
+$timeseries = $cursor->toArray();
+
+$res['timeseries'] = $timeseries;
 echo json_encode($res);
+echo "\n";
 ?>
