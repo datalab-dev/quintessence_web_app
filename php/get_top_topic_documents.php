@@ -9,9 +9,9 @@ if ($_GET) {
 
 $con = new MongoDB\Client("mongodb://localhost:27017");
 $db = $con->test;
-$collection = $db->{'topics.terms'};
+$collection = $db->{'topics'};
 $cursor = $collection->find(['_id' => $topicId]);
 $response = $cursor->toArray()[0];
 
-echo json_encode($response['terms']);
+echo json_encode($response['topDocs']);
 ?>

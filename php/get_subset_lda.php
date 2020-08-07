@@ -63,23 +63,83 @@ function intersectMatches($matches) {
     $docs = array_filter($counts, function($count) use($nquery){
         return $count >= $nquery;
     });
-    $docs = array_values($docs);
+    $docs = array_keys($docs);
 
     return $docs;
 }
 
 
-// $datesString = $_GET['dates'];
-// $keywordsString = $_GET['keywords'];
-// $locationsString = $_GET['locations'];
-// $authorsString = $_GET['authors'];
-// $proportion = (bool)$_GET['proportion']; // set true to calculate proportion
+/* calculate topic proportions */
+function getTopicProportions($collection, $docs) {
+    $cursor = $collection->aggregate(
+        [
+            [
+                '$match' => ['_id' => ['$in' => $docs]]
+            ],
+            [
+                '$lookup' => [
+                    'from' => 'docs.metadata',
+                    'localField' => '_id',
+                    'foreignField' => '_id',
+                    'as' => 'meta'
+                ]
+            ],
+            [
+                '$unwind' => ['path' => '$topics']
+            ],
+            [
+                '$replaceRoot' => ['newRoot' => [
+                    '$mergeObjects' => [
+                        ['$arrayElemAt' => ['$meta', 0]],
+                        '$$ROOT']]
+                    ]
+            ],
+            [
+                '$project' => [
+                    'topicId' => '$topics.topicId',
+                    'freq' => ['$multiply' => [
+                        '$topics.probability',
+                        '$wordCount']
+                    ]
+                ]
+            ],
+            [
+                '$group' => [
+                    '_id' => '$topicId',
+                    'topicFreq' => ['$sum' => '$freq']
+                ]
+            ]
+        ]
+    );
+    $res = $cursor->toArray();
 
-$datesString = "'1490','1600'";
-$keywordsString = "'Description and travel', 'Early works to 1800'";
-$locationsString = "";
-$authorsString = "";
-$proportion = "True";
+    foreach ($res as $freq) {
+        $topicFreqs[] = $freq['topicFreq'];
+    }
+    $sum = array_sum($topicFreqs);
+
+    $topicProportions = [];
+    foreach ($topicFreqs as $topicFreq) {
+        $topicProportions[] = ($topicFreq) / $sum;
+    }
+
+    return $topicProportions;
+}
+
+
+if ($_GET) {
+    $datesString = $_GET['dates'];
+    $keywordsString = $_GET['keywords'];
+    $locationsString = $_GET['locations'];
+    $authorsString = $_GET['authors'];
+    $proportion = (bool)$_GET['proportion']; // set true to calculate proportion
+} else {
+    $datesString = "'1490','1600'";
+    $keywordsString = "'Description and travel', 'Early works to 1800'";
+    $locationsString = "";
+    $authorsString = "";
+    $proportion = "True";
+}
 
 $con = new MongoDB\Client("mongodb://localhost:27017");
 $db = $con->test;
@@ -92,40 +152,16 @@ $matches[] = subsetString($collection, 'keywords', $keywordsString);
 $matches[] = subsetString($collection, 'location', $locationsString);
 $matches[] = subsetString($collection, 'author', $authorsString);
 $docs = intersectMatches($matches);
-// var_dump($docs);
 
-/* get doc topics */
-$collection = $db->{'topics.docs'};
-$cursor = $collection->aggregate(
-    [
-        [
-            '$unwind' => ['path' => '$docs']
-        ],
-        [
-            '$match' => ['docs.qid' => ['$in' => $docs]]
-        ],
-        [
-            '$group' => [
-                '_id' => '$_id',
-                'topicFreq' => ['$sum' => '$docs.frequency'],
-            ]
-        ],
-        [
-            '$project' => ['_id' => 0]
-        ]
-    ]
+/* get topic proportions */
+$collection = $db->{'docs.topics'};
+$proportions = [];
+if (!empty($docs) && $proportion)
+    $proportions = getTopicProportions($collection, $docs);
+
+$result = array(
+    'qids' => $docs,
+    'proportions' => $proportions
 );
-$res = $cursor->toArray();
-foreach ($res as $freq) {
-    $topicFreqs[] = $freq['topicFreq'];
-}
-$sum = array_sum($topicFreqs);
-
-/* calculate proportions */
-$topicProportions = [];
-foreach ($topicFreqs as $topicFreq) {
-    $topicProportions[] = ($topicFreq + 1) / $sum;
-}
-
-echo json_encode($topicProportions);
+echo json_encode($result);
 ?>
