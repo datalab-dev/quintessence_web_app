@@ -7,8 +7,7 @@ if ($_GET) {
     $topicId = (int)$argv[1];
 }
 
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 $collection = $db->{'topics'};
 $cursor = $collection->find(['_id' => $topicId]);
 $response = $cursor->toArray()[0];

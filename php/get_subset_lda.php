@@ -141,8 +141,7 @@ if ($_GET) {
     $proportion = "True";
 }
 
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 $collection = $db->{'docs.metadata'};
 
 /* get qids of subset */

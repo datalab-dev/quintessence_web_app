@@ -7,8 +7,7 @@ if ($_GET) {
     $qid = (int)$argv[1];
 }
 
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 $collection = $db->{'docs.metadata'};
 $cursor = $collection->find(
     ['_id' => $qid],

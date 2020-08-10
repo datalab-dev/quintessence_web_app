@@ -10,8 +10,7 @@ if ($_GET) {
 echo $term . "\n";
 
 /* get neighbors to terms */
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 $collection = $db->{'terms.neighbors'};
 $cursor = $collection->find(
     [

@@ -7,8 +7,7 @@ if ($_GET) {
     $term = $argv[1];
 }
 
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 $collection = $db->{'terms.frequencies'};
 $cursor = $collection->find(
     [

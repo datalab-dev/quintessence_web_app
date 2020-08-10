@@ -1,7 +1,6 @@
 <?php
 require 'vendor/autoload.php';
 
-$time_start = microtime(true);
 
 /* given term get the top n documents based on tfidf score */
 function getDocuments($db, $term) {
@@ -60,8 +59,7 @@ if ($_GET) {
 }
 
 $N = 20; // window size
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 
 $documents = getDocuments($db, $term);
 foreach ($documents as $doc) {

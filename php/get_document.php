@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require 'config.php';
 
 if ($_GET) {
     $qid = (int)$_GET['qid'];
@@ -17,8 +18,7 @@ if ($truncated) {
     $collectionName = 'docs';
 }
 
-$con = new MongoDB\Client("mongodb://localhost:27017");
-$db = $con->test;
+$db = getMongoCon();
 $collection = $db->{$collectionName};
 $cursor = $collection->find(
     [
