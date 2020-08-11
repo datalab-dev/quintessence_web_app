@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require 'config.php';
 
 if ($_GET) {
     $qid = (int)$_GET['qid'];

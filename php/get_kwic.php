@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require 'config.php';
 
 
 /* given term get the top n documents based on tfidf score */

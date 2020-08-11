@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require 'config.php';
 
 
 /* returns a subset of qids given numeric bounds and metadata field

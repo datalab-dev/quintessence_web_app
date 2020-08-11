@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require 'config.php';
 
 if ($_GET) {
     $topicId = (int)$_GET['topicId'];
