@@ -15,7 +15,7 @@ var timeseriesLayout = {
         gridwidth: 1
     },
     yaxis: {
-        title: 'Word Change',
+        title: 'term Change',
         gridcolor: 'rgb(243, 243, 243)',
         layer: 'below traces',
         range: [0, 1.05],
@@ -51,75 +51,75 @@ var startingLayout = {
         gridwidth: 1
     },
     yaxis: {
-        title: 'Word Change',
+        title: 'term Change',
         gridcolor: 'rgb(243, 243, 243)',
         layer: 'below traces',
         range: [0, 1.05],
         dtick: 0.25,
         gridwidth: 1,
         showticklabels: true,
-	tickmode: 'array',
-	tickvals: [.25, .50, .75, 1.0],
-	ticktext: ['25', '50', '75', '100%'],
-	tickfont: {color: 'gray'}
+    	tickmode: 'array',
+    	tickvals: [.25, .50, .75, 1.0],
+    	ticktext: ['25', '50', '75', '100%'],
+    	tickfont: {color: 'gray'}
     },
     annotations: [
-    {
-      x: 1700,
-      y: 1,
-      xref: 'Decades',
-      yref: 'Word Change',
-      text: 'each decade is <br> compared with 1700',
-      showarrow: true,
-      arrowhead: 6,
-      ax: 0,
-      ay: -40
-    },
-    {
-      x: 1490,
-      y: 0.4763,
-      xref: 'Decades',
-      yref: 'Word Change',
-      text: 'lowest point is most <br> different from 1700',
-      showarrow: true,
-      arrowhead: 6,
-      ax: 0,
-      ay: 40
-    },
-    {
-      x: 1650,
-      y: 0.4636,
-      xref: 'Decades',
-      yref: 'Word Change',
-      text: 'terms nearest to <br> word in 1700',
-      showarrow: true,
-      arrowhead: 6,
-      ax: 20,
-      ay: 40
-    },
-    {
-      x: 1670,
-      y: 0.572,
-      xref: 'Decades',
-      yref: 'Word Change',
-      text: '',
-      showarrow: true,
-      arrowhead: 6,
-      ax: -50,
-      ay: 56
-    },
-    {
-      x: 1505,
-      y: 0.67,
-      xref: 'Decades',
-      yref: 'Word Change',
-      text: 'abrupt increase indicates <br> word meaning change',
-      showarrow: true,
-      arrowhead: 2,
-      ax: -30,
-      ay: -75
-    }
-  ],
+        {
+            x: 1700,
+            y: 1,
+            xref: 'Decades',
+            yref: 'term Change',
+            text: 'each decade is <br> compared with 1700',
+            showarrow: true,
+            arrowhead: 6,
+            ax: 0,
+            ay: -40
+        },
+        {
+            x: 1490,
+            y: 0.4763,
+            xref: 'Decades',
+            yref: 'term Change',
+            text: 'lowest point is most <br> different from 1700',
+            showarrow: true,
+            arrowhead: 6,
+            ax: 0,
+            ay: 40
+        },
+        {
+            x: 1650,
+            y: 0.4636,
+            xref: 'Decades',
+            yref: 'term Change',
+            text: 'terms nearest to <br> term in 1700',
+            showarrow: true,
+            arrowhead: 6,
+            ax: 20,
+            ay: 40
+        },
+        {
+            x: 1670,
+            y: 0.572,
+            xref: 'Decades',
+            yref: 'term Change',
+            text: '',
+            showarrow: true,
+            arrowhead: 6,
+            ax: -50,
+            ay: 56
+        },
+        {
+            x: 1505,
+            y: 0.67,
+            xref: 'Decades',
+            yref: 'term Change',
+            text: 'abrupt increase indicates <br> term meaning change',
+            showarrow: true,
+            arrowhead: 2,
+            ax: -30,
+            ay: -75
+        }
+    ],
     //margin: { pad: 20 },
     paper_bgcolor: 'rgb(243, 243, 243)',
     plot_bgcolor: 'rgb(243, 243, 243)',
@@ -196,16 +196,16 @@ function get_nninfo(data) {
 }
 
 
-/* given a word's nerest neighbors in 1700 get traces over time for all */
+/* given a term's nerest neighbors in 1700 get traces over time for all */
 function get_nn_traces(neighbors, neighborsTimeseries, decades) {
     var traces = [];
 
-    neighbors.forEach(function(word) {
-        if (neighborsTimeseries[word] == null) {
+    neighbors.forEach(function(term) {
+        if (neighborsTimeseries[term] == null) {
             return;
         }
 
-        var y = replaceZero(neighborsTimeseries[word]);
+        var y = replaceZero(neighborsTimeseries[term]);
         var trace = {
             x: decades,
             y: y,
@@ -217,7 +217,7 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
                 width: 0.5,
 		shape: 'spline'
             },
-            hovertext: word,
+            hovertext: term,
             hoverinfo: 'text',
             // hovertemplate: '%{text}',
             hoverlabel: {namelength :-1}
@@ -229,7 +229,7 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
 }
 
 
-function plot_hist(category, sel, nn, word) {
+function plot_hist(category, sel, nn, term) {
     var trace = {
 	x: nn.scores,
         y: nn.neighbors,
@@ -251,19 +251,19 @@ function plot_hist(category, sel, nn, word) {
     var element;
     switch(category) {
         case 'decade':
-            var title = `Most similar to "${word}" in ${sel}`;
+            var title = `Most similar to "${term}" in ${sel}`;
             element = 'dec-hist';
             break;
         case 'author':
-            var title = `Most similar to "${word}" in texts by ${sel}`;
+            var title = `Most similar to "${term}" in texts by ${sel}`;
             element = 'auth-hist';
             break;
         case 'location':
-            var title = `Most similar to "${word}" in texts from ${sel}`;
+            var title = `Most similar to "${term}" in texts from ${sel}`;
             element = 'loc-hist';
             break;
         case 'full':
-            var title = `Most similar to "${word}" in all texts`;
+            var title = `Most similar to "${term}" in all texts`;
             element = 'full-hist';
             break;
     }
@@ -274,12 +274,13 @@ function plot_hist(category, sel, nn, word) {
         title: '',
         dtick: 1
     };
-    Plotly.newPlot(element, [trace], authHistLayout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot(element, [trace], authHistLayout, {displayModeBar: false},
+        {showSendToCloud: true});
 }
 
 
-/* given a word generate word embeddings plots */
-function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
+/* given a term generate term embeddings plots */
+function plot_timeseries(term, decades, termTimeseries, decNeighbors,
     neighborsTimeseries, layout) {
 
     var nninfo = [];
@@ -291,17 +292,17 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
 
-    wordTimeseries = replaceZero(wordTimeseries);
+    termTimeseries = replaceZero(termTimeseries);
 
     var colors = [];
     for (var i = 0; i < decades.length; i++) {
         colors.push('rgb(243, 243, 243)');
     }
 
-    /* plot word change over time */
+    /* plot term change over time */
     var trace1 = {
         x: decades,
-        y: wordTimeseries,
+        y: termTimeseries,
         mode: 'lines+markers',
         type: 'scatter',
         color: 'steelblue',
@@ -319,19 +320,20 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
             }
         },
         text: nninfo,
-        hovertemplate: '<br>Similarity Score: %{y:.2%}<br>Most similar words:<br>%{text}',
+        hovertemplate: '<br>Similarity Score: %{y:.2%}<br>Most similar terms:<br>%{text}',
         hoverlabel: {namelength : 0}
     };
 
     var data1 = [ trace1 ].concat(nntraces);
 
     var nnPlot = document.getElementById('nn-plot');
-    Plotly.newPlot('nn-plot', data1, layout, {displayModeBar: false}, {showSendToCloud: true});
+    Plotly.newPlot('nn-plot', data1, layout, {displayModeBar: false},
+        {showSendToCloud: true});
 
     /* plot nearest neighbors histogram on click
     nnPlot.on('plotly_click', function(data) {
         var decade = data.points[0].x;
-        plot_hist('decade', decade, decNeighbors[decade], word);
+        plot_hist('decade', decade, decNeighbors[decade], term);
     }); */
 
     /* change the color of a point hovered on */
@@ -344,9 +346,6 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
         y = data.points[data.points.length - 1].y;
         newColors[pn] = 'steelblue';
 
-        // console.log("pn: "+ pn);
-        // console.log(x + "+" + y);
-
         var update = {'marker': {
             color: newColors,
             size: 8,
@@ -357,7 +356,7 @@ function plot_timeseries(word, decades, wordTimeseries, decNeighbors,
 }
 
 
-function get_kwic(data, word) {
+function get_kwic(data, term) {
     var doc_ids_list = [];
     var kwics = [];
 
@@ -368,7 +367,7 @@ function get_kwic(data, word) {
         doc_ids_list = JSON.parse(data);
     }).done(function() {
         Object.keys(data).forEach(function(doc) {
-            var kwic = data[doc].window.replace(data[doc].word, `<b>${data[doc].word}</b>`);
+            var kwic = data[doc].window.replace(data[doc].term, `<b>${data[doc].term}</b>`);
             kwics.push(kwic);
         });
 
@@ -414,79 +413,81 @@ $(document).ready(function() {
     var auth_options = $("#dropdown-auth").html();
     var loc_options = $("#dropdown-loc").html();
 
-    /* load the word 'history' as a sample selection */
+    /* load the term 'history' as a sample selection */
     $.getJSON('./resources/sample_embed.json', function(data) {
         $('#tokens').val('history');
-        var word = 'history';
-        plot_timeseries(word, decades, data.wordTimeseries,
-            data.decNeighbors, data.neighborsTimeseries, startingLayout);
-        plot_hist('full', null, data.fullNeighbors["full"], word);
+        var term = 'history';
+        var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length)
+        plot_timeseries(term, decades, data.timeseries[0],
+            data.decades, neighborsTimeseries, timeseriesLayout);
+        plot_hist('full', null, data.full, term);
         $("#dropdown-auth").change(function () {
            var author = $(this).val();
            var authName = $("#dropdown-auth option:selected").text();
-           plot_hist('author', authName, data.authNeighbors[author], word);
+           plot_hist('author', authName, data.authors[author], term);
         });
         $("#dropdown-loc").change(function () {
           var location = $(this).val();
           var locName = $("#dropdown-loc option:selected").text();
-          plot_hist('location', locName, data.locNeighbors[location], word);
+          plot_hist('location', locName, data.locations[location], term);
         });
         $.getJSON('./resources/sample_kwic.json?v=3', function(data) {
-            get_kwic(data, word);
+            get_kwic(data, term);
             data = [];
         })
     });
 
     var decades = range(1480, 1710, 10);
 
-    $.getJSON('./resources/words.json', function(data) {
+    $.getJSON('./resources/terms.json', function(data) {
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
             source: function(request, response) {
-                var results = $.ui.autocomplete.filter(data.words, request.term)
+                var results = $.ui.autocomplete.filter(data.terms, request.term)
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
                 $('#search-button').on('click', function() {
                     $('#top_docs').toggle()
-                    var word = ui.item.value;
+                    var term = ui.item.value;
                     console.log(ui.item.value);
                     $('#token-msg').text('Requesting token data ...');
-                    $('#kwic-msg').text('Requesting keyword in context data ...');
-                    $.getJSON(`./php/fetch_all.php?word=${word}`, function(data) {
+                    $('#kwic-msg').text('Requesting keyterm in context data ...');
+                    $.getJSON(`./php/fetch_neighbors.php?term=${term}`, function(data) {
                         /* filter dropdown menus */
-                        for(var author in data.authNeighbors) {
-                            if (data.authNeighbors[author].scores.length == 0) {
+                        for(var author in data.authors) {
+                            if (data.authors[author].scores.length == 0) {
                                 $(`#dropdown-auth option[value=\"${author}\"]`).remove();
                             }
                         }
-                        for(var location in data.locNeighbors) {
-                            if (data.locNeighbors[location].scores.length == 0) {
+                        for(var location in data.locations) {
+                            if (data.locations[location].scores.length == 0) {
                                 $(`#dropdown-loc option[value=\"${location}\"]`).remove();
                             }
                         }
 
                         /* plot */
-                        plot_timeseries(word, decades, data.wordTimeseries,
-                            data.decNeighbors, data.neighborsTimeseries, timeseriesLayout);
-                        plot_hist('full', null, data.fullNeighbors["full"], word);
+                        var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length)
+                        plot_timeseries(term, decades, data.timeseries[0],
+                            data.decades, neighborsTimeseries, timeseriesLayout);
+                        plot_hist('full', null, data.full, term);
                         $("#dropdown-auth").change(function () {
                            var author = $(this).val();
                            var authName = $("#dropdown-auth option:selected").text();
-                           plot_hist('author', authName, data.authNeighbors[author], word);
+                           plot_hist('author', authName, authors[author], term);
                        });
                        $("#dropdown-loc").change(function () {
                           var location = $(this).val();
                           var locName = $("#dropdown-loc option:selected").text();
-                          plot_hist('location', locName, data.locNeighbors[location], word);
+                          plot_hist('location', locName, data.locations[location], term);
                       });
                     })
                     .done(function() {
                       $('#token-msg').text('');
                     });
-                    $.getJSON(`./php/fetch_kwic.php?word=${word}`, function(data) {
-                        get_kwic(data, word);
+                    $.getJSON(`./php/get_kwic.php?term=${term}`, function(data) {
+                        get_kwic(data, term);
                         data = [];
                     })
                     .done(function() {

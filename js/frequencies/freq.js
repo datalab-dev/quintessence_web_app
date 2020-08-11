@@ -17,13 +17,13 @@ Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
 function plotFrequencies(data, raw_data) {
     var decades = range(1480, 1700, 10);
     var traces = [];
-    var myWords = Object.keys(data);
+    var myterms = Object.keys(data);
 
-    myWords.forEach(function(word) {
+    myterms.forEach(function(term) {
         var trace = {
             x: decades,
-            y: data[word],
-            name: word,
+            y: data[term],
+            name: term,
             mode: 'lines+markers',
             type: 'scatter',
             marker: {
@@ -39,8 +39,8 @@ function plotFrequencies(data, raw_data) {
             },
             line: { opacity: 1, shape: 'spline' },
             color: 'steelblue3',
-            text: raw_data[word],
-            hovertemplate: '%{y:.2%} of Words Used in %{x} <br>Total Occurrences: %{text:,}',
+            text: raw_data[term],
+            hovertemplate: '%{y:.2%} of terms Used in %{x} <br>Total Occurrences: %{text:,}',
             hoverlabel: {namelength : 0}
         };
         traces.push(trace);
@@ -90,9 +90,9 @@ function plotFrequencies(data, raw_data) {
 function plotOverallFrequencies(data) {
     var decades = range(1480, 1700, 10);
 
-    var traceWords = {
+    var traceterms = {
         x: decades,
-        y: data.wordFreqs,
+        y: data.termFreqs,
         type: 'bar',
         marker: {
             symbol: 28,
@@ -108,7 +108,7 @@ function plotOverallFrequencies(data) {
         line: { opacity: 1 },
         color: 'steelblue3',
         // text: 'test',
-        hovertemplate: '%{y:.3s} total words',
+        hovertemplate: '%{y:.3s} total terms',
         hoverlabel: {namelength : 0}
     };
 
@@ -163,28 +163,28 @@ function plotOverallFrequencies(data) {
         height: 600
     };
 
-    Plotly.newPlot('wordFreqPlot', [traceWords], layout, {displayModeBar: false}, {responsive: true});
+    Plotly.newPlot('termFreqPlot', [traceterms], layout, {displayModeBar: false}, {responsive: true});
     Plotly.newPlot('docFreqPlot', [traceDocs], layout, {displayModeBar: false}, {responsive: true});
 }
 
 
-function addWord(word, freq_data, raw_data) {
+function addterm(term, freq_data, raw_data) {
     $('#token-list').append(`<li><button class='btn'><i class='fa
-        fa-close'></i></button>${word}</li>`);
+        fa-close'></i></button>${term}</li>`);
 
     /* add on click listener for deletion */
     $("#token-disp button").click(function() {
-        var word = $(this).parent().text();
-        delete freq_data[word];
-        delete raw_data[word];
+        var term = $(this).parent().text();
+        delete freq_data[term];
+        delete raw_data[term];
         $(this).parent().remove();
         plotFrequencies(freq_data, raw_data);
     });
 
-    /* fetch data */
-    $.getJSON(`./php/fetch_freq.php?word=${word}`, function(data) {
-        freq_data[word] = data.relFreqs;
-        raw_data[word] = data.rawFreqs;
+    /* get data */
+    $.getJSON(`./php/get_freq.php?term=${term}`, function(data) {
+        freq_data[term] = data.relFreqs;
+        raw_data[term] = data.rawFreqs;
     }).done(function() {
         /* replot */
         plotFrequencies(freq_data, raw_data);
@@ -218,25 +218,25 @@ $(document).ready(function() {
     freq_data = {};
     raw_data = {};
 
-    addWord('history', freq_data, raw_data);
+    addterm('history', freq_data, raw_data);
 
-    $.getJSON('./resources/words.json', function(data) {
+    $.getJSON('./resources/terms.json', function(data) {
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
             source: function(request, response) {
-                var results = $.ui.autocomplete.filter(data.words, request.term)
+                var results = $.ui.autocomplete.filter(data.terms, request.term)
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
                 $('#search-button').on('click', function() {
-                    addWord(ui.item.value, freq_data, raw_data);
+                    addterm(ui.item.value, freq_data, raw_data);
                 });
             }
         });
     });
 
-    $.getJSON('./php/fetch_overall_freq.php', function(data) {
+    $.getJSON('./php/get_overall_freq.php', function(data) {
         plotOverallFrequencies(data);
     });
 });
