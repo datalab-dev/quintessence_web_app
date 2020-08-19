@@ -17,7 +17,11 @@ function updateLdaPca() {
               `&keywords=${getDropdownString('keywords')}` +
               `&authors=${getDropdownString('authors')}` +
               `&locations=${getDropdownString('locations')}`
+
+    /* show as loading */
+    document.getElementById("ndocs").innerHTML = "";
     document.getElementById("status").innerHTML = "Fetching Results ...";
+    document.getElementById("overlay").style.display = "block";
 
     /* replot with new proportions */
     $.getJSON('./php/get_subset_lda.php', function(data) {
@@ -30,5 +34,10 @@ function updateLdaPca() {
         var ndocs = data["qids"].length;
         ndocs = ndocs < maxdocs ? ndocs : maxdocs;
         initDocumentResults(data['qids'], ndocs);
+
+        /* show as loaded */
+        document.getElementById("ndocs").innerHTML = `${data["qids"].length} results`;
+        document.getElementById("status").innerHTML = "Loaded";
+        document.getElementById("overlay").style.display = "none";
     });
 }
