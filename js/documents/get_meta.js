@@ -2,58 +2,45 @@
 function getMeta(qid, kwic) {
     $.getJSON(`./php/get_meta.php?qid=${qid}`, function(data) {
         if (kwic != undefined)
-            data["Word in Context"] = kwic;
+            data["word in context"] = kwic;
 
         parseMeta(data, qid);
     });
 }
 
+function addTable(tname, keys, data) {
+    for (const key of keys) {
+        if (data[key] == undefined)
+            continue;
+
+        $(`${tname} tbody`).append(`
+            <tr>
+                <td class="keys">${key}</td>
+                <td class="values">${data[key]}</td>
+            </tr>
+        `);
+    }
+}
+
 /* create metadata tables */
-function parseMeta(data, docid) {
-    var title = "";
-    var ids = ["QID", "File_ID", "STC_ID", "ESTC_ID", "EEBO_Citation",
-               "Proquest_ID", "VID"];
-    var main = ["Title", "Author", "Location", "Publisher", "Date",
-                "Word_Count", "Word in Context"];
-    var main_container = document.getElementById("info_" + docid);
-    main_container.innerHTML = "";
-    var refs_container = document.getElementById("refs_" + docid);
+function parseMeta(data, qid) {
+    var idKeys = ["qid", "fileId", "stcId", "estcId", "eeboCitation",
+                  "proquestId", "vid"];
+    var mainKeys = ["title", "author", "location", "publisher", "date",
+                    "wordCount"];
 
-    var main_table = document.createElement("table");
-    for (var i = 0; i < Object.keys(data).length; i++) {
-        var key = Object.keys(data)[i];
-        if (main.includes(key)) {
-            var row = main_table.insertRow(-1);
-            var kcell = row.insertCell(-1)
-            kcell.innerHTML = key;
-            kcell.classList.add("keys");
-            var vcell = row.insertCell(-1)
-            vcell.innerHTML = data[key];
-            vcell.classList.add("values");
+    data["qid"] = qid;
+    if (data["word in context"] != undefined)
+        mainKeys.push("word in context");
 
-            if (key == "Title")
-                title = data[key];
-        }
-    }
+    /* main container */
+    var tname = `#info_${qid}`;
+    $(tname).append("<table><tbody></tbody></table>");
+    addTable(tname, mainKeys, data);
 
-    var header = document.createElement("h2");
-    header.innerHTML = "Reference IDs";
-
-    var id_table = document.createElement("table");
-    for (var i = 0; i < Object.keys(data).length; i++) {
-        var key = Object.keys(data)[i];
-        if (ids.includes(key)) {
-            var row = id_table.insertRow(-1);
-            var kcell = row.insertCell(-1)
-            kcell.innerHTML = key;
-            kcell.classList.add("keys");
-            var vcell = row.insertCell(-1)
-            vcell.innerHTML = data[key];
-            vcell.classList.add("values");
-        }
-    }
-
-    main_container.appendChild(main_table);
-    refs_container.appendChild(header);
-    refs_container.appendChild(id_table);
+    /* refs container */
+    tname = `#refs_${qid}`;
+    $(tname).append("<h2>Reference IDs</h2>");
+    $(tname).append("<table><tbody></tbody></table>");
+    addTable(tname, idKeys, data);
 }

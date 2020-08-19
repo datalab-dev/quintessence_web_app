@@ -15,61 +15,44 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
-    <script src="./js/init_documents_results.js"> </script>
-    <script src="./js/update_ldapca.js"> </script>
-    <script src="./js/get_subset.js"> </script>
-    <script src="./js/get_meta.js"> </script>
-    <script src="./js/get_full_document.js"> </script>
-    <script src="./js/get_truncated_document.js"> </script>
-    <script src="./js/get_topic_terms.js"> </script>
-    <script src="./js/get_topic_documents.js"> </script>
-    <script src="./js/get_topic_proportion.js"> </script>
-    <script src="./js/get_ldapca.js"> </script>
-    <script src="./js/plot_ldapca.js"> </script>
-    <script src="./js/plot_topic_terms.js"> </script>
-    <script src="./js/create_subset_options.js"> </script>
-    <script src="./js/get_all_subset_options.js"> </script>
+    <script src="./js/topics/init_lda_pca.js"></script>
+    <script src="./js/topics/plot_topic_terms.js"></script>
+    <script src="./js/topics/update_lda_pca.js"></script>
+    <script src="./js/topics/init_subset_options.js"></script>
+    <script src="./js/documents/init_document_results.js"></script>
+    <script src="./js/documents/get_meta.js"></script>
+    <script src="./js/documents/get_full_document.js"></script>
+    <script src="./js/documents/get_truncated_document.js"></script>
+
     <script>
 	$(document).ready(function() {
-	    // populate subset options
-	    get_all_subset_options();
-	    $('.ui.dropdown') .dropdown();
-	    var $range = $(".js-range-slider");
-
-	    $range.ionRangeSlider({
-		   type: "double",
-		   min: 1470,
-		   max: 1700,
-	    });
-
+	    initSubsetOptions();
 	});
     </script>
 </head>
-<body onload="init_plot_ldapca(); get_topic_terms()">
 
+<body onload="initLdaPca();">
     <!-- navigation bar-->
-        <div id="nav-placeholder"></div>
-	    <script>
-			$("#nav-placeholder").load("nav.html",function(){
-			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
-			    	});
-	//    );
+    <div id="nav-placeholder"></div>
+    <script>
+        $("#nav-placeholder").load("nav.html",function() {
+            $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+        });
     </script>
-    
+
     <div class="text-block">
 	<h2> Text Topics </h2>
 	<p>
-	Explore broader themes in a corpus with our topic model. This model identifies common themes across texts by grouping words according to their co-occurrence with other words. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information. 
+	Explore broader themes in a corpus with our topic model. This model identifies common themes across texts by grouping words according to their co-occurrence with other words. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information.
 	</p>
     </div>
 
     <hr>
 
-
-    <div class="text-block"> 
+    <div class="text-block">
 	<p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
 
 	<!-- Timeline-->
@@ -80,13 +63,12 @@
 	<!-- /Timeline-->
 
 	<!-- /Keywords -->
-	<div class="subsetter" id="Keywords"> 
+	<div class="subsetter" id="Keywords">
 	    <h3 class="selecter-title"> Keywords </h3>
 		<select id="selected-keywords" class="ui fluid search dropdown" multiple="">
 		</select>
 	</div>
 	<!-- /Keywords -->
-
 
 	<!-- Authors -->
 	<div class="subsetter" id="Authors">
@@ -97,7 +79,7 @@
 	<!-- /Authors -->
 
 	<!-- Locations -->
-	<div class="subsetter" id="Locations"> 
+	<div class="subsetter" id="Locations">
 	    <h3 class="selecter-title"> Locations </h3>
 	    <select class="ui fluid search dropdown" id="selected-locations" multiple="multiple">
 	    </select>
@@ -105,45 +87,41 @@
 	<!-- /Locations -->
 
 	<div id="apply-filters">
-	    <div id="status"> </div>
-	    <div id="ndocs"> 25318 results</div>
-	<button type="button" class="subset_button" onclick="get_subset();"> Apply Filters </button> 
+        <div id="status"> </div>
+        <div id="ndocs"> 25318 results</div>
+        <button type="button" class="subset_button" onclick="updateLdaPca();"> Apply Filters </button>
 	</div>
     </div>
 
     <!--Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution
     <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
-	<div id="ndocs"> </div>
-	<div id="year distribution"> </div>
-	<div id="author distribution"> </div>
-	<div id="keyword distribution"> </div>
-	<div id="location distribution"> </div>
+    	<div id="ndocs"> </div>
+    	<div id="year distribution"> </div>
+    	<div id="author distribution"> </div>
+    	<div id="keyword distribution"> </div>
+    	<div id="location distribution"> </div>
     </div>
     -->
 
-    <div style="display: none" id="sinfo"></div>
-    <div style="display: none" id="cinfo"></div>
-    <div style="display: none" id="xinfo"></div>
-    <div style="display: none" id="yinfo"></div>
-    <div id="lda_area" name="no_top_docs"> 
-	<div id="ldapca"> </div>
-	<div id="topic_terms" name="11"> </div>
-	<div id="overlay">
-	    <div id="text">Loading Data</div>
-	</div>
+    <div style="display: none" id="topics"></div>
+    <div id="lda_area" name="no_top_docs">
+    	<div id="ldapca"> </div>
+    	<div id="topic_terms" name="11"></div>
+    	<div id="overlay">
+    	    <div id="text">Loading Data</div>
+    	</div>
     </div>
 
     <hr id="hideme" style="display: none">
     <div class="text-block">
-	<div id="top_docs"> </div>
+       <div id="top_docs"> </div>
     </div>
 
 
     <!--Footer -->
-        <div id="footer-placeholder"></div>
-	    <script>
-			$("#footer-placeholder").load("footer.html");
-	    </script>
+    <div id="footer-placeholder"></div>
+    <script>
+        $("#footer-placeholder").load("footer.html");
+    </script>
     <!-- Footer -->
-
 </body>

@@ -20,7 +20,7 @@ function updateLdaPca() {
     document.getElementById("status").innerHTML = "Fetching Results ...";
 
     /* replot with new proportions */
-    $.getJSON('./json/subset.json', function(data) {
+    $.getJSON('./php/get_subset_lda.php', function(data) {
         var topics = JSON.parse(document.getElementById("topics").innerHTML);
         for (var i = 0; i < topics.length; i++) {
             topics[i]['proportion'] = data['proportions'][i];
@@ -29,6 +29,6 @@ function updateLdaPca() {
 
         var ndocs = data["qids"].length;
         ndocs = ndocs < maxdocs ? ndocs : maxdocs;
-        // initDocumentResults(data['qids'], ndocs);
+        initDocumentResults(data['qids'], ndocs);
     });
 }

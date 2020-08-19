@@ -139,7 +139,7 @@ if ($_GET) {
     $keywordsString = "'Description and travel', 'Early works to 1800'";
     $locationsString = "";
     $authorsString = "";
-    $proportion = "True";
+    $proportion = True;
 }
 
 $db = getMongoCon();

@@ -4,14 +4,7 @@ require 'config.php';
 
 $db = getMongoCon();
 $collection = $db->topics;
-$cursor = $collection->find(
-    [],
-    [
-        'projection' => [
-            '_id' => 0
-        ]
-    ]
-);
+$cursor = $collection->find([]);
 $response = $cursor->toArray();
 
 echo json_encode($response);

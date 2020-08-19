@@ -19,7 +19,7 @@ function plotFrequencies(data, raw_data) {
     var traces = [];
     var myterms = Object.keys(data);
 
-    myterms.forEach(function(term) {
+    for (const term of myterms) {
         var trace = {
             x: decades,
             y: data[term],
@@ -44,7 +44,7 @@ function plotFrequencies(data, raw_data) {
             hoverlabel: {namelength : 0}
         };
         traces.push(trace);
-    });
+    }
 
     var layout = {
         title: ' ',

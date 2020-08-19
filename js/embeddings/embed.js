@@ -200,7 +200,7 @@ function get_nninfo(data) {
 function get_nn_traces(neighbors, neighborsTimeseries, decades) {
     var traces = [];
 
-    neighbors.forEach(function(term) {
+    for (const term of neighbors) {
         if (neighborsTimeseries[term] == null) {
             return;
         }
@@ -223,7 +223,7 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
             hoverlabel: {namelength :-1}
         }
         traces.push(trace);
-    });
+    }
 
     return traces;
 }
@@ -285,9 +285,9 @@ function plot_timeseries(term, decades, termTimeseries, decNeighbors,
 
     var nninfo = [];
 
-    decades.forEach(function(decade) {
+    for (const decade of decades) {
         nninfo.push(get_nninfo(decNeighbors[decade]));
-    });
+    }
 
     var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
         neighborsTimeseries, decades);
@@ -366,10 +366,10 @@ function get_kwic(data, term) {
     $.get("./php/get_qid.php", { 'fileids[]' : file_ids }, function(data) {
         doc_ids_list = JSON.parse(data);
     }).done(function() {
-        Object.keys(data).forEach(function(doc) {
+        for (const doc of Object.keys(data)) {
             var kwic = data[doc].window.replace(data[doc].term, `<b>${data[doc].term}</b>`);
             kwics.push(kwic);
-        });
+        }
 
         $.getScript("./js/init_documents_results.js", function() {
             $.getScript("./js/get_meta.js", function() {

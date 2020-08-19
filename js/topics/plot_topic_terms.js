@@ -34,11 +34,10 @@ var topicTermsLayout = {
 function plotTopicTerms(topicId, topTerms) {
     /* generate plot data from top term objects */
     var terms = [], scores = [];
-    topTerms.forEach(function(topTerm) {
+    for (const topTerm of topTerms) {
         terms.push(topTerm['term']);
         scores.push(topTerm['score']);
-    });
-    console.log(scores);
+    }
 
     /* plot topic terms */
     var trace = {

@@ -5,22 +5,11 @@ function getTruncatedDocument(qid) {
     });
 }
 
-function parseDocument(data, docid) {
-    var container = document.getElementById("sample_" + docid);
-    var header = document.createElement("h2");
-    header.innerHTML = "Text Sample";
-    container.appendChild(header);
-
+function parseDocument(data, qid) {
     var text = data.replace("\t", " ").substring(0,1000);
-    var content = document.createElement("p");
-    content.innerHTML = text
-    container.appendChild(content);
-
-    if (text.length <= 5000) {
-    	var elipsis = document.createElement("p");
-    	elipsis.innerHTML = "...";
-    	elipsis.style.fontSize = "x-large";
-    	elipsis.style.textAlign = "center";
-    	container.appendChild(elipsis);
-    }
+    $(`#sample_${qid}`).append(`
+        <h2>Text Sample</h2>
+        <p>${text}</p>
+        <p style="font-size: x-large; text-align: center;">...</p>
+    `);
 }

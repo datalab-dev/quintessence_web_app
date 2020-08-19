@@ -1,4 +1,4 @@
-const DEFAULT_TOPIC = 10;
+const DEFAULT_TOPIC = 11;
 const LDA_PCA_PLOT_NAME = 'ldapca';
 
 var ldaPcaLayout = {
@@ -86,7 +86,7 @@ var ldaPcaLayout = {
 
 /* get topic data and initialize the lda pca plot */
 function initLdaPca() {
-    $.getJSON('./json/topics.json', function(data) {
+    $.getJSON('./php/get_init_lda.php', function(data) {
         plotLdaPca(data);
     });
 }
@@ -111,7 +111,7 @@ function updateLdaPcaColors(selected, colors, sizes) {
 function plotLdaPca(topics) {
     /* generate plot data from topic objects */
     var xs = [], ys = [], sizes = [], texts = [], colors = [], topTerms = [];
-    topics.forEach(function(topic) {
+    for (const topic of topics) {
         var proportion = topic['proportion'] * 100;
         xs.push(topic['x']);
         ys.push(topic['y']);
@@ -120,7 +120,7 @@ function plotLdaPca(topics) {
                    `Proportion: ${proportion.toFixed(2)}%`);
         colors.push('#1f77b4');
         topTerms.push(topic['topTerms']);
-    });
+    }
 
     /* plot data */
     var trace = {
@@ -143,7 +143,8 @@ function plotLdaPca(topics) {
     }
     Plotly.newPlot(LDA_PCA_PLOT_NAME, [trace], ldaPcaLayout,
         {displayModeBar: false});
-    updateLdaPcaColors(DEFAULT_TOPIC, colors.slice(0), sizes); // copy of colors
+    updateLdaPcaColors(DEFAULT_TOPIC - 1, colors.slice(0), sizes);
+    plotTopicTerms(DEFAULT_TOPIC, topTerms[DEFAULT_TOPIC - 1]);
 
     /* when a topic is selected update colors and plot topic terms */
     var ldaPcaPlot = document.getElementById(LDA_PCA_PLOT_NAME);

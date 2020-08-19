@@ -1,6 +1,6 @@
 /* get subset options and initialize dropdown options */
 function initSubsetOptions() {
-    $.getJSON('./json/subset_options.json', function(data) {
+    $.getJSON('./php/get_subset_options.php', function(data) {
         populateSubsetOptions(data);
     });
 }
@@ -16,13 +16,13 @@ function populateSubsetOptions(data) {
     });
 
     var fields = ['keywords', 'authors', 'locations'];
-    fields.forEach(function(field) {
+    for (const field of fields) {
         var dropdown = document.getElementById(`selected-${field}`);
-        data[field].forEach(function(val) {
+        for (const val of data[field]) {
             var option = document.createElement("option");
             option.text = val;
             option.value = val;
             dropdown.appendChild(option);
-        });
-    });
+        }
+    }
 }
