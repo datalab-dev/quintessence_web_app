@@ -6,7 +6,7 @@ function initDocumentResults(qids, NDOCS, kwics) {
     /* set title */
     var title = `<h3>Document Results (${qids.length})</h3>`;
     if (kwics !== undefined)
-        title = `Examples of ${$("#tokens").val()} in Context`;
+        title = `<h3>Examples of ${$("#tokens").val()} in Context<h3>`;
     $("#top_docs").append(title);
 
     /* document containers */

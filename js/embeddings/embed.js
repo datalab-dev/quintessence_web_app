@@ -349,24 +349,15 @@ function plot_timeseries(term, decades, termTimeseries, decNeighbors,
 
 
 function get_kwic(data, term) {
-    var doc_ids_list = [];
     var kwics = [];
+    for (const qid in data) {
+        var doc = data[qid];
+        kwics.push(doc.window.replace(doc.term, `<b>${doc.term}</b>`));
+    }
 
-    var file_ids = Object.keys(data);
-    console.log(file_ids);
-
-    $.get("./php/get_qid.php", { 'fileids[]' : file_ids }, function(data) {
-        doc_ids_list = JSON.parse(data);
-    }).done(function() {
-        for (const doc of Object.keys(data)) {
-            var kwic = data[doc].window.replace(data[doc].term, `<b>${data[doc].term}</b>`);
-            kwics.push(kwic);
-        }
-
-        $.getScript("./js/init_documents_results.js", function() {
-            $.getScript("./js/get_meta.js", function() {
-                init_documents_results(doc_ids_list, doc_ids_list.length, kwics);
-            });
+    $.getScript("./js/documents/init_document_results.js", function() {
+        $.getScript("./js/documents/get_meta.js", function() {
+            initDocumentResults(Object.keys(data), kwics.length, kwics);
         });
     });
 }
@@ -423,12 +414,12 @@ $(document).ready(function() {
         })
     });
 
-    $.getJSON('./resources/terms.json', function(data) {
+    $.getJSON('./php/get_terms.php', function(terms) {
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
             source: function(request, response) {
-                var results = $.ui.autocomplete.filter(data.terms, request.term)
+                var results = $.ui.autocomplete.filter(terms, request.term)
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
@@ -438,7 +429,7 @@ $(document).ready(function() {
                     console.log(ui.item.value);
                     $('#token-msg').text('Requesting token data ...');
                     $('#kwic-msg').text('Requesting keyterm in context data ...');
-                    $.getJSON(`./php/fetch_neighbors.php?term=${term}`, function(data) {
+                    $.getJSON(`./php/get_neighbors.php?term=${term}`, function(data) {
                         /* filter dropdown menus */
                         for(var author in data.authors) {
                             if (data.authors[author].scores.length == 0)
