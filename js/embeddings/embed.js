@@ -128,7 +128,6 @@ var startingLayout = {
     displayModeBar: false
 };
 
-
 var histLayout = {
     autosize: false,
     width: 1024,
@@ -197,15 +196,10 @@ function get_nninfo(data) {
 
 
 /* given a term's nerest neighbors in 1700 get traces over time for all */
-function get_nn_traces(neighbors, neighborsTimeseries, decades) {
+function get_nn_traces(neighborsTimeseries, decades) {
     var traces = [];
-
-    for (const term of neighbors) {
-        if (neighborsTimeseries[term] == null) {
-            return;
-        }
-
-        var y = replaceZero(neighborsTimeseries[term]);
+    for (const neighbor of neighborsTimeseries) {
+        var y = replaceZero(neighbor.timeseries);
         var trace = {
             x: decades,
             y: y,
@@ -217,7 +211,7 @@ function get_nn_traces(neighbors, neighborsTimeseries, decades) {
                 width: 0.5,
 		shape: 'spline'
             },
-            hovertext: term,
+            hovertext: neighbor.term,
             hoverinfo: 'text',
             // hovertemplate: '%{text}',
             hoverlabel: {namelength :-1}
@@ -289,10 +283,8 @@ function plot_timeseries(term, decades, termTimeseries, decNeighbors,
         nninfo.push(get_nninfo(decNeighbors[decade]));
     }
 
-    var nntraces = get_nn_traces(decNeighbors[1700].neighbors,
-        neighborsTimeseries, decades);
-
-    termTimeseries = replaceZero(termTimeseries);
+    var nntraces = get_nn_traces(neighborsTimeseries, decades);
+    termTimeseries.timeseries = replaceZero(termTimeseries.timeseries);
 
     var colors = [];
     for (var i = 0; i < decades.length; i++) {
@@ -302,7 +294,7 @@ function plot_timeseries(term, decades, termTimeseries, decNeighbors,
     /* plot term change over time */
     var trace1 = {
         x: decades,
-        y: termTimeseries,
+        y: termTimeseries.timeseries,
         mode: 'lines+markers',
         type: 'scatter',
         color: 'steelblue',
@@ -391,33 +383,27 @@ function reset() {
 
 $(document).ready(function() {
     /* configure tabs */
-    $('#tabs li a:not(:first)').addClass('inactive');
+    $('#tabs a:not(:first)').addClass('inactive');
     $('.container:not(:first)').hide();
-    $('#tabs li a').click(function(){
+    $('#tabs a').click(function(){
         var t = $(this).attr('href');
-        $('#tabs li a').addClass('inactive');
+        $('#tabs a').addClass('inactive');
         $(this).removeClass('inactive');
         $('.container').hide();
         $(t).fadeIn('slow');
 
         return false;
-
-        if($(this).hasClass('inactive')) {
-            $('#tabs li a').addClass('inactive');
-            $(this).removeClass('inactive');
-            $('.container').hide();
-            $(t).fadeIn('slow');
-        }
     })
 
     var auth_options = $("#dropdown-auth").html();
     var loc_options = $("#dropdown-loc").html();
+    var decades = range(1480, 1710, 10);
 
     /* load the term 'history' as a sample selection */
     $.getJSON('./resources/sample_embed.json', function(data) {
         $('#tokens').val('history');
         var term = 'history';
-        var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length)
+        var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length);
         plot_timeseries(term, decades, data.timeseries[0],
             data.decades, neighborsTimeseries, timeseriesLayout);
         plot_hist('full', null, data.full, term);
@@ -431,13 +417,11 @@ $(document).ready(function() {
           var locName = $("#dropdown-loc option:selected").text();
           plot_hist('location', locName, data.locations[location], term);
         });
-        $.getJSON('./resources/sample_kwic.json?v=3', function(data) {
+        $.getJSON('./resources/sample_kwic.json', function(data) {
             get_kwic(data, term);
             data = [];
         })
     });
-
-    var decades = range(1480, 1710, 10);
 
     $.getJSON('./resources/terms.json', function(data) {
         $('#tokens').autocomplete({
@@ -457,14 +441,12 @@ $(document).ready(function() {
                     $.getJSON(`./php/fetch_neighbors.php?term=${term}`, function(data) {
                         /* filter dropdown menus */
                         for(var author in data.authors) {
-                            if (data.authors[author].scores.length == 0) {
+                            if (data.authors[author].scores.length == 0)
                                 $(`#dropdown-auth option[value=\"${author}\"]`).remove();
-                            }
                         }
                         for(var location in data.locations) {
-                            if (data.locations[location].scores.length == 0) {
+                            if (data.locations[location].scores.length == 0)
                                 $(`#dropdown-loc option[value=\"${location}\"]`).remove();
-                            }
                         }
 
                         /* plot */
@@ -473,15 +455,15 @@ $(document).ready(function() {
                             data.decades, neighborsTimeseries, timeseriesLayout);
                         plot_hist('full', null, data.full, term);
                         $("#dropdown-auth").change(function () {
-                           var author = $(this).val();
-                           var authName = $("#dropdown-auth option:selected").text();
-                           plot_hist('author', authName, authors[author], term);
-                       });
-                       $("#dropdown-loc").change(function () {
-                          var location = $(this).val();
-                          var locName = $("#dropdown-loc option:selected").text();
-                          plot_hist('location', locName, data.locations[location], term);
-                      });
+                            var author = $(this).val();
+                            var authName = $("#dropdown-auth option:selected").text();
+                            plot_hist('author', authName, authors[author], term);
+                        });
+                        $("#dropdown-loc").change(function () {
+                            var location = $(this).val();
+                            var locName = $("#dropdown-loc option:selected").text();
+                            plot_hist('location', locName, data.locations[location], term);
+                        });
                     })
                     .done(function() {
                       $('#token-msg').text('');
@@ -500,17 +482,13 @@ $(document).ready(function() {
         });
     })
     .done(function() {
-        // $('#autocomplete').val('');
-        // Plotly.newPlot('nn-plot', null, timeseriesLayout, {showSendToCloud: true});
-        // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
         histLayout.title = null;
+        // Plotly.newPlot('dec-hist', null, histLayout, {showSendToCloud: true});
         Plotly.newPlot('auth-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
         Plotly.newPlot('loc-hist', null, histLayout, {displayModeBar: false}, {showSendToCloud: true});
-        // Plotly.newPlot('full-hist', null, histLayout, {showSendToCloud: true});
     });
 
     $('#tokens').val('');
     $('#dropdown-auth').val('');
     $('#dropdown-loc').val('');
-    //$( "#tabs" ).tabs();
 });

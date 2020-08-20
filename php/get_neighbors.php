@@ -8,8 +8,6 @@ if ($_GET) {
     $term = $argv[1];
 }
 
-echo $term . "\n";
-
 /* get neighbors to terms */
 $db = getMongoCon();
 $collection = $db->{'terms.neighbors'};
@@ -28,13 +26,21 @@ $cursor = $collection->find(
     ]
 );
 $res = $cursor->toArray()[0];
+$terms = (array)$res['decades'][1700]['neighbors'];
+array_unshift($terms, $term);
 
 /* get timeseries */
 $collection = $db->{'terms.timeseries'};
 $cursor = $collection->aggregate(
     [
         [
-            '$match' => ['_id' => ['$in' => $res['decades'][1480]['neighbors']]]
+            '$match' => ['_id' => ['$in' => $terms]]
+        ],
+        [
+            '$addFields' => ['__order' => ['$indexOfArray' => [$terms, '$_id']]]
+        ],
+        [
+            '$sort' => ['__order' => 1]
         ],
         [
             '$project' => [
@@ -42,7 +48,7 @@ $cursor = $collection->aggregate(
                 'term' => '$_id',
                 'timeseries' => 1
             ]
-        ]
+        ],
     ]
 );
 $timeseries = $cursor->toArray();

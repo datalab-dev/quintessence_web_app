@@ -8,26 +8,23 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./style/embed_style.css"> -->
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="./js/embed.js?2"></script>
-    <script src="./js/get_truncated_document.js"> </script>
-    <script src="./js/get_full_document.js"> </script>
-
+    <script src="./js/embeddings/embed.js"></script>
+    <script src="./js/documents/get_truncated_document.js"> </script>
+    <script src="./js/documents/get_full_document.js"> </script>
 </head>
 
 <body>
     <!-- Navigation bar-->
-        <div id="nav-placeholder"></div>
-	    <script>
-			$("#nav-placeholder").load("nav.html",function(){
-			    	      $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
-			    	});
-	//    );
+    <div id="nav-placeholder"></div>
+    <script>
+        $("#nav-placeholder").load("nav.html",function(){
+            $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+        });
     </script>
 
 
@@ -41,7 +38,10 @@
 	approximations are represented numerically, which allows us to calculate
 	similarity between words, as well as word meaning change over time, among
 	different authors, and in different print locations. The plots are all
-	representations of these calculations. Search any word in our vocabulary to see a plot of that word's change. You can hover on the word at each decade to see its overall Similarity Score, as well as the other nearest terms in that decade. The word is also shown in
+	representations of these calculations. Search any word in our vocabulary to
+    see a plot of that word's change. You can hover on the word at each decade
+    to see its overall Similarity Score, as well as the other nearest terms in
+    that decade. The word is also shown in
 	context below the graphs.
 	</p>
     </div>
@@ -126,21 +126,18 @@
             <div id="loc-hist" class="plot"></div>
         </div>
 
-        <div class="row">
-        </div>
+        <div class="row"></div>
 
         <div id="kwic-row" class="row flex-column">
             <div id="kwic-msg"></div>
-            <ul id="kwic-list" class="list-group">
-            </ul>
+            <ul id="kwic-list" class="list-group"></ul>
         </div>
 
 
         <hr id="hideme" style="display: none">
         <div class="text-block">
-            <div id="top_docs"> </div>
+        <div id="top_docs"></div>
 	</div>
-
 
     <!--Footer -->
         <div id="footer-placeholder"></div>
@@ -148,6 +145,4 @@
 			$("#footer-placeholder").load("footer.html");
 	    </script>
     <!-- Footer -->
-
-
 </body>
