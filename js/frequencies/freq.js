@@ -183,6 +183,7 @@ function addterm(term, freq_data, raw_data) {
 
     /* get data */
     $.getJSON(`./php/get_freq.php?term=${term}`, function(data) {
+        console.log(data);
         freq_data[term] = data.relFreqs;
         raw_data[term] = data.rawFreqs;
     }).done(function() {
@@ -195,7 +196,7 @@ function addterm(term, freq_data, raw_data) {
 
 
 $(document).ready(function() {
-    // Configure tabs
+    /* configure tabs */
     $('#tabs li a:not(:first)').addClass('inactive');
     $('.container:not(:first)').hide();
     $('#tabs li a').click(function(){
@@ -205,13 +206,6 @@ $(document).ready(function() {
         $('.container').hide();
         $(t).fadeIn('slow');
         return false;
-
-        if($(this).hasClass('inactive')) {
-            $('#tabs li a').addClass('inactive');
-            $(this).removeClass('inactive');
-            $('.container').hide();
-            $(t).fadeIn('slow');
-        }
     })
 
     $('#tokens').val('');
@@ -220,12 +214,12 @@ $(document).ready(function() {
 
     addterm('history', freq_data, raw_data);
 
-    $.getJSON('./resources/terms.json', function(data) {
+    $.getJSON('./php/get_terms.php', function(terms) {
         $('#tokens').autocomplete({
             delay: 0,
             minLength: 3,
             source: function(request, response) {
-                var results = $.ui.autocomplete.filter(data.terms, request.term)
+                var results = $.ui.autocomplete.filter(terms, request.term)
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
