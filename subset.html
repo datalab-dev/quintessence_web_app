@@ -30,6 +30,11 @@
     <script>
 	$(document).ready(function() {
 	    initSubsetOptions();
+
+        $('#category-form input').on('change', function() {
+            var topics = JSON.parse(document.getElementById("topics").innerHTML);
+            plotLdaPca(topics);
+        });
 	});
     </script>
 </head>
@@ -102,6 +107,21 @@
     	<div id="location distribution"> </div>
     </div>
     -->
+
+    <div class="text-block">
+	<p>Show top categories in document hover</p>
+
+    <form id="category-form">
+        <input type="radio" id="authors" name="category" value="authors">
+        <label for="authors"><b>Authors</b></label><br>
+        <input type="radio" id="locations" name="category" value="locations">
+        <label for="locations"><b>Locations</b></label><br>
+        <input type="radio" id="keywords" name="category" value="keywords">
+        <label for="keywords"><b>Keywords</b></label><br>
+        <input type="radio" id="publishers" name="category" value="publishers">
+        <label for="publishers"><b>Publishers</b></label>
+    </form>
+    </div>
 
     <div style="display: none" id="topics"></div>
     <div id="lda_area" name="no_top_docs">

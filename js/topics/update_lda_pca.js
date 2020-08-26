@@ -29,6 +29,7 @@ function updateLdaPca() {
         for (var i = 0; i < topics.length; i++) {
             topics[i]['proportion'] = data['proportions'][i];
         }
+        document.getElementById("topics").innerHTML = JSON.stringify(topics);
         plotLdaPca(topics);
 
         var ndocs = data["qids"].length;

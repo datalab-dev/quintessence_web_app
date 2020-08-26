@@ -107,8 +107,20 @@ function updateLdaPcaColors(selected, colors, sizes) {
     Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 }
 
+function topString(arr) {
+    const n = 60; // max length of string
+    var s = "";
+    for (const elem of arr) {
+        str = (elem.length > n) ? elem.substr(0, n-1) + '...' : elem;
+        s += `    ${str}<br>`
+    }
+    return s;
+}
+
 /* given the topic data draw the lda pca plot */
 function plotLdaPca(topics) {
+    var category = $("input[name='category']:checked").val();
+
     /* generate plot data from topic objects */
     var xs = [], ys = [], sizes = [], texts = [], colors = [], topTerms = [];
     for (const topic of topics) {
@@ -116,8 +128,10 @@ function plotLdaPca(topics) {
         xs.push(topic['x']);
         ys.push(topic['y']);
         sizes.push(proportion * 10);
-        texts.push(`Topic ID: ${topic['_id']}` + '<br>' +
-                   `Proportion: ${proportion.toFixed(2)}%`);
+        texts.push(
+            `Topic ID: ${topic['_id']}<br>` +
+            `Proportion: ${proportion.toFixed(2)}%<br>` +
+            `Top ${category}: <br>${topString(topic[category])}`);
         colors.push('#1f77b4');
         topTerms.push(topic['topTerms']);
     }
@@ -128,7 +142,10 @@ function plotLdaPca(topics) {
         y: ys,
         text: texts,
         hovertemplate: '%{text}',
-        hoverlabel: {namelength: -1},
+        hoverlabel: {
+            namelength: 0,
+            align: 'left'
+        },
         textposition: 'bottom',
         mode: 'markers',
         type: 'scatter',
