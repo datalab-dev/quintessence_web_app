@@ -26,11 +26,12 @@ function updateLdaPca() {
     /* replot with new proportions */
     $.getJSON(url, function(data) {
         var topics = JSON.parse(document.getElementById("topics").innerHTML);
+        var topicNum = document.getElementById("selectedTopic").innerHTML;
         for (var i = 0; i < topics.length; i++) {
             topics[i]['proportion'] = data['proportions'][i];
         }
         document.getElementById("topics").innerHTML = JSON.stringify(topics);
-        plotLdaPca(topics, annotations = false);
+        plotLdaPca(topics, topicNum = topicNum, annotations = false);
 
         var ndocs = data["qids"].length;
         ndocs = ndocs < maxdocs ? ndocs : maxdocs;

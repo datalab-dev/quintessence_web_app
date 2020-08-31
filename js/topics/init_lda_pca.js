@@ -118,7 +118,7 @@ function topString(arr) {
 }
 
 /* given the topic data draw the lda pca plot */
-function plotLdaPca(topics, annotations = true) {
+function plotLdaPca(topics, topicNum = DEFAULT_TOPIC, annotations = true) {
     var category = $("input[name='category']:checked").val();
 
     /* generate plot data from topic objects */
@@ -164,8 +164,9 @@ function plotLdaPca(topics, annotations = true) {
 
     Plotly.newPlot(LDA_PCA_PLOT_NAME, [trace], ldaPcaLayout,
         {displayModeBar: false});
-    updateLdaPcaColors(DEFAULT_TOPIC - 1, colors.slice(0), sizes);
-    plotTopicTerms(DEFAULT_TOPIC, topTerms[DEFAULT_TOPIC - 1]);
+    updateLdaPcaColors(topicNum - 1, colors.slice(0), sizes);
+    plotTopicTerms(topicNum, topTerms[topicNum - 1]);
+    document.getElementById("selectedTopic").innerHTML = topicNum;
 
     /* when a topic is selected update colors and plot topic terms */
     var ldaPcaPlot = document.getElementById(LDA_PCA_PLOT_NAME);
@@ -173,6 +174,7 @@ function plotLdaPca(topics, annotations = true) {
         var pn = data.points[data.points.length - 1].pointNumber;
         updateLdaPcaColors(pn, colors.slice(0), sizes); // copy of colors
         plotTopicTerms(pn + 1, topTerms[pn]); // pass topic id and terms
+        document.getElementById("selectedTopic").innerHTML = pn + 1;
     });
 
     document.getElementById("topics").innerHTML = JSON.stringify(topics);
