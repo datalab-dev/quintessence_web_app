@@ -1,6 +1,5 @@
 var timeseriesLayout = {
-    autosize: false,
-    width: 1024,
+    autosize: true,
     height: 550,
     title: ' ',
     xaxis: {
@@ -35,8 +34,7 @@ var timeseriesLayout = {
 };
 
 var startingLayout = {
-    autosize: false,
-    width: 1024,
+    autosize: true,
     height: 550,
     title: ' ',
     xaxis: {
