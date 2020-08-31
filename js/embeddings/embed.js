@@ -189,8 +189,7 @@ $(document).ready(function() {
                     $('#top_docs').toggle()
                     var term = ui.item.value;
                     console.log(ui.item.value);
-                    $('#token-msg').text('Requesting token data ...');
-                    $('#kwic-msg').text('Requesting keyterm in context data ...');
+                    $('#kwic-msg').text('Loading keyword in context data ...');
                     $.getJSON(`./php/get_neighbors.php?term=${term}`, function(data) {
                         /* filter dropdown menus */
                         for(var author in data.authors) {
@@ -218,9 +217,6 @@ $(document).ready(function() {
                             plotHist('location', locName, data.locations[location], term);
                         });
                     })
-                    .done(function() {
-                      $('#token-msg').text('');
-                    });
 
                     getKwic(term);
                 });
