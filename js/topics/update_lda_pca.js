@@ -30,7 +30,7 @@ function updateLdaPca() {
             topics[i]['proportion'] = data['proportions'][i];
         }
         document.getElementById("topics").innerHTML = JSON.stringify(topics);
-        plotLdaPca(topics);
+        plotLdaPca(topics, annotations = false);
 
         var ndocs = data["qids"].length;
         ndocs = ndocs < maxdocs ? ndocs : maxdocs;

@@ -118,7 +118,7 @@ function topString(arr) {
 }
 
 /* given the topic data draw the lda pca plot */
-function plotLdaPca(topics) {
+function plotLdaPca(topics, annotations = true) {
     var category = $("input[name='category']:checked").val();
 
     /* generate plot data from topic objects */
@@ -158,6 +158,10 @@ function plotLdaPca(topics) {
             }
         }
     }
+
+    if (annotations == false)
+        ldaPcaLayout.annotations = null;
+
     Plotly.newPlot(LDA_PCA_PLOT_NAME, [trace], ldaPcaLayout,
         {displayModeBar: false});
     updateLdaPcaColors(DEFAULT_TOPIC - 1, colors.slice(0), sizes);
