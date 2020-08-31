@@ -24,7 +24,7 @@ function updateLdaPca() {
     document.getElementById("overlay").style.display = "block";
 
     /* replot with new proportions */
-    $.getJSON('./php/get_subset_lda.php', function(data) {
+    $.getJSON(url, function(data) {
         var topics = JSON.parse(document.getElementById("topics").innerHTML);
         for (var i = 0; i < topics.length; i++) {
             topics[i]['proportion'] = data['proportions'][i];

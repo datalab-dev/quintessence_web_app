@@ -11,9 +11,9 @@ $locations = $collection->distinct("location");
 $keywords = $collection->distinct("keywords");
 
 $result = array(
-        'authors'=> $authors,
-        'locations' => $locations,
-        'keywords' => $keywords
-    );
+    'authors'=> $authors,
+    'locations' => $locations,
+    'keywords' => $keywords
+);
 echo json_encode($result);
 ?>
