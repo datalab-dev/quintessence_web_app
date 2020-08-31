@@ -1,4 +1,4 @@
-const DEFAULT_TOPIC = 11;
+const DEFAULT_TOPIC = 55;
 const LDA_PCA_PLOT_NAME = 'ldapca';
 
 var ldaPcaLayout = {
@@ -7,15 +7,15 @@ var ldaPcaLayout = {
     hoverdistance: 20,
     plot_bgcolor: 'rgb(243,243,243)',
     scrollZoom: "false",
-    yaxis: {
-        fixedrange: true,
-        showgrid: false,
-    },
     xaxis : {
         fixedrange: true,
         showgrid: false,
         ticks: '',
-        showticklabels: false
+        showticklabels: false,
+    },
+    yaxis: {
+        fixedrange: true,
+        showgrid: false
     },
     height: 900,
     margin: {
@@ -27,8 +27,8 @@ var ldaPcaLayout = {
     },
     annotations: [
         {
-            x: 0.0372,
-            y: 0.1918,
+            x: -432173.5,
+            y: 2016225,
             xref: 'Decades',
             yref: 'Word Change',
             text: 'each bubble represents <br> one topic',
@@ -38,47 +38,47 @@ var ldaPcaLayout = {
             ay: -40
         },
         {
-            x: -0.003,
-            y: -0.1067,
+            x: 1010927,
+            y: 457759.1,
             xref: 'Decades',
             yref: 'Word Change',
             text: 'color indicates <br> topic cluster',
             showarrow: true,
             arrowhead: 0,
-            ax: -70,
+            ax: 70,
             ay: 0
         },
         {
-            x: -0.2138,
-            y: 0.0802,
+            x: -1329386,
+            y: -450149.8,
             xref: 'Decades',
             yref: 'Word Change',
             text: 'sizes reflect topic prevalence <br> in chosen subset',
             showarrow: true,
             arrowhead: 0,
-            ax: 20,
-            ay: -140
+            ax: -150,
+            ay: 50
         },
         {
-            x: -0.1505,
-            y: 0.1335,
+            x: -353226.6,
+            y: -1098607,
             xref: 'Decades',
             yref: 'Word Change',
             text: '',
             showarrow: true,
             arrowhead: 0,
-            ax: -50,
-            ay: -48
+            ax: -180,
+            ay: -20
         },
         {
-            x: 0.1229,
-            y: 0.0558,
+            x: 94523.23,
+            y: 990735.9,
             xref: 'Decades',
             yref: 'Word Change',
             text: 'click bubble to view <br> terms in topic',
             showarrow: true,
             arrowhead: 0,
-            ax: -50,
+            ax: 50,
             ay: -75
         }
     ]
