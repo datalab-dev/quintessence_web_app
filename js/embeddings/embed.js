@@ -10,7 +10,7 @@ var timeseriesLayout = {
         dtick: 10,
         zerolinewidth: 1,
         ticklen: 1,
-	tickfont: {color: 'gray'},
+        tickfont: {color: 'gray'},
         gridwidth: 1
     },
     yaxis: {
@@ -33,99 +33,63 @@ var timeseriesLayout = {
     displayModeBar: false
 };
 
-var startingLayout = {
-    autosize: true,
-    height: 550,
-    title: ' ',
-    xaxis: {
-        title: 'Decades',
-        gridcolor: 'rgb(243, 243, 243)',
-        type: 'linear',
-        range: [1470, 1705],
-        dtick: 10,
-        zerolinewidth: 1,
-        ticklen: 1,
-	tickfont: {color: 'gray'},
-        gridwidth: 1
+var timeseriesAnnotations = [
+    {
+        x: 1700,
+        y: 1,
+        xref: 'Decades',
+        yref: 'term Change',
+        text: 'each decade is <br> compared with 1700',
+        showarrow: true,
+        arrowhead: 6,
+        ax: 0,
+        ay: -40
     },
-    yaxis: {
-        title: 'term Change',
-        gridcolor: 'rgb(243, 243, 243)',
-        layer: 'below traces',
-        range: [0, 1.05],
-        dtick: 0.25,
-        gridwidth: 1,
-        showticklabels: true,
-    	tickmode: 'array',
-    	tickvals: [.25, .50, .75, 1.0],
-    	ticktext: ['25', '50', '75', '100%'],
-    	tickfont: {color: 'gray'}
+    {
+        x: 1490,
+        y: 0.4503,
+        xref: 'Decades',
+        yref: 'term Change',
+        text: 'lowest point is most <br> different from 1700',
+        showarrow: true,
+        arrowhead: 6,
+        ax: 0,
+        ay: 40
     },
-    annotations: [
-        {
-            x: 1700,
-            y: 1,
-            xref: 'Decades',
-            yref: 'term Change',
-            text: 'each decade is <br> compared with 1700',
-            showarrow: true,
-            arrowhead: 6,
-            ax: 0,
-            ay: -40
-        },
-        {
-            x: 1490,
-            y: 0.4503,
-            xref: 'Decades',
-            yref: 'term Change',
-            text: 'lowest point is most <br> different from 1700',
-            showarrow: true,
-            arrowhead: 6,
-            ax: 0,
-            ay: 40
-        },
-        {
-            x: 1650,
-            y: 0.4636,
-            xref: 'Decades',
-            yref: 'term Change',
-            text: 'terms nearest to <br> term in 1700',
-            showarrow: true,
-            arrowhead: 6,
-            ax: 20,
-            ay: 40
-        },
-        {
-            x: 1670,
-            y: 0.572,
-            xref: 'Decades',
-            yref: 'term Change',
-            text: '',
-            showarrow: true,
-            arrowhead: 6,
-            ax: -50,
-            ay: 56
-        },
-        {
-            x: 1505,
-            y: 0.67,
-            xref: 'Decades',
-            yref: 'term Change',
-            text: 'abrupt increase indicates <br> term meaning change',
-            showarrow: true,
-            arrowhead: 2,
-            ax: -90,
-            ay: -85
-        }
-    ],
-    //margin: { pad: 20 },
-    paper_bgcolor: 'rgb(243, 243, 243)',
-    plot_bgcolor: 'rgb(243, 243, 243)',
-    showlegend: false,
-    hovermode: 'closest',
-    displayModeBar: false
-};
-
+    {
+        x: 1650,
+        y: 0.4636,
+        xref: 'Decades',
+        yref: 'term Change',
+        text: 'terms nearest to <br> term in 1700',
+        showarrow: true,
+        arrowhead: 6,
+        ax: 20,
+        ay: 40
+    },
+    {
+        x: 1670,
+        y: 0.572,
+        xref: 'Decades',
+        yref: 'term Change',
+        text: '',
+        showarrow: true,
+        arrowhead: 6,
+        ax: -50,
+        ay: 56
+    },
+    {
+        x: 1505,
+        y: 0.67,
+        xref: 'Decades',
+        yref: 'term Change',
+        text: 'abrupt increase indicates <br> term meaning change',
+        showarrow: true,
+        arrowhead: 2,
+        ax: -90,
+        ay: -85
+    }
+]
 
 /* helper function which returns an array of ints given a range */
 const range = (start, stop, step = 1) =>
@@ -155,6 +119,8 @@ $(document).ready(function() {
         $('#tokens').val('history');
         var term = 'history';
         var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length);
+        var startingLayout = JSON.parse(JSON.stringify(timeseriesLayout));
+        startingLayout.annotations = timeseriesAnnotations;
         plotWordChange(term, decades, data.timeseries[0],
             data.decades, neighborsTimeseries, startingLayout);
         plotHist('full', null, data.full, term);
