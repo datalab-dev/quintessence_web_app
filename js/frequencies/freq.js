@@ -18,25 +18,25 @@ $(document).ready(function() {
     $('#tabs li a:not(:first)').addClass('inactive');
     $('.container:not(:first)').hide();
     $('#tabs li a').click(function(){
-        var t = $(this).attr('href');
-        $('#tabs li a').addClass('inactive');
-        $(this).removeClass('inactive');
-        $('.container').hide();
-        $(t).fadeIn('slow');
-        return false;
+	var t = $(this).attr('href');
+	$('#tabs li a').addClass('inactive');
+	$(this).removeClass('inactive');
+	$('.container').hide();
+	$(t).fadeIn('slow');
+	return false;
     })
 
     /* add terms and documents per year plots */
     $.getJSON('./php/get_overall_freq.php', function(data) {
-        plotOverallFrequencies(data.word_count, data.doc_count);
+	plotOverallFrequencies(data.word_count, data.doc_count);
     });
 
 
     /* Relative Frequency plot controls 
-        
+
        plot term 'history' as demo
        add autocomplete to input for terms (uses terms from php/get_terms.php
-    */
+       */
 
     $('#tokens').val('');
     frequencies = {} // init empty object to hold the data for each term
@@ -44,16 +44,18 @@ $(document).ready(function() {
     addTermFreq('history', frequencies);
 
     $.getJSON('./php/get_terms.php', function(terms) {
-        $('#tokens').autocomplete({
-            delay: 0,
-            minLength: 3,
-            source: function(request, response) {
-                var results = $.ui.autocomplete.filter(terms, request.term)
-                response(results.slice(0, 10));
-            },
-            select: function(e, ui) {
+	$('#tokens').autocomplete({
+	    delay: 0,
+	    minLength: 3,
+	    source: function(request, response) {
+		var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+		response( $.grep( terms, function( item ){
+		    return matcher.test( item );
+		}) );
+	    },
+	    select: function(e, ui) {
 		addTermFreq(ui.item.value, frequencies);
-            }
-        });
+	    }
+	});
     });
 });
