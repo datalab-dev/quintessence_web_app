@@ -41,7 +41,7 @@ var ldaPcaLayout = {
 	t: 50,
 	pad: 0
     },
-    /*
+    /* these need to be fixed, x and y coordinates updated; one way is to se the label as the (x,y) and then record the locations 
     annotations: [
 	{
 	    x: -432173.5,
@@ -151,8 +151,6 @@ function plotLdaPca(topics, topicNum, annotations) {
     var trace = {
 	x: xs,
 	y: ys,
-	//text: texts,
-	//hovertemplate: '%{text}',
 	text: ids,
 	hovertemplate: texts,
 	hoverlabel: {
