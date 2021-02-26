@@ -52,9 +52,7 @@ $(document).ready(function() {
                 response(results.slice(0, 10));
             },
             select: function(e, ui) {
-                $('#search-button').on('click', function() {
-                    addTermFreq(ui.item.value, frequencies);
-                });
+		addTermFreq(ui.item.value, frequencies);
             }
         });
     });
