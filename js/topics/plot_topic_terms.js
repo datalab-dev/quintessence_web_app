@@ -1,3 +1,18 @@
+/*
+
+Plots the top terms for a given topic
+
+Gets everything from get_top_topic_terms.php
+
+Needs:
+    TopicId
+    Object{
+        scores: [ ],
+        terms: [ ]
+    }
+
+*/
+
 var topicTermsLayout = {
     staticPlot: true,
     autosize: false,
@@ -33,11 +48,8 @@ var topicTermsLayout = {
 
 function plotTopicTerms(topicId, topTerms) {
     /* generate plot data from top term objects */
-    var terms = [], scores = [];
-    for (const topTerm of topTerms) {
-        terms.push(topTerm['term']);
-        scores.push(topTerm['score']);
-    }
+    var terms = topTerms['terms']; 
+    var scores = topTerms['scores'];
 
     /* plot topic terms */
     var trace = {

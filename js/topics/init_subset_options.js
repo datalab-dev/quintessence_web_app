@@ -18,7 +18,7 @@ function populateSubsetOptions(data) {
     var fields = ['keywords', 'authors', 'locations'];
     for (const field of fields) {
         var dropdown = document.getElementById(`selected-${field}`);
-        for (const val of data[field]) {
+        for (const val of data[field].slice(0,2001)) {
             var option = document.createElement("option");
             option.text = val;
             option.value = val;

@@ -18,8 +18,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
-    <script src="./js/topics/init_lda_pca.js"></script>
+    <script src="./js/topics/topics.js"></script>
     <script src="./js/topics/plot_topic_terms.js"></script>
+    <script src="./js/topics/plot_lda_pca.js"></script>
     <script src="./js/topics/update_lda_pca.js"></script>
     <script src="./js/topics/init_subset_options.js"></script>
     <script src="./js/documents/init_document_results.js"></script>
@@ -27,20 +28,9 @@
     <script src="./js/documents/get_full_document.js"></script>
     <script src="./js/documents/get_truncated_document.js"></script>
 
-    <script>
-	$(document).ready(function() {
-	    initSubsetOptions();
-
-        $('#category-form input').on('change', function() {
-            var topics = JSON.parse(document.getElementById("topics").innerHTML);
-            var topicNum = document.getElementById("selectedTopic").innerHTML;
-            plotLdaPca(topics, topicNum = topicNum, annotations = false);
-        });
-	});
-    </script>
 </head>
 
-<body onload="initLdaPca();">
+<body>
     <!-- navigation bar-->
     <div id="nav-placeholder"></div>
     <script>
@@ -113,14 +103,12 @@
 	<p>Show top categories in document hover</p>
 
     <form id="category-form">
-        <input type="radio" id="authors" name="category" value="authors">
-        <label for="authors"><b>Authors</b></label><br>
-        <input type="radio" id="locations" name="category" value="locations" checked="checked">
-        <label for="locations"><b>Locations</b></label><br>
-        <input type="radio" id="keywords" name="category" value="keywords">
+        <input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
         <label for="keywords"><b>Keywords</b></label><br>
-        <input type="radio" id="publishers" name="category" value="publishers">
-        <label for="publishers"><b>Publishers</b></label>
+        <input type="radio" id="authors" name="category" value="topAuthors">
+        <label for="authors"><b>Authors</b></label><br>
+        <input type="radio" id="locations" name="category" value="topLocations">
+        <label for="locations"><b>Locations</b></label><br>
     </form>
     </div>
 
