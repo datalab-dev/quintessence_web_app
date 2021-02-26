@@ -1,8 +1,19 @@
+/*
+Creates two plots for the frequencies page:
+
+1. Number of documents over time
+2. Number of tokens over time
+
+Need word counts per year and doc counts per year
+
+*/
+
+
 var layout = {
     title: ' ',
     autosize: false,
     xaxis: {
-        title: 'Decades',
+        title: 'Year',
         gridcolor: 'rgb(243, 243, 243)',
         type: 'linear',
         range: [1470, 1700],
@@ -29,12 +40,16 @@ var layout = {
 };
 
 
-function plotOverallFrequencies(data) {
-    var decades = range(1480, 1700, 10);
+function plotOverallFrequencies(word_counts, doc_counts) {
+    /**
+     * Create wordcounts over time AND docs over time plots
+     * @param  {object} word_count keys are years values are counts
+     * @param  {object} doc_count kyes are years values are counts
+     */
 
     var traceterms = {
-        x: decades,
-        y: data.termFreqs,
+        x: Object.keys(word_counts),
+        y: Object.values(word_counts),
         type: 'bar',
         marker: {
             symbol: 28,
@@ -55,8 +70,8 @@ function plotOverallFrequencies(data) {
     };
 
     var traceDocs = {
-        x: decades,
-        y: data.docFreqs,
+        x: Object.keys(doc_counts),
+        y: Object.values(doc_counts),
         type: 'bar',
         marker: {
             symbol: 28,

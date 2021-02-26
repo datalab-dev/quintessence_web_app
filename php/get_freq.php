@@ -1,4 +1,26 @@
 <?php
+/**
+get_freq.php
+
+Given term, returns frequency and relative frequency of that term.
+
+{
+   "freq": [
+       {year: count},
+        ...
+   ],
+   "relFreq": [
+       {year: count/(total wc for that year)},
+       ...
+   ]
+}
+
+args (either GET parameter or command line):
+    term -- string
+
+authors: Arthur Koehl, Chandni Nagda
+ */
+
 require 'vendor/autoload.php';
 require 'config.php';
 
@@ -8,31 +30,31 @@ if ($_GET) {
     $term = $argv[1];
 }
 
+// 1. Get freq array
 $db = getMongoCon();
-$collection = $db->{'terms.frequencies'};
-$cursor = $collection->find(
+$collection = $db->{'frequencies.terms'};
+$result = $collection->findOne(
     [
-        '_id' => $term
+	'term' => $term
     ],
-    [
-        'projection' => [
-            '_id' => 0,
-            'decades' => 1,
-        ]
-    ]
 );
-$res = $cursor->toArray()[0]['decades'];
+$freq = $result['freq'];
 
-$relFreqs = [];
-$rawFreqs = [];
-foreach ($res as $freqs) {
-    array_push($rawFreqs, $freqs['freq']);
-    array_push($relFreqs, $freqs['relFreq']);
+
+// 2. Get total word count per year array
+$collection = $db->{'frequencies.corpus'};
+$result = $collection->findOne([]);
+$total_wc = $result["word_count"];
+
+
+// 3. compute relative frequency
+$relFreq = array();
+foreach (array_keys($freq) as $year) {
+    $relFreq[$year] = $freq[$year] / $total_wc[$year];
 }
 
-$result = array(
-    'relFreqs' => $relFreqs,
-    'rawFreqs' => $rawFreqs
-);
-echo json_encode($result);
+echo json_encode( array( 
+    "freq" => $freq,
+    "relFreq" => $relFreq) 
+)
 ?>

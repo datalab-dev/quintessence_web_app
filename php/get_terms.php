@@ -1,15 +1,31 @@
 <?php
+/**
+get_terms.php
+
+Return list of all the terms that can be plotted based on frequency.
+
+authors:    Arthur Koehl, Chandni Nagda
+ */
+
 require 'vendor/autoload.php';
 require 'config.php';
 
 $db = getMongoCon();
-$collection = $db->{'terms.timeseries'};
-$cursor = $collection->find([], ['projection' => ['_id' => 1]]);
-$res = $cursor->toArray();
+$collection = $db->{'frequencies.terms'};
+$cursor = $collection->find(
+    [], 
+    ['projection' => [
+	'_id' => 0,
+	'freq' => 0,
+    ] 
+    ],
+);
+$results = $cursor->toArray();
 
-$terms = [];
-foreach ($res as $term)
-    array_push($terms, $term['_id']);
+$terms = array();
+foreach ($results as $res) {
+    $terms[] = $res["term"];
+}
 
 echo json_encode($terms);
 ?>

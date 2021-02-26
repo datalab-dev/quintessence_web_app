@@ -1,3 +1,18 @@
+/*
+
+Controls generating and updating the plots for corpus.html
+Plots:
+1. Relative Frequency (plot_freq.js)
+2. Terms per year     (plot_overall_freq.js)
+3. Documents per year (plot_overall_freq.js)
+
+Calls to php:
+get_terms.php
+get_overall_freq.php
+get_freq.php
+
+*/
+
 $(document).ready(function() {
     /* configure tabs */
     $('#tabs li a:not(:first)').addClass('inactive');
@@ -11,11 +26,22 @@ $(document).ready(function() {
         return false;
     })
 
-    $('#tokens').val('');
-    freqData = {};
-    rawData = {};
+    /* add terms and documents per year plots */
+    $.getJSON('./php/get_overall_freq.php', function(data) {
+        plotOverallFrequencies(data.word_count, data.doc_count);
+    });
 
-    addTermFreq('history', freqData, rawData);
+
+    /* Relative Frequency plot controls 
+        
+       plot term 'history' as demo
+       add autocomplete to input for terms (uses terms from php/get_terms.php
+    */
+
+    $('#tokens').val('');
+    frequencies = {} // init empty object to hold the data for each term
+
+    addTermFreq('history', frequencies);
 
     $.getJSON('./php/get_terms.php', function(terms) {
         $('#tokens').autocomplete({
@@ -27,13 +53,9 @@ $(document).ready(function() {
             },
             select: function(e, ui) {
                 $('#search-button').on('click', function() {
-                    addTermFreq(ui.item.value, freqData, rawData);
+                    addTermFreq(ui.item.value, frequencies);
                 });
             }
         });
-    });
-
-    $.getJSON('./php/get_overall_freq.php', function(data) {
-        plotOverallFrequencies(data);
     });
 });
