@@ -48,8 +48,8 @@ var topicTermsLayout = {
 
 function plotTopicTerms(topicId, topTerms) {
     /* generate plot data from top term objects */
-    var terms = topTerms['terms']; 
-    var scores = topTerms['scores'];
+    var terms = topTerms['terms'].slice(0,31); 
+    var scores = topTerms['scores'].slice(0,31);
 
     /* plot topic terms */
     var trace = {
