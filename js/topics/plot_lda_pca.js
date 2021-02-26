@@ -185,7 +185,7 @@ function plotLdaPca(topics, topicNum, annotations) {
     ldaPcaPlot.on('plotly_click', function(data) {
 	var pn = data.points[data.points.length - 1].pointNumber;
 	updateLdaPcaColors(pn, colors.slice(0), sizes); // copy of colors
-	document.getElementById("selectedTopic").innerHTML = pn + 1;
+	document.getElementById("selectedTopic").innerHTML = pn;
 
 	$.getJSON('./php/get_top_topic_terms.php?topicId=' + pn.toString(),
 	    function(data) {
