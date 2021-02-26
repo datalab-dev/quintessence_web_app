@@ -1,4 +1,4 @@
-const DEFAULT_TOPIC = 55;
+const DEFAULT_TOPIC = 25;
 const LDA_PCA_PLOT_NAME = 'ldapca';
 
 var ldaPcaLayout = {
