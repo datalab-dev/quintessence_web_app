@@ -529,7 +529,7 @@ td
 }
 
 .freq-input {
-    width: 400px;
+    width: 700px;
     border: 1px solid #BCBCBC;
     height: 38px; /* with border 1px top and bottom total is 40 like the search button next to it */
     margin: 0;
