@@ -1,4 +1,24 @@
 <?php
+/** 
+get_subset_lda.php
+
+Return list of all docs that match subset critera
+As well as the new topic proportions
+
+GET Request string looks like:
+./php/get_subset_lda.php?proportion=true&dates='1470','1700'&keywords='Clothing and dress','Early works to 1800.','Legal status, laws, etc.'&authors='elizabeth i queen england','clark samuel'&locations='london','oxford'
+
+each item is enclosed in single quotes and separated by commas
+dates is starting year and end year
+
+Return is 
+{
+    "qids": [ ],
+    "proportions": [ ]
+}
+
+authors: Arthur Koehl, Chandni Nagda
+ */
 require 'vendor/autoload.php';
 require 'config.php';
 
@@ -6,21 +26,41 @@ require 'config.php';
 /* returns a subset of qids given numeric bounds and metadata field
  * bounds should be passed in as comma separated string
  * if string is empty returns empty array */
-function subsetNumeric($collection, $field, $boundsString) {
+function subsetDates($collection, $boundsString) {
     if ($boundsString == '') {
-        return [];
+	return [];
     }
 
     $bounds = explode(',', str_replace('\'', '', $boundsString));
     $bounds = array_map('intval', $bounds);
-    $cursor = $collection->find(
-        [$field => ['$gte' => $bounds[0], '$lte' => $bounds[1]]],
-        ['projection' => ['_id' => 1]]
+
+    $cursor = $collection->aggregate(
+	[[
+	// add new field 'dates' that is numeric of date string
+	    '$addFields' => [
+		'year' => [
+		    '$convert'=> [ 
+		        "input"=> '$Date',
+			"to"=> "int",
+			"onError"=> 0
+                    ]
+               ]
+	    ]
+	],
+	// return ids that fall within the bounds
+	['$match' => [
+	    'year' => ['$gte' => $bounds[0], '$lte' => $bounds[1]]
+	]
+	],
+	['$project' => [
+	    '_id' => 1,
+	]
+	]]
     );
 
     $subset = [];
     foreach ($cursor as $doc) {
-        $subset[] = $doc['_id'];
+	$subset[] = $doc['_id'];
     }
 
     return $subset;
@@ -31,25 +71,25 @@ function subsetNumeric($collection, $field, $boundsString) {
  * if string is empty returns empty array */
 function subsetString($collection, $field, $string) {
     if ($string == '') {
-        return [];
+	return [];
     }
 
     $searchTerms = explode(',', str_replace('\'', '', $string));
     $regexStrings = [];
     foreach ($searchTerms as $searchTerm) {
-        $regexStrings[] = [
-            $field => ['$regex' => new MongoDB\BSON\Regex(".*{$searchTerm}.*")]
-        ];
+	$regexStrings[] = [
+	    $field => ['$regex' => new MongoDB\BSON\Regex(".*{$searchTerm}.*")]
+	];
     }
 
     $cursor = $collection->find(
-        ['$or' => $regexStrings],
-        ['projection' => ['_id' => 1]]
+	['$or' => $regexStrings],
+	['projection' => ['_id' => 1]]
     );
 
     $subset = [];
     foreach ($cursor as $doc) {
-        $subset[] = $doc['_id'];
+	$subset[] = $doc['_id'];
     }
 
     return $subset;
@@ -62,7 +102,7 @@ function intersectMatches($matches) {
     $merged = array_merge(...$matches);
     $counts = array_count_values($merged);
     $docs = array_filter($counts, function($count) use($nquery){
-        return $count >= $nquery;
+	return $count >= $nquery;
     });
     $docs = array_keys($docs);
 
@@ -73,55 +113,59 @@ function intersectMatches($matches) {
 /* calculate topic proportions */
 function getTopicProportions($collection, $docs) {
     $cursor = $collection->aggregate(
-        [
-            [
-                '$match' => ['_id' => ['$in' => $docs]]
-            ],
-            [
-                '$lookup' => [
-                    'from' => 'docs.metadata',
-                    'localField' => '_id',
-                    'foreignField' => '_id',
-                    'as' => 'meta'
-                ]
-            ],
-            [
-                '$unwind' => ['path' => '$topics']
-            ],
-            [
-                '$replaceRoot' => ['newRoot' => [
-                    '$mergeObjects' => [
-                        ['$arrayElemAt' => ['$meta', 0]],
-                        '$$ROOT']]
-                    ]
-            ],
-            [
-                '$project' => [
-                    'topicId' => '$topics.topicId',
-                    'freq' => ['$multiply' => [
-                        '$topics.probability',
-                        '$wordCount']
-                    ]
-                ]
-            ],
-            [
-                '$group' => [
-                    '_id' => '$topicId',
-                    'topicFreq' => ['$sum' => '$freq']
-                ]
-            ]
-        ]
+	[
+	    [
+		'$match' => ['_id' => ['$in' => $docs]]
+	    ],
+	    [
+		// ALWAYS MAKE SURE LOOKUP COLLECTION IS INDEXED ON foreignField!
+		'$lookup' => [
+		    'from' => 'frequencies.docs',
+		    'localField' => '_id',
+		    'foreignField' => 'docId',
+		    'as' => 'counts'
+		]
+	    ],
+	    [
+		'$unwind' => [
+		    'path' => '$topics', 
+		    'includeArrayIndex' => "topicId"
+		]
+	    ],
+	    [
+		'$replaceRoot' => ['newRoot' => [
+		    '$mergeObjects' => [
+			['$arrayElemAt' => ['$counts', 0]],
+			'$$ROOT']]
+		]
+	    ],
+	    [
+		'$project' => [
+		    'topicId' => 1,
+		    'freq' => ['$multiply' => [
+			'$topics',
+			'$word_count_raw']
+		    ]
+		]
+	    ],
+	    [
+		'$group' => [
+		    '_id' => '$topicId',
+		    'topicFreq' => ['$sum' => '$freq']
+		]
+	    ]
+	]
     );
     $res = $cursor->toArray();
 
     foreach ($res as $freq) {
-        $topicFreqs[] = $freq['topicFreq'];
+	$topicFreqs[] = $freq['topicFreq'];
     }
     $sum = array_sum($topicFreqs);
 
     $topicProportions = [];
     foreach ($topicFreqs as $topicFreq) {
-        $topicProportions[] = ($topicFreq) / $sum;
+	$topicProportions[] = ($topicFreq) / $sum;
     }
 
     return $topicProportions;
@@ -135,7 +179,7 @@ if ($_GET) {
     $authorsString = $_GET['authors'];
     $proportion = (bool)$_GET['proportion']; // set true to calculate proportion
 } else {
-    $datesString = "'1490','1600'";
+    $datesString = "'1490','1700'";
     $keywordsString = "'Description and travel', 'Early works to 1800'";
     $locationsString = "";
     $authorsString = "";
@@ -143,19 +187,19 @@ if ($_GET) {
 }
 
 $db = getMongoCon();
-$collection = $db->{'docs.metadata'};
+$collection = $db->{'docs.meta'};
 
 /* get qids of subset */
 $matches = [];
-$matches[] = subsetNumeric($collection, 'date', $datesString);
-$matches[] = subsetString($collection, 'keywords', $keywordsString);
-$matches[] = subsetString($collection, 'location', $locationsString);
-$matches[] = subsetString($collection, 'author', $authorsString);
+$matches[] = subsetDates($collection, $datesString);
+$matches[] = subsetString($collection, 'Keywords', $keywordsString);
+$matches[] = subsetString($collection, 'Location', $locationsString);
+$matches[] = subsetString($collection, 'Author', $authorsString);
 $docs = intersectMatches($matches);
 
 /* get topic proportions */
-$collection = $db->{'docs.topics'};
 $proportions = [];
+$collection = $db->{'docs.topics'};
 if (!empty($docs) && $proportion)
     $proportions = getTopicProportions($collection, $docs);
 
