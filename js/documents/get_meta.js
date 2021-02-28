@@ -24,10 +24,9 @@ function addTable(tname, keys, data) {
 
 /* create metadata tables */
 function parseMeta(data, qid) {
-    var idKeys = ["qid", "fileId", "stcId", "estcId", "eeboCitation",
-                  "proquestId", "vid"];
-    var mainKeys = ["title", "author", "location", "publisher", "date",
-                    "wordCount"];
+    var idKeys = ["File_ID", "STC_ID", "ESTC_ID", "EEBO_Citation",
+                  "Proquest_ID", "VID"];
+    var mainKeys = ["Title", "Author", "Location", "Publisher", "Date", "Keywords"];
 
     data["qid"] = qid;
     if (data["word in context"] != undefined)
