@@ -1,3 +1,16 @@
+/*
+
+Functions for updating the topic proportions of lda bubble plot.
+
+Pulls the information from the subset controls drop downs, constructs
+a query to get_subset_lda, replots the bubble plot (resizes the bubbles),
+updates some elements on the page (e.g num results)
+
+Calls to php:
+get_subset_lda
+
+*/
+
 function getDropdownString(field) {
     var dropdown = $(`#selected-${field}`).dropdown('get value');
     str = '';
@@ -18,6 +31,7 @@ function updateLdaPca() {
               `&authors=${getDropdownString('authors')}` +
               `&locations=${getDropdownString('locations')}`
 
+    console.log(url);
     /* show as loading */
     document.getElementById("ndocs").innerHTML = "";
     document.getElementById("status").innerHTML = "Fetching Results ...";
@@ -25,6 +39,7 @@ function updateLdaPca() {
 
     /* replot with new proportions */
     $.getJSON(url, function(data) {
+	console.log(data);
         var topics = JSON.parse(document.getElementById("topics").innerHTML);
         var topicNum = document.getElementById("selectedTopic").innerHTML;
         for (var i = 0; i < topics.length; i++) {
