@@ -4,15 +4,16 @@ require 'vendor/autoload.php';
 // database connection info
 $user = '';
 $password = '';
-$dbname = 'test';
-$server = '127.0.0.1';
+$dbname = 'quintessence';
+$server = 'datasci.library.ucdavis.edu';
 $port = '27017';
 
 function getMongoCon() {
     global $user, $password, $dbname, $server, $port;
 
+    $typemap = ["typeMap" => ['root' => 'array', 'document' => 'array']];
     $url = 'mongodb://'.$server.':'.$port;
-    $con = new MongoDB\Client($url);
+    $con = new MongoDB\Client($url, [], $typemap);
 
     if (!$con)
         echo 'failed to connect to database!';
@@ -20,4 +21,6 @@ function getMongoCon() {
     $db = $con->{$dbname};
     return $db;
 }
+
+$db = getMongoCon();
 ?>
