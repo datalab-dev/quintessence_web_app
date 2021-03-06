@@ -4,57 +4,6 @@ Plot can be updated to add a new word (as a new trace) and also to remove words.
 
 Needs words frequency and relative frequency over time
 */
-
-
-var freq_layout = {
-    title: ' ',
-    autosize: false,
-    xaxis: {
-        title: 'Year',
-        gridcolor: 'rgb(243, 243, 243)',
-        type: 'linear',
-        range: [1470, 1700],
-        dtick: 10,
-        zerolinewidth: 1,
-        ticklen: 1,
-        gridwidth: 1
-    },
-    yaxis: {
-        title: 'Relative Frequency (%)',
-        gridcolor: 'rgb(243, 243, 243)',
-        gridwidth: 1,
-        rangemode: 'tozero',
-	exponentformat: "none",
-        showticklabels: true,
-        ticklen: 1,
-        showline: true
-    },
-    rangemode: 'nonnegative',
-    paper_bgcolor: 'rgb(243, 243, 243)',
-    plot_bgcolor: 'rgb(243, 243, 243)',
-    showlegend: true,
-    hovermode: 'closest',
-    width: 1024,
-    height: 600
-};
-
-
-const range = (start, stop, step = 1) =>
-Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
-
-
-Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
-    while (L && this.length) {
-        what = a[--L];
-        while ((ax = this.indexOf(what)) !== -1) {
-            this.splice(ax, 1);
-        }
-    }
-    return this;
-};
-
-
 function plotFrequencies(frequencies) {
     /**
      * Given collection of term frequencies plots each of those terms.
@@ -71,12 +20,17 @@ function plotFrequencies(frequencies) {
     var myterms = Object.keys(frequencies);
 
     for (const term of myterms) {
+	var years = Object.keys(frequencies[term]["relFreq"]);
+	var freq = Object.values(frequencies[term]["freq"]);
+	var relFreq = Object.values(frequencies[term]["relFreq"]);
+
+	var avg = moving_average(relFreq, 5);
+
         var trace = {
-            x: Object.keys(frequencies[term]["relFreq"]),
-            y: Object.values(frequencies[term]["relFreq"]),
+            x: years,
+            y: relFreq,
             name: term,
-            mode: 'lines+markers',
-            type: 'scatter',
+            mode: 'lines',
             marker: {
                 symbol: 28,
                 sizemode: 'diameter',
@@ -90,11 +44,36 @@ function plotFrequencies(frequencies) {
             },
             line: { opacity: 1, shape: 'spline' },
             color: 'steelblue3',
-            text: Object.values(frequencies[term]["freq"]),
-            hovertemplate: '%{y:.2%} of terms Used in %{x} <br>Total Occurrences: %{text:,}',
+            text: freq,
+            hovertemplate: '%{y:.2%} of terms used in %{x} <br>Total Occurrences: %{text:,}',
             hoverlabel: {namelength : 0}
         };
+
+        var trace2 = {
+            x: years,
+            y: avg,
+            name: term + " moving average 5 years",
+            mode: 'lines',
+            marker: {
+                symbol: 28,
+                sizemode: 'diameter',
+                size: 5,
+                opacity: 1,
+                line: {
+                    size: 1,
+                    color: 'steelblue3',
+                    opacity: 1
+                }
+            },
+            line: { opacity: 1, shape: 'spline' },
+            color: 'steelblue3',
+            text: freq,
+            hovertemplate: '%{y:.2%} of terms used in %{x} <br>Total Occurrences: %{text:,}',
+            hoverlabel: {namelength : 0}
+        };
+
         traces.push(trace);
+        traces.push(trace2);
     }
 
     var nnPlot = document.getElementById('freqPlot');
@@ -102,36 +81,3 @@ function plotFrequencies(frequencies) {
 }
 
 
-function addTermFreq(term, frequencies) {
-    /**
-     * Add term to the relative frequency plot
-     *
-     * @param  {string} term word to plot
-     * @param  {object} frequencies object containing data for each term
-     *
-     */ 
-
-    /* add button for the new term */
-    $('#token-list').append(`<li><button class='btn'><i class='fa
-        fa-close'></i></button>${term}</li>`);
-
-    /* add on click listener for deletion
-       if clicked, remove term from frequencies object and redraw plot of terms
-    */
-    $("#token-disp button").click(function() {
-        var term = $(this).parent().text();
-        delete frequencies[term];
-        $(this).parent().remove();
-        plotFrequencies(frequencies);
-    });
-
-    /* get data for the term */
-    $.getJSON(`./php/get_freq.php?term=${term}`, function(data) {
-        frequencies[term] = data;
-    }).done(function() {
-        /* replot */
-        plotFrequencies(frequencies);
-        $('#search-button').off('click');
-        $('#tokens').val(''); // clear the search bar when token selected
-    });
-}
