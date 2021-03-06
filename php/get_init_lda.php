@@ -21,8 +21,7 @@ $collection = $db->topics;
 $cursor = $collection->find(
     [],
     ['projection' => [
-	'_id' => 0,
-	'topicId' => 1,
+	'_id' => 1,
 	'x' => 1,
 	'y' => 1,
 	'proportion' => 1,
