@@ -15,16 +15,14 @@ $collection = $db->{'frequencies.terms'};
 $cursor = $collection->find(
     [], 
     ['projection' => [
-	'_id' => 0,
-	'freq' => 0,
+	'_id' => 1,
     ] 
     ],
 );
 $results = $cursor->toArray();
-
-$terms = array();
+$terms = [];
 foreach ($results as $res) {
-    $terms[] = $res["term"];
+    $terms[] = $res["_id"];
 }
 
 echo json_encode($terms);

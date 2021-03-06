@@ -35,7 +35,7 @@ $db = getMongoCon();
 $collection = $db->{'frequencies.terms'};
 $result = $collection->findOne(
     [
-	'term' => $term
+	'_id' => $term
     ],
 );
 $freq = $result['freq'];
