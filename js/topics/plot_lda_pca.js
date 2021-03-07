@@ -136,12 +136,12 @@ function plotLdaPca(topics, topicNum, annotations) {
     var xs = [], ys = [], sizes = [], ids =[], texts = [], colors = [];
     for (const topic of topics) {
 	var proportion = topic['proportion'] * 100;
-	ids.push(topic['topicId']);
+	ids.push(topic['_id']);
 	xs.push(topic['x'] * 100);
 	ys.push(topic['y'] * 100);
-	sizes.push(proportion * 10);
+	sizes.push(proportion * 20);
 	texts.push(
-	    `Topic ID: ${topic['topicId']}<br>` +
+	    `Topic: ${topic['_id']}<br>` +
 	    `Proportion: ${proportion.toFixed(2)}%<br>` +
 	    `${category}: <br>${topString(topic[category])}`);
 	colors.push('#1f77b4');
