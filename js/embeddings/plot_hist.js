@@ -1,31 +1,3 @@
-var histLayout = {
-    autosize: false,
-    width: 1024,
-    height: 550,
-    barmode: 'stack',
-    title: null,
-    xaxis: {
-        title: '',
-        type: 'log',
-        showgrid: false,
-        showline: false,
-        showticklabels: false,
-        zeroline: false,
-	hoverformat: '.2%'
-    },
-    yaxis: {
-        showticklabels: false,
-        showgrid: false,
-        zeroline: false
-    },
-    margin: { l: 150, r: 50, b: 20, t: 75 },
-    legend: { orientation: 'h' },
-    paper_bgcolor: 'rgb(243, 243, 243)',
-    plot_bgcolor: 'rgb(243, 243, 243)',
-    autosize: true,
-    displayModeBar: false
-};
-
 function plotHist(category, sel, nn, term) {
     var trace = {
 	x: nn.scores,

@@ -1,101 +1,3 @@
-var timeseriesLayout = {
-    autosize: true,
-    height: 550,
-    title: ' ',
-    xaxis: {
-        title: 'Decades',
-        gridcolor: 'rgb(243, 243, 243)',
-        type: 'linear',
-        range: [1470, 1705],
-        dtick: 10,
-        zerolinewidth: 1,
-        ticklen: 1,
-        tickfont: {color: 'gray'},
-        gridwidth: 1
-    },
-    yaxis: {
-        title: 'term Change',
-        gridcolor: 'rgb(243, 243, 243)',
-        layer: 'below traces',
-        range: [0, 1.05],
-        dtick: 0.25,
-        gridwidth: 1,
-        showticklabels: true,
-        tickmode: 'array',
-        tickvals: [.25, .50, .75, 1.0],
-        ticktext: ['25', '50', '75', '100%'],
-        tickfont: {color: 'gray'}
-    },
-    paper_bgcolor: 'rgb(243, 243, 243)',
-    plot_bgcolor: 'rgb(243, 243, 243)',
-    showlegend: false,
-    hovermode: 'closest',
-    displayModeBar: false
-};
-
-var timeseriesAnnotations = [
-    {
-        x: 1700,
-        y: 1,
-        xref: 'Decades',
-        yref: 'term Change',
-        text: 'each decade is <br> compared with 1700',
-        showarrow: true,
-        arrowhead: 6,
-        ax: 0,
-        ay: -40
-    },
-    {
-        x: 1490,
-        y: 0.4503,
-        xref: 'Decades',
-        yref: 'term Change',
-        text: 'lowest point is most <br> different from 1700',
-        showarrow: true,
-        arrowhead: 6,
-        ax: 0,
-        ay: 40
-    },
-    {
-        x: 1650,
-        y: 0.4636,
-        xref: 'Decades',
-        yref: 'term Change',
-        text: 'terms nearest to <br> term in 1700',
-        showarrow: true,
-        arrowhead: 6,
-        ax: 20,
-        ay: 40
-    },
-    {
-        x: 1670,
-        y: 0.572,
-        xref: 'Decades',
-        yref: 'term Change',
-        text: '',
-        showarrow: true,
-        arrowhead: 6,
-        ax: -50,
-        ay: 56
-    },
-    {
-        x: 1505,
-        y: 0.67,
-        xref: 'Decades',
-        yref: 'term Change',
-        text: 'abrupt increase indicates <br> term meaning change',
-        showarrow: true,
-        arrowhead: 2,
-        ax: -90,
-        ay: -85
-    }
-]
-
-/* helper function which returns an array of ints given a range */
-const range = (start, stop, step = 1) =>
-Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
-
-
 $(document).ready(function() {
     /* configure tabs */
     $('#tabs a:not(:first)').addClass('inactive');
@@ -197,3 +99,56 @@ $(document).ready(function() {
     $('#dropdown-auth').val('');
     $('#dropdown-loc').val('');
 });
+
+/* helper function which returns an array of ints given a range */
+const range = (start, stop, step = 1) =>
+Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
+
+function getNnInfo(data) {
+    var res = "";
+    for (i = 19; i > 9; i--) {
+        var n = data.neighbors[i];
+        var p = (parseFloat(data.scores[i])*100).toFixed(2);
+        res = res.concat(n, " - ", p, "%<br>");
+    }
+    return(res);
+}
+
+
+function replaceZero(arr) {
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i] == "0") {
+            arr[i] = null;
+        }
+    }
+
+    return arr;
+}
+
+
+/* given a term's nerest neighbors in 1700 get traces over time for all */
+function getNnTraces(neighborsTimeseries, decades) {
+    var traces = [];
+    for (const neighbor of neighborsTimeseries) {
+        var y = replaceZero(neighbor.timeseries);
+        var trace = {
+            x: decades,
+            y: y,
+            mode: 'lines',
+            type: 'scatter',
+            line: {
+                opacity: 0.7,
+                color: 'rgb(128, 128, 128)',
+                width: 0.5,
+                shape: 'spline'
+            },
+            hovertext: neighbor.term,
+            hoverinfo: 'text',
+            // hovertemplate: '%{text}',
+            hoverlabel: {namelength :-1}
+        }
+        traces.push(trace);
+    }
+
+    return traces;
+}
