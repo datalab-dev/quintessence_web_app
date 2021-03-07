@@ -13,6 +13,8 @@ get_freq.php
 
 */
 
+
+
 $(document).ready(function() {
     /* configure tabs */
     $('#tabs li a:not(:first)').addClass('inactive');
@@ -37,6 +39,13 @@ $(document).ready(function() {
        plot term 'history' as demo
        add autocomplete to input for terms (uses terms from php/get_terms.php
        */
+
+    var smoothing= $('#smoothing-select').val();
+    $('#smoothing-select').on('change', function() {
+	smoothing = $('#smoothing-select').val();
+	plotFrequencies(frequencies, smoothing);
+    });
+
     // Autocomplete
     $.getJSON('./php/get_terms.php', function(terms) {
 	$('#tokens').autocomplete({
@@ -49,7 +58,7 @@ $(document).ready(function() {
 		}) );
 	    },
 	    select: function(e, ui) {
-		addTermFreq(ui.item.value, frequencies);
+		addTermFreq(ui.item.value, frequencies, smoothing);
 	    }
 	});
     });
@@ -57,15 +66,16 @@ $(document).ready(function() {
     // plot history as an example
     $('#tokens').val('');
     frequencies = {} // init empty object to hold the data for each term
-    addTermFreq('history', frequencies);
+    addTermFreq('history', frequencies, smoothing);
 });
 
-function addTermFreq(term, frequencies) {
+function addTermFreq(term, frequencies, smoothing) {
     /**
      * Add term to the relative frequency plot
      *
      * @param  {string} term word to plot
      * @param  {object} frequencies object containing data for each term
+     * @param  {int} smoothing the level for smoothing
      *
      */ 
 
@@ -80,7 +90,7 @@ function addTermFreq(term, frequencies) {
 	var term = $(this).parent().text();
 	delete frequencies[term];
 	$(this).parent().remove();
-	plotFrequencies(frequencies);
+	plotFrequencies(frequencies, smoothing);
     });
 
     /* get data for the term */
@@ -90,7 +100,7 @@ function addTermFreq(term, frequencies) {
 	frequencies[term] = data;
     }).done(function() {
 	/* replot */
-	plotFrequencies(frequencies);
+	plotFrequencies(frequencies, smoothing);
 	$('#search-button').off('click');
 	$('#tokens').val(''); // clear the search bar when token selected
     });
@@ -100,14 +110,17 @@ const range = (start, stop, step = 1) =>
     Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
 
 function moving_average( array, window) {
-    // window should be odd number. e.g if window =3, then take average of point, point before and point after
+    // window is number of datapoints on each side to include
+    window = parseInt(window);
     let results = [];
     for (var i =0; i < array.length; i++) {
-	let start = Math.max(0, i-Math.floor(window/2));
-	let end = Math.min(array.length,  i+Math.floor(window/2) + 1);
+	let start = Math.max(0, i - window);
+	let end = Math.min(array.length-1, i + window); 
+
+	// since end is not included in slice add 1
 	let slice = array.slice(
 	    start,
-	    end
+	    end + 1
 	);
 	let mean = slice.reduce((a, b) => a + b, 0) / slice.length;
 	results[i] = mean;
