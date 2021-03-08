@@ -3,123 +3,156 @@ $(document).ready(function() {
     $('#tabs a:not(:first)').addClass('inactive');
     $('.container:not(:first)').hide();
     $('#tabs a').click(function(){
-        var t = $(this).attr('href');
-        $('#tabs a').addClass('inactive');
-        $(this).removeClass('inactive');
-        $('.container').hide();
-        $(t).fadeIn('slow');
+	var t = $(this).attr('href');
+	$('#tabs a').addClass('inactive');
+	$(this).removeClass('inactive');
+	$('.container').hide();
+	$(t).fadeIn('slow');
 
-        return false;
+	return false;
     })
 
-    var auth_options = $("#dropdown-auth").html();
-    var loc_options = $("#dropdown-loc").html();
-    var decades = range(1480, 1710, 10);
+    $.getJSON('./php/get_embeddings_terms.php', function(terms) {
+	$('#tokens').autocomplete({
+	    delay: 0,
+	    minLength: 3,
+	    source: function(request, response) {
+		var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+		response( $.grep( terms, function( item ){
+		    return matcher.test( item );
+		}) );
+	    },
+	    select: function(e, ui) {
+		// When term is selected:
+		var term = ui.item.value;
 
-    /* load the term 'history' as a sample selection */
-    $.getJSON('./resources/sample_embed.json', function(data) {
-        $('#tokens').val('history');
-        var term = 'history';
-        var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length);
-        var startingLayout = JSON.parse(JSON.stringify(timeseriesLayout));
-        startingLayout.annotations = timeseriesAnnotations;
-        plotWordChange(term, decades, data.timeseries[0],
-            data.decades, neighborsTimeseries, startingLayout);
-        plotHist('full', null, data.full, term);
-        $("#dropdown-auth").change(function () {
-           var author = $(this).val();
-           var authName = $("#dropdown-auth option:selected").text();
-           plotHist('author', authName, data.authors[author], term);
-        });
-        $("#dropdown-loc").change(function () {
-          var location = $(this).val();
-          var locName = $("#dropdown-loc option:selected").text();
-          plotHist('location', locName, data.locations[location], term);
-        });
+		// clear dropdown menu
+		$('#category-select').empty();
+		$('#model-select').empty();
+		$('#model-select').hide();
 
-        $.getJSON('./resources/sample_kwic.json', function(data) {
-            parseKwic(data, 'Abraham'); // change to history
-        });
-    })
+		// clear result
+		$('#result').empty();
 
-    $.getJSON('./php/get_terms.php', function(terms) {
-        $('#tokens').autocomplete({
-            delay: 0,
-            minLength: 3,
-            source: function(request, response) {
-                var results = $.ui.autocomplete.filter(terms, request.term)
-                response(results.slice(0, 10));
-            },
-            select: function(e, ui) {
-                $('#search-button').on('click', function() {
-                    $('#top_docs').toggle()
-                    var term = ui.item.value;
-                    console.log(ui.item.value);
-                    $('#kwic-msg').text('Loading keyword in context data ...');
-                    $.getJSON(`./php/get_neighbors.php?term=${term}`, function(data) {
-                        /* filter dropdown menus */
-                        for(var author in data.authors) {
-                            if (data.authors[author].scores.length == 0)
-                                $(`#dropdown-auth option[value=\"${author}\"]`).remove();
-                        }
-                        for(var location in data.locations) {
-                            if (data.locations[location].scores.length == 0)
-                                $(`#dropdown-loc option[value=\"${location}\"]`).remove();
-                        }
+		$.getJSON(`./php/get_neighbors.php?term=${term}`, function(data) {
 
-                        /* plot */
-                        var neighborsTimeseries = data.timeseries.slice(1, data.timeseries.length)
-                        plotWordChange(term, decades, data.timeseries[0],
-                            data.decades, neighborsTimeseries, timeseriesLayout);
-                        plotHist('full', null, data.full, term);
-                        $("#dropdown-auth").change(function () {
-                            var author = $(this).val();
-                            var authName = $("#dropdown-auth option:selected").text();
-                            plotHist('author', authName, authors[author], term);
-                        });
-                        $("#dropdown-loc").change(function () {
-                            var location = $(this).val();
-                            var locName = $("#dropdown-loc option:selected").text();
-                            plotHist('location', locName, data.locations[location], term);
-                        });
-                    })
+		    // get categories
+		    let categories = Object.keys(data);
+		    categories = categories.filter(e => e !== '_id');
 
-                    getKwic(term);
-                });
-            }
-        });
-    })
-    .done(function() {
-       histLayout.title = null;
-       Plotly.newPlot('auth-hist', null, histLayout, {displayModeBar: false});
-       Plotly.newPlot('loc-hist', null, histLayout, {displayModeBar: false});
-   });
+		    // populate categories dropdown menu
+		    for (var i = 0; i < categories.length; i++) {
+			$('#category-select').append(
+			    $('<option></option').text(categories[i]).val(categories[i]));
+		    }
 
-    $('#tokens').val('');
-    $('#dropdown-auth').val('');
-    $('#dropdown-loc').val('');
-});
+		    // DEFAULT BEHAVIOR
+		    // if none selected it defaults to first (probably 'full')
+		    let category = $( "#category-select option:selected" ).text();
+
+		    if (category == "full") {
+		        nn = data[category];
+		        let tbl = make_table_from_neighbors_data(nn);
+		        $('#result').append(tbl);
+		    } else {
+			    $('#model-select').empty()
+			    let models = Object.keys(data[category]);
+
+		            for (var i = 0; i < models.length; i++) {
+		                $('#model-select').append(
+		                    $('<option></option').text(models[i]).val(models[i]));
+		            }
+			    $('#model-select').show();
+                             
+		            let model = $( "#model-select option:selected" ).text();
+		            $('#result').empty();
+			    nn = data[category][model];
+		            let tbl = make_table_from_neighbors_data(nn);
+		            $('#result').append(tbl);
+		    }
+
+		    // UPDATE ON USER INPUT
+		    // if user selects a category
+                    $('#category-select').on('change', function() {
+			let category = this.value;
+
+			if (category !== "full") {
+			    $('#model-select').empty()
+			    let models = Object.keys(data[category]);
+
+		            for (var i = 0; i < models.length; i++) {
+		                $('#model-select').append(
+		                    $('<option></option').text(models[i]).val(models[i]));
+		            }
+			    $('#model-select').show();
+                             
+		            let model = $( "#model-select option:selected" ).text();
+		            $('#result').empty();
+			    nn = data[category][model];
+		            let tbl = make_table_from_neighbors_data(nn);
+		            $('#result').append(tbl);
+
+			} else {
+			    $('#model-select').empty();
+		            $('#result').empty();
+			    $('#model-select').hide();
+		            nn = data[category];
+		            let tbl = make_table_from_neighbors_data(nn);
+		            $('#result').append(tbl);
+			}
+		    }); // select category
+
+		    // if user selects a model
+                    $('#model-select').on('change', function() {
+		        $('#result').empty();
+		        let category = $( "#category-select option:selected" ).text();
+			console.log(category, this.value);
+			nn = data[category][this.value];
+		        let tbl = make_table_from_neighbors_data(nn);
+		        $('#result').append(tbl);
+		    }); //select model
+
+
+		}); // get neighbors
+	    } // when term is selected
+	});
+    });
+}); // on ready
 
 /* helper function which returns an array of ints given a range */
 const range = (start, stop, step = 1) =>
-Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
+    Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
 
 function getNnInfo(data) {
     var res = "";
     for (i = 19; i > 9; i--) {
-        var n = data.neighbors[i];
-        var p = (parseFloat(data.scores[i])*100).toFixed(2);
-        res = res.concat(n, " - ", p, "%<br>");
+	var n = data.neighbors[i];
+	var p = (parseFloat(data.scores[i])*100).toFixed(2);
+	res = res.concat(n, " - ", p, "%<br>");
     }
     return(res);
 }
 
+function make_table_from_neighbors_data(neighbors) {
+    let table = document.createElement("table");
+
+    for (var i =0; i < neighbors.terms.length; i++) {
+	var row = table.insertRow(i);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	cell1.innerHTML = neighbors.terms[i];
+	cell2.innerHTML = neighbors.scores[i].toFixed(3);
+	cell3.innerHTML = neighbors.freqs[i];
+    }
+    return table;
+}
 
 function replaceZero(arr) {
     for (i = 0; i < arr.length; i++) {
-        if (arr[i] == "0") {
-            arr[i] = null;
-        }
+	if (arr[i] == "0") {
+	    arr[i] = null;
+	}
     }
 
     return arr;
@@ -130,24 +163,24 @@ function replaceZero(arr) {
 function getNnTraces(neighborsTimeseries, decades) {
     var traces = [];
     for (const neighbor of neighborsTimeseries) {
-        var y = replaceZero(neighbor.timeseries);
-        var trace = {
-            x: decades,
-            y: y,
-            mode: 'lines',
-            type: 'scatter',
-            line: {
-                opacity: 0.7,
-                color: 'rgb(128, 128, 128)',
-                width: 0.5,
-                shape: 'spline'
-            },
-            hovertext: neighbor.term,
-            hoverinfo: 'text',
-            // hovertemplate: '%{text}',
-            hoverlabel: {namelength :-1}
-        }
-        traces.push(trace);
+	var y = replaceZero(neighbor.timeseries);
+	var trace = {
+	    x: decades,
+	    y: y,
+	    mode: 'lines',
+	    type: 'scatter',
+	    line: {
+		opacity: 0.7,
+		color: 'rgb(128, 128, 128)',
+		width: 0.5,
+		shape: 'spline'
+	    },
+	    hovertext: neighbor.term,
+	    hoverinfo: 'text',
+	    // hovertemplate: '%{text}',
+	    hoverlabel: {namelength :-1}
+	}
+	traces.push(trace);
     }
 
     return traces;

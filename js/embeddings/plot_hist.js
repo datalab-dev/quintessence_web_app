@@ -1,7 +1,11 @@
 function plotHist(category, sel, nn, term) {
+    // category :     {String}  decade, author, location, full
+    // sel:           {String}  name of subset
+    // nn:            {Object}  scores: [ ], terms: [ ]
+    // term           {String}  term
     var trace = {
 	x: nn.scores,
-        y: nn.neighbors,
+        y: nn.terms,
         type: 'bar',
         orientation: 'h',
         hovertemplate: '%{x} similarity',

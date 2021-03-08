@@ -1,5 +1,5 @@
 /* given a term generate term embeddings plots */
-function plotWordChange(term, decades, termTimeseries, decNeighbors,
+function plotWordChange(term, timeseries, decNeighbors,
     neighborsTimeseries, layout) {
 
     var nninfo = [];
