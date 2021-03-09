@@ -60,6 +60,7 @@ $(document).ready(function() {
 		    } else {
 			    $('#model-select').empty()
 			    let models = Object.keys(nndata[category]);
+			    models = models.sort();
 
 		            for (var i = 0; i < models.length; i++) {
 		                $('#model-select').append(
@@ -82,6 +83,7 @@ $(document).ready(function() {
 			if (category !== "full") {
 			    $('#model-select').empty()
 			    let models = Object.keys(nndata[category]);
+			    models = models.sort();
 
 		            for (var i = 0; i < models.length; i++) {
 		                $('#model-select').append(
