@@ -1,3 +1,4 @@
+var nndata;
 $(document).ready(function() {
     /* configure tabs */
     $('#tabs a:not(:first)').addClass('inactive');
@@ -36,8 +37,10 @@ $(document).ready(function() {
 
 		$.getJSON(`./php/get_neighbors.php?term=${term}`, function(data) {
 
+		    nndata = data;
+
 		    // get categories
-		    let categories = Object.keys(data);
+		    let categories = Object.keys(nndata);
 		    categories = categories.filter(e => e !== '_id');
 
 		    // populate categories dropdown menu
@@ -51,12 +54,12 @@ $(document).ready(function() {
 		    let category = $( "#category-select option:selected" ).text();
 
 		    if (category == "full") {
-		        nn = data[category];
+		        nn = nndata[category];
 		        let tbl = make_table_from_neighbors_data(nn);
 		        $('#result').append(tbl);
 		    } else {
 			    $('#model-select').empty()
-			    let models = Object.keys(data[category]);
+			    let models = Object.keys(nndata[category]);
 
 		            for (var i = 0; i < models.length; i++) {
 		                $('#model-select').append(
@@ -66,7 +69,7 @@ $(document).ready(function() {
                              
 		            let model = $( "#model-select option:selected" ).text();
 		            $('#result').empty();
-			    nn = data[category][model];
+			    nn = nndata[category][model];
 		            let tbl = make_table_from_neighbors_data(nn);
 		            $('#result').append(tbl);
 		    }
@@ -78,7 +81,7 @@ $(document).ready(function() {
 
 			if (category !== "full") {
 			    $('#model-select').empty()
-			    let models = Object.keys(data[category]);
+			    let models = Object.keys(nndata[category]);
 
 		            for (var i = 0; i < models.length; i++) {
 		                $('#model-select').append(
@@ -88,7 +91,7 @@ $(document).ready(function() {
                              
 		            let model = $( "#model-select option:selected" ).text();
 		            $('#result').empty();
-			    nn = data[category][model];
+			    nn = nndata[category][model];
 		            let tbl = make_table_from_neighbors_data(nn);
 		            $('#result').append(tbl);
 
@@ -96,7 +99,7 @@ $(document).ready(function() {
 			    $('#model-select').empty();
 		            $('#result').empty();
 			    $('#model-select').hide();
-		            nn = data[category];
+		            nn = nndata[category];
 		            let tbl = make_table_from_neighbors_data(nn);
 		            $('#result').append(tbl);
 			}
@@ -107,7 +110,7 @@ $(document).ready(function() {
 		        $('#result').empty();
 		        let category = $( "#category-select option:selected" ).text();
 			console.log(category, this.value);
-			nn = data[category][this.value];
+			nn = nndata[category][this.value];
 		        let tbl = make_table_from_neighbors_data(nn);
 		        $('#result').append(tbl);
 		    }); //select model
@@ -123,11 +126,11 @@ $(document).ready(function() {
 const range = (start, stop, step = 1) =>
     Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
 
-function getNnInfo(data) {
+function getNnInfo(nndata) {
     var res = "";
     for (i = 19; i > 9; i--) {
-	var n = data.neighbors[i];
-	var p = (parseFloat(data.scores[i])*100).toFixed(2);
+	var n = nndata.neighbors[i];
+	var p = (parseFloat(nndata.scores[i])*100).toFixed(2);
 	res = res.concat(n, " - ", p, "%<br>");
     }
     return(res);
