@@ -122,7 +122,7 @@ function getTopicProportions($collection, $docs) {
 		'$lookup' => [
 		    'from' => 'frequencies.docs',
 		    'localField' => '_id',
-		    'foreignField' => 'docId',
+		    'foreignField' => '_id',
 		    'as' => 'counts'
 		]
 	    ],
