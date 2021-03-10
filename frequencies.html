@@ -1,0 +1,97 @@
+<!doctype html>
+<head>
+    <title>Quintessence Alpha: Word Frequency</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="./js/frequencies/freq.js"></script>
+    <script src="./js/frequencies/layouts.js"></script>
+    <script src="./js/frequencies/plot_freq.js"></script>
+    <script src="./js/frequencies/plot_overall_freq.js"></script>
+</head>
+
+<body>
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+	$("#nav-placeholder").load("nav.html",function(){
+		    $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+		});
+    </script>
+
+    <div class="text-block">
+	<h2> Word Frequency </h2>
+	<p>
+	Compare the relative frequency of up to five terms at a time. Graphs showing
+	the total number of words and total number of documents per year are also
+	available below.
+	</p>
+    </div>
+
+    <hr>
+
+    <ul id="tabs" class="button-tabs">
+	<li><a href="#token-freq"> Relative Frequency Over Time</a></li>
+	<li><a href="#overall-words">Words per Year</a></li>
+	<li><a href="#overall-docs">Documents per Year</a></li>
+    </ul>
+
+    <hr>
+
+    <div class="container" id="token-freq">
+	<div class= "text-block">
+	    <div class= "search-label">Plot Relative Frequency:</div>
+
+	    <div style="display: flex; flex-direction: row">
+		<input class="freq-input"  id="tokens" placeholder="Starting typing a word here, select it from dropdown to plot it!"/>
+		<div id="token-msg"></div>
+	    </div>
+
+	    <label for="smoothing-select">Choose a smoothing level:</label>
+
+	    <select name="smoothing" id="smoothing-select">
+		<option value="0">0</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option selected value="3">3</option>
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="20">20</option>
+	    </select>
+
+	</div>
+
+	<div class= "text-block">
+	    <div id="token-disp">
+		<ul id="token-list"></ul>
+	    </div>
+
+	</div>
+	<div id="freqPlot"></div>
+    </div>
+
+    <div class="container" id="overall-words">
+	<div id="termFreqPlot"></div>
+    </div>
+
+    <div class="container" id="overall-docs">
+	<div id="docFreqPlot"></div>
+    </div>
+    </div>
+
+    <!--Footer -->
+    <div id="footer-placeholder"></div>
+    <script>
+	$("#footer-placeholder").load("footer.html");
+    </script>
+    <!-- Footer -->
+</body>

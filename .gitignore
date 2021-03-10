@@ -1,1 +1,8 @@
+# data
 /xml/
+
+# php stuff
+/php/vendor/
+
+# Vim swap files
+*.swp

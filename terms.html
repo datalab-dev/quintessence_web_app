@@ -1,0 +1,119 @@
+<!doctype html>
+<head>
+    <title>Quintessence Alpha: Word Meanings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="./js/embeddings/embed.js"></script>
+    <script src="./js/embeddings/layouts.js"></script>
+    <script src="./js/embeddings/get_kwic.js"></script>
+    <script src="./js/embeddings/plot_wc.js"></script>
+    <script src="./js/embeddings/plot_hist.js"></script>
+    <script src="./js/documents/get_truncated_document.js"> </script>
+    <script src="./js/documents/get_full_document.js"> </script>
+    <script src="./js/documents/get_meta.js"> </script>
+    <script src="./js/documents/init_document_results.js"> </script>
+</head>
+
+<body>
+    <!-- Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+	$("#nav-placeholder").load("nav.html",function(){
+		    $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+		});
+    </script>
+
+
+    <div class="text-block">
+	<h2> Word Meanings </h2>
+
+	<p>
+	We use word embeddings to evaluate the interchangeability of words and how
+	meaning evolves over time. Word embeddings are approximations of a word’s
+	meaning based on millions of guesses by a neural network. These
+	approximations are represented numerically, which allows us to calculate
+	similarity between words, as well as word meaning change over time, among
+	different authors, and in different print locations. The plots are all
+	representations of these calculations. Search any word in our vocabulary to
+	see a plot of that word's change. You can hover on the word at each decade
+	to see its overall Similarity Score, as well as the other nearest terms in
+	that decade. The word is also shown in
+	context below the graphs.
+	</p>
+    </div>
+
+    <hr>
+
+
+    <ul id="tabs" class="button-tabs">
+	<li><a href="#all-nn">Most Similar Words</a></li>
+	<li><a href="#word-change">Word Change</a></li>
+    </ul>
+    <hr>
+
+
+
+    <div class="container" id="all-nn">
+
+	<div class="text-block">
+	    
+	    <div class="search-label">Search for a word and select a model:</div>
+
+	    <div style="display: flex; flex-direction: row">
+		<input class="freq-input"  id="tokens">
+		<div id="token-msg"></div>
+	    </div>
+
+	    <div class="controls" style="display: flex; flex-direction: row">
+
+		<select id="category-select" style="display: none; margin-right: 10px" class="w-25 form-select" aria-label="Default select example">
+		</select>
+
+		<select style="display: none" id="model-select" class="w-50 form-select" aria-label="Default select example">
+		</select>
+
+	    </div> <!-- controls -->
+
+	    <div style="min-height: 200px; padding-top: 20px;" id="result"> </div>
+	</div> <!-- text-block -->
+
+    </div> <!-- container all-nn -->
+
+
+    <div class="container" id="word-change">
+
+        <div class="search-label">Search for a word to plot its change over time</div>
+
+	<div class= "text-block">
+	    <div style="display: flex; flex-direction: row">
+		<input class="freq-input"  id="timeseries-tokens">
+		<div id="token-msg"></div>
+	    </div>
+	</div>
+
+	<div style="min-height: 300px" id="nn-plot" class="plot"></div>
+    </div>
+
+
+
+    <!--Footer -->
+    <div id="footer-placeholder"></div>
+    <script>
+	$("#footer-placeholder").load("footer.html");
+    </script>
+    <!-- Footer -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>

@@ -1,29 +1,26 @@
 <?php
+require 'vendor/autoload.php';
+
 // database connection info
-$user = 'q_user';
-$password = 'quintessence';
-$modelsdb = 'EEBO_Models';
-$corpusdb = 'quintessence_corpus';
-$server = '127.0.0.1';
+$user = '';
+$password = '';
+$dbname = 'quintessence';
+$server = 'datasci.library.ucdavis.edu';
+$port = '27017';
 
+function getMongoCon() {
+    global $user, $password, $dbname, $server, $port;
 
-function getCorpusCon() {
-    global $user, $password, $modelsdb, $corpusdb, $server;
-    $corpus_con = new mysqli($server, $user, $password, $corpusdb);
-    if (!$corpus_con)
-        echo "failed to connect to corpus database!";
+    $typemap = ["typeMap" => ['root' => 'array', 'document' => 'array']];
+    $url = 'mongodb://'.$server.':'.$port;
+    $con = new MongoDB\Client($url, [], $typemap);
 
-    mysqli_set_charset($corpus_con, 'utf8');
-    return $corpus_con;
+    if (!$con)
+        echo 'failed to connect to database!';
+
+    $db = $con->{$dbname};
+    return $db;
 }
 
-function getModelsCon() {
-    global $user, $password, $modelsdb, $corpusdb, $server;
-    $models_con = new mysqli($server, $user, $password, $modelsdb);
-    if (!$models_con)
-        echo "failed to connect to models database!";
-
-    mysqli_set_charset($corpus_con, 'utf8');
-    return $models_con;
-}
+$db = getMongoCon();
 ?>
