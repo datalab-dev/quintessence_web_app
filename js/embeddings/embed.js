@@ -1,4 +1,4 @@
-var nndata;
+var nndata;  // global variable
 $(document).ready(function() {
     /* configure tabs */
     $('#tabs a:not(:first)').addClass('inactive');
@@ -13,6 +13,33 @@ $(document).ready(function() {
 	return false;
     })
 
+
+    // word change tab
+    $.getJSON('./php/get_timeseries_terms.php', function(tsterms) {
+	$('#timeseries-tokens').autocomplete({
+	    delay: 0,
+	    minLength: 3,
+	    source: function(request, response) {
+		var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+		response( $.grep( tsterms, function( item ){
+		    return matcher.test( item );
+		}) );
+	    },
+	    select: function(e, ui) {
+		var tsterm = ui.item.value;
+
+		// clear plot
+		//$('#nn-plot').empty();
+
+		// get time series data
+		$.getJSON(`./php/get_timeseries.php?term=${tsterm}`, function(data) {
+		    plotWordChange(data);
+		}); // get_timeseries term
+	    } // select
+	}); //autocomplete
+    }); // get timeseries terms
+
+    // Most Similar words Tab
     $.getJSON('./php/get_embeddings_terms.php', function(terms) {
 	$('#tokens').autocomplete({
 	    delay: 0,
@@ -124,20 +151,6 @@ $(document).ready(function() {
     });
 }); // on ready
 
-/* helper function which returns an array of ints given a range */
-const range = (start, stop, step = 1) =>
-    Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step);
-
-function getNnInfo(nndata) {
-    var res = "";
-    for (i = 19; i > 9; i--) {
-	var n = nndata.neighbors[i];
-	var p = (parseFloat(nndata.scores[i])*100).toFixed(2);
-	res = res.concat(n, " - ", p, "%<br>");
-    }
-    return(res);
-}
-
 function make_table_from_neighbors_data(neighbors) {
     let table = document.createElement("table");
 
@@ -151,42 +164,4 @@ function make_table_from_neighbors_data(neighbors) {
 	cell3.innerHTML = neighbors.freqs[i];
     }
     return table;
-}
-
-function replaceZero(arr) {
-    for (i = 0; i < arr.length; i++) {
-	if (arr[i] == "0") {
-	    arr[i] = null;
-	}
-    }
-
-    return arr;
-}
-
-
-/* given a term's nerest neighbors in 1700 get traces over time for all */
-function getNnTraces(neighborsTimeseries, decades) {
-    var traces = [];
-    for (const neighbor of neighborsTimeseries) {
-	var y = replaceZero(neighbor.timeseries);
-	var trace = {
-	    x: decades,
-	    y: y,
-	    mode: 'lines',
-	    type: 'scatter',
-	    line: {
-		opacity: 0.7,
-		color: 'rgb(128, 128, 128)',
-		width: 0.5,
-		shape: 'spline'
-	    },
-	    hovertext: neighbor.term,
-	    hoverinfo: 'text',
-	    // hovertemplate: '%{text}',
-	    hoverlabel: {namelength :-1}
-	}
-	traces.push(trace);
-    }
-
-    return traces;
 }
