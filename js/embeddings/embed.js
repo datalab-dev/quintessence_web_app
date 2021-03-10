@@ -56,6 +56,7 @@ $(document).ready(function() {
 
 		// clear dropdown menu
 		$('#category-select').empty();
+		$('#category-select').hide();
 		$('#model-select').empty();
 		$('#model-select').hide();
 
@@ -101,6 +102,8 @@ $(document).ready(function() {
 		            let tbl = make_table_from_neighbors_data(nn);
 		            $('#result').append(tbl);
 		    }
+
+		    $('#category-select').show();
 
 		    // UPDATE ON USER INPUT
 		    // if user selects a category
