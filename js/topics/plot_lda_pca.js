@@ -189,6 +189,11 @@ function plotLdaPca(topics, topicNum, annotations) {
 	    function(data) {
 		plotTopicTerms(pn,data); // pass topic id 
 	    });
+
+	$.getJSON('./php/get_topic_proportions.php?topicId=' + pn.toString(), 
+	    function(data) {
+		plot_topic_proportion(data);
+	    });
     });
 
     document.getElementById("topics").innerHTML = JSON.stringify(topics);

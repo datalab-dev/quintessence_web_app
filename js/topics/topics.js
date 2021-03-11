@@ -34,4 +34,10 @@ $(document).ready(function() {
 	function(data) {
             plotTopicTerms(DEFAULT_TOPIC, data);
     })
+    /* plot topic proportions time series for the default topic */
+    $.getJSON('./php/get_topic_proportions.php?topicId=' + DEFAULT_TOPIC.toString(),
+	function(data) {
+            plot_topic_proportion(data);
+	}
+    );
 });
