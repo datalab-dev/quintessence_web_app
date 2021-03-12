@@ -30,7 +30,7 @@ var topic_proportion_layout = {
     width: 1024,
     height: 600
 };
-function plot_topic_proportion(topicId, proportions) {
+function plot_topic_proportion(proportions) {
     // filter out points past 1700 and before 1470
 
     const allowed = range(1470,1700);
