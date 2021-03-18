@@ -30,9 +30,10 @@ $(document).ready(function() {
     });
 
     /* plot top terms for the default topic */
-    $.getJSON('./php/get_top_topic_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
+    //$.getJSON('./php/get_top_topic_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
+    $.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
 	function(data) {
-            plotTopicTerms(DEFAULT_TOPIC, data);
+            plotTopicTerms(DEFAULT_TOPIC, data["topterms"]);
     })
     /* plot topic proportions time series for the default topic */
     $.getJSON('./php/get_topic_proportions.php?topicId=' + DEFAULT_TOPIC.toString(),
