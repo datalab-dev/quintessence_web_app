@@ -2,14 +2,11 @@
 
 Plots the top terms for a given topic
 
-Gets everything from get_top_topic_terms.php
+Gets everything from get_top_topic_relevance_terms.php
 
-Needs:
-    TopicId
-    Object{
-	scores: [ ],
-	terms: [ ]
-    }
+needs topterms object containing top terms for each lambda as well as the other
+stats such as overallFreq, topicFreq, and relevance scores
+
 
 */
 
@@ -88,7 +85,7 @@ function plotTopicTerms(topicId, topterms) {
             orientation: 'h',
             opacity: 0.7,
             marker: {
-                color: 'blue'
+                color: '#1f77b4'
             }
         }
 	traces.push(trace);
@@ -127,7 +124,6 @@ function plotTopicTerms(topicId, topterms) {
 	steps: mysteps
     }]
 
-    console.log(traces);
     topicTermsLayout.sliders = slider;
 
     //topicTermsLayout.title = 'Topic Terms ' + topicId;
