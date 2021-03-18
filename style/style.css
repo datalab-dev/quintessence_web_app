@@ -289,14 +289,14 @@ p {
     position: relative;
     display: flex;
     flex-direction: row;
-    width: 1200px;
+    width: 1400px;
     margin-bottom: 20px;
     align-self: center;
 }
 
 #topic_terms {
     height: 900px;
-    width: 300px;
+    width: 500px;
 }
 #ldapca {
     height: 900px;

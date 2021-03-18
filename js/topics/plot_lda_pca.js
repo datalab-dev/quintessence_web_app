@@ -185,9 +185,9 @@ function plotLdaPca(topics, topicNum, annotations) {
 	updateLdaPcaColors(pn, colors.slice(0), sizes); // copy of colors
 	document.getElementById("selectedTopic").innerHTML = pn;
 
-	$.getJSON('./php/get_top_topic_terms.php?topicId=' + pn.toString(),
+	$.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + pn.toString(),
 	    function(data) {
-		plotTopicTerms(pn,data); // pass topic id 
+		plotTopicTerms(pn,data["topterms"]); // pass topic id 
 	    });
 
 	$.getJSON('./php/get_topic_proportions.php?topicId=' + pn.toString(), 
