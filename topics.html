@@ -125,9 +125,25 @@
 
     <div style="display: none" id="topics"></div>
     <div style="display: none" id="selectedTopic"></div>
+
+    <div id="search-bars" style="display: flex; flex-direction: row; margin:auto; width: 1400px;"> 
+	<form>
+	    <label for="topic">Topic:</label>
+		<input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
+	    <label for="term">Term:</label>
+		<input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
+	</form>
+	<button id="reset-bubbles" style="height: 38px"> Reset</button>
+    </div>
     <div id="lda_area" name="no_top_docs">
+
 	<div id="ldapca"> </div>
+
 	<div id="topic_terms" name="11"></div>
+
+
+
+
 	<div id="overlay">
 	    <div id="text">Loading Data</div>
 	</div>
