@@ -147,6 +147,7 @@ function plotLdaPca(topics, topicNum, annotations) {
 	colors.push('#1f77b4');
     }
     saved_sizes = sizes;
+    saved_colors = colors;
 
     /* plot data */
     var trace = {

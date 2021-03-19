@@ -528,6 +528,22 @@ td
     margin-bottom: 16px;
 }
 
+.lda-input {
+    width: 300px;
+    border: 1px solid #BCBCBC;
+    height: 38px; /* with border 1px top and bottom total is 40 like the search button next to it */
+    margin: 0;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#topic-input {
+    width: 60px;
+}
+
 .freq-input {
     width: 700px;
     border: 1px solid #BCBCBC;
