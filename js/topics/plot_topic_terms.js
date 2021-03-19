@@ -10,42 +10,6 @@ stats such as overallFreq, topicFreq, and relevance scores
 
 */
 
-var topicTermsLayout = {
-    barmode: 'stack',
-    staticPlot: false,
-    autosize: false,
-    showlegend: false,
-    height: 900,
-    width: 500,
-    plot_bgcolor: 'rgb(243,243,243)',
-    margin: {
-	l: 120,
-	r: 0,
-	b: 50,
-	t: 50,
-	pad: 0
-    },
-    xaxis: {
-	autorange: true,
-	showgrid: false,
-	zeroline: false,
-	showline: false,
-	autotick: true,
-	ticks: '',
-	showticklabels: false
-    },
-    yaxis: {
-	autorange: "reversed",
-	fixedrange: true,
-	showgrid: false,
-	zeroline: false,
-	showline: false,
-	autotick: true,
-	ticks: '',
-	showticklabels: true
-    },
-};
-
 function plotTopicTerms(topicId, topterms) {
     /* generate plot data from top term objects */
 

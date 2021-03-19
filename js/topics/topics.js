@@ -11,6 +11,7 @@ get_subset_options.php
 get_subset_lda.php
 
 */
+const LDA_PCA_PLOT_NAME = 'ldapca';
 const DEFAULT_TOPIC = 25;
 var saved_sizes = []; // to be accessed and updated anywhere
 var saved_colors = []; // to be accessed and updated anywhere
@@ -121,3 +122,6 @@ $(document).ready(function() {
     });
 
 });
+
+const range = (start, stop, step = 1) =>
+      Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step)
