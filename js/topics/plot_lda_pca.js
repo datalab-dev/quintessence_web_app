@@ -146,6 +146,7 @@ function plotLdaPca(topics, topicNum, annotations) {
 	    `${category}: <br>${topString(topic[category])}`);
 	colors.push('#1f77b4');
     }
+    saved_sizes = sizes;
 
     /* plot data */
     var trace = {
@@ -161,7 +162,7 @@ function plotLdaPca(topics, topicNum, annotations) {
 	mode: 'markers+text',
 	type: 'scatter',
 	marker: {
-	    sizes: sizes,
+	    size: sizes,
 	    color: '#1f77b4',
 	    line: {
 		color: 'black',

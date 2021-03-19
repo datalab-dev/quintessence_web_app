@@ -12,7 +12,7 @@ stats such as overallFreq, topicFreq, and relevance scores
 
 var topicTermsLayout = {
     barmode: 'stack',
-    staticPlot: true,
+    staticPlot: false,
     autosize: false,
     showlegend: false,
     height: 900,
@@ -36,6 +36,7 @@ var topicTermsLayout = {
     },
     yaxis: {
 	autorange: "reversed",
+	fixedrange: true,
 	showgrid: false,
 	zeroline: false,
 	showline: false,
@@ -54,40 +55,40 @@ function plotTopicTerms(topicId, topterms) {
 
     var traces = [];
     for (var i = 0; i < topterms.length; i++) {
-        let terms = topterms[i]['terms'];
-        let overallFreq = topterms[i]['overallFreq'];
-        let topicFreq = topterms[i]['estimatedTermFreqTopic'];
-        let relevances = topterms[i]['relevances'];
+	let terms = topterms[i]['terms'];
+	let overallFreq = topterms[i]['overallFreq'];
+	let topicFreq = topterms[i]['estimatedTermFreqTopic'];
+	let relevances = topterms[i]['relevances'];
 
-        let diff = [];
-        for (var j = 0; j < overallFreq.length; j++) {
-            diff.push(overallFreq[j] - topicFreq[j]);
-        }
+	let diff = [];
+	for (var j = 0; j < overallFreq.length; j++) {
+	    diff.push(overallFreq[j] - topicFreq[j]);
+	}
 
-        /* plot topic terms */
-        let trace = {
-            x: topicFreq,
-            y: terms,
+	/* plot topic terms */
+	let trace = {
+	    x: topicFreq,
+	    y: terms,
 	    visible: false,
-            type: 'bar',
-            orientation: 'h',
-            opacity: 0.7,
-            marker: {
-                color: '#a91111'
-            }
-        }
+	    type: 'bar',
+	    orientation: 'h',
+	    opacity: 0.7,
+	    marker: {
+		color: '#a91111'
+	    }
+	}
 
-        let trace2 = {
-            x: diff,
-            y: terms,
+	let trace2 = {
+	    x: diff,
+	    y: terms,
 	    visible: false,
-            type: 'bar',
-            orientation: 'h',
-            opacity: 0.7,
-            marker: {
-                color: '#1f77b4'
-            }
-        }
+	    type: 'bar',
+	    orientation: 'h',
+	    opacity: 0.7,
+	    marker: {
+		color: '#1f77b4'
+	    }
+	}
 	traces.push(trace);
 	traces.push(trace2);
     }
@@ -128,6 +129,38 @@ function plotTopicTerms(topicId, topterms) {
 
     //topicTermsLayout.title = 'Topic Terms ' + topicId;
     $('#topic_terms').append('<div id="topic_terms_plot"></div>')
-    Plotly.newPlot('topic_terms_plot', traces, topicTermsLayout,
-	{staticPlot: true});
+    Plotly.newPlot('topic_terms_plot', traces, topicTermsLayout);
+
+
+    var toptermsPlot = document.getElementById('topic_terms_plot');
+    toptermsPlot.on('plotly_afterplot', function(data) {
+	Plotly.d3.selectAll("#topic_terms_plot .yaxislayer-above").selectAll('text')
+	    .on("mouseover", function(d) {
+		term = d.text;
+
+		// get topics dist
+		$.getJSON('./php/get_topic_terms_dist.php?term=' + term,
+		    function(data) {
+			// update sizes of ldapca plot
+			var proportions = []
+			for (var i = 0; i < data.length; i++) {
+			    proportions[i] = Math.min(data[i] * 100 * 20, 250);
+			}
+			var update = {
+			    'marker.size': [proportions],
+			}
+			Plotly.restyle("ldapca", update, 0);
+		    }
+		);
+
+	    })
+
+	.on("mouseleave", function(d) {
+			var update = {
+			    'marker.size': [saved_sizes],
+			}
+			Plotly.restyle("ldapca", update, 0);
+	});
+    });
+
 }
