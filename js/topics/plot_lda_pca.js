@@ -161,7 +161,7 @@ function plotLdaPca(topics, topicNum, annotations) {
 	mode: 'markers+text',
 	type: 'scatter',
 	marker: {
-	    sizes: sizes,
+	    size: sizes,
 	    color: '#1f77b4',
 	    line: {
 		color: 'black',
