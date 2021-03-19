@@ -136,6 +136,10 @@ function plotTopicTerms(topicId, topterms) {
     toptermsPlot.on('plotly_afterplot', function(data) {
 	Plotly.d3.selectAll("#topic_terms_plot .yaxislayer-above").selectAll('text')
 	    .on("mouseover", function(d) {
+		console.log($(this));
+		$(this).css({"font-size":'24px'});
+		$(this).css({"font-style":'italic'});
+
 		term = d.text;
 
 		// get topics dist
@@ -156,6 +160,8 @@ function plotTopicTerms(topicId, topterms) {
 	    })
 
 	.on("mouseleave", function(d) {
+		$(this).css({"font-size":'12px'});
+		$(this).css({"font-style":''});
 			var update = {
 			    'marker.size': [saved_sizes],
 			}
