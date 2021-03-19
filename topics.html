@@ -29,15 +29,25 @@
     <script src="./js/documents/get_full_document.js"></script>
     <script src="./js/documents/get_truncated_document.js"></script>
 
+    <style>
+   #topic_terms_plot .yaxislayer-above {
+         cursor: pointer;
+	   pointer-events: all;
+       }
+   #topic_terms_plot g.draglayer g.xy {
+         display: none;
+   }
+    </style>
+
 </head>
 
 <body>
     <!-- navigation bar-->
     <div id="nav-placeholder"></div>
     <script>
-        $("#nav-placeholder").load("nav.html",function() {
-            $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
-        });
+	$("#nav-placeholder").load("nav.html",function() {
+		    $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
+		});
     </script>
 
     <div class="text-block">
@@ -55,15 +65,15 @@
 	<!-- Timeline-->
 	<div style="margin-bottom: 20px">
 	    <h3 style="margin-top: 10px" class="selecter-title"> Date Range </h3>
-	      <input type="text" id="date-range" class="js-range-slider" name="my_range" value="" />
+	    <input type="text" id="date-range" class="js-range-slider" name="my_range" value="" />
 	</div>
 	<!-- /Timeline-->
 
 	<!-- /Keywords -->
 	<div class="subsetter" id="Keywords">
 	    <h3 class="selecter-title"> Keywords </h3>
-		<select id="selected-keywords" class="ui fluid search dropdown" multiple="">
-		</select>
+	    <select id="selected-keywords" class="ui fluid search dropdown" multiple="">
+	    </select>
 	</div>
 	<!-- /Keywords -->
 
@@ -84,57 +94,57 @@
 	<!-- /Locations -->
 
 	<div id="apply-filters">
-        <div id="status"></div>
-        <div id="ndocs">60327 results</div>
-        <button type="button" class="subset_button" onclick="updateLdaPca();"> Apply Filters </button>
+	    <div id="status"></div>
+	    <div id="ndocs">60327 results</div>
+	    <button type="button" class="subset_button" onclick="updateLdaPca();"> Apply Filters </button>
 	</div>
     </div>
 
     <!--Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution
-    <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
-    	<div id="ndocs"> </div>
-    	<div id="year distribution"> </div>
-    	<div id="author distribution"> </div>
-    	<div id="keyword distribution"> </div>
-    	<div id="location distribution"> </div>
-    </div>
+	<div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
+	<div id="ndocs"> </div>
+	<div id="year distribution"> </div>
+	<div id="author distribution"> </div>
+	<div id="keyword distribution"> </div>
+	<div id="location distribution"> </div>
+	</div>
     -->
 
     <div class="text-block">
 	<p>Show top categories in document hover</p>
 
-    <form id="category-form">
-        <input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
-        <label for="keywords"><b>Keywords</b></label><br>
-        <input type="radio" id="authors" name="category" value="topAuthors">
-        <label for="authors"><b>Authors</b></label><br>
-        <input type="radio" id="locations" name="category" value="topLocations">
-        <label for="locations"><b>Locations</b></label><br>
-    </form>
+	<form id="category-form">
+	    <input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
+	    <label for="keywords"><b>Keywords</b></label><br>
+	    <input type="radio" id="authors" name="category" value="topAuthors">
+	    <label for="authors"><b>Authors</b></label><br>
+	    <input type="radio" id="locations" name="category" value="topLocations">
+	    <label for="locations"><b>Locations</b></label><br>
+	</form>
     </div>
 
     <div style="display: none" id="topics"></div>
     <div style="display: none" id="selectedTopic"></div>
     <div id="lda_area" name="no_top_docs">
-    	<div id="ldapca"> </div>
-    	<div id="topic_terms" name="11"></div>
-    	<div id="overlay">
-    	    <div id="text">Loading Data</div>
-    	</div>
+	<div id="ldapca"> </div>
+	<div id="topic_terms" name="11"></div>
+	<div id="overlay">
+	    <div id="text">Loading Data</div>
+	</div>
     </div>
 
-	<div style="width: 900px; margin-right: auto; margin-left: auto" id="topic_proportion"> </div>
+    <div style="width: 900px; margin-right: auto; margin-left: auto" id="topic_proportion"> </div>
 
     <hr id="hideme" style="display: none">
     <div class="text-block">
-       <div id="top_docs"> </div>
+	<div id="top_docs"> </div>
     </div>
 
 
     <!--Footer -->
     <div id="footer-placeholder"></div>
     <script>
-        $("#footer-placeholder").load("footer.html");
+	$("#footer-placeholder").load("footer.html");
     </script>
     <!-- Footer -->
 </body>
