@@ -15,7 +15,6 @@ For each topic needs:
 
 */
 
-const LDA_PCA_PLOT_NAME = 'ldapca';
 
 /* update the colors of the lda pca plot */
 function updateLdaPcaColors(selected, colors, sizes) {
