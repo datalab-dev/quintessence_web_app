@@ -155,8 +155,12 @@ function plotTopicTerms(topicId, topterms) {
 
 	    })
 
-//	.on("mouseleave", function(d) {
-//	});
+	.on("mouseleave", function(d) {
+			var update = {
+			    'marker.size': [saved_sizes],
+			}
+			Plotly.restyle("ldapca", update, 0);
+	});
     });
 
 }

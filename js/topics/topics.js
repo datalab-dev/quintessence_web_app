@@ -12,6 +12,7 @@ get_subset_lda.php
 
 */
 const DEFAULT_TOPIC = 25;
+var saved_sizes = []; // to be accessed and updated anywhere
 
 $(document).ready(function() {
     /* fills in dropdown menus for subsetting corpus (Locations, Authors...) */
