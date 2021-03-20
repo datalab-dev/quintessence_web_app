@@ -1,0 +1,58 @@
+#topic_info {
+    height: 400px;
+    width: 1000px;
+    margin:auto;
+    display: flex-row;
+}
+#topic_info_wrapper {
+    width: 100%;
+}
+
+#lda_wrapper {
+    padding-top: 30px;
+}
+
+#lda_area {
+    background-color: rgb(243,243,243);
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 1400px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+#topic_terms {
+    height: 900px;
+    width: 500px;
+}
+#ldapca {
+    height: 900px;
+    width: 900px;
+}
+#overlay {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.lda-input {
+    width: 300px;
+    border: 1px solid #BCBCBC;
+    height: 38px; /* with border 1px top and bottom total is 40 like the search button next to it */
+    margin: 0;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#topic-input {
+    width: 60px;
+}
+
