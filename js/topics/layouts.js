@@ -8,9 +8,9 @@ var topicTermsLayout = {
     plot_bgcolor: 'rgb(243,243,243)',
     margin: {
 	l: 120,
-	r: 0,
-	b: 50,
-	t: 50,
+	r: 20,
+	b: 0,
+	t: 0,
 	pad: 0
     },
     xaxis: {
@@ -53,8 +53,8 @@ var ldaPcaLayout = {
     margin: {
 	l: 0,
 	r: 0,
-	b: 50,
-	t: 50,
+	b: 0,
+	t: 0,
 	pad: 0
     },
     /* these need to be fixed, x and y coordinates updated; one way is to se the label as the (x,y) and then record the locations 

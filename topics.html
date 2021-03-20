@@ -32,11 +32,11 @@
     <script src="./js/documents/get_truncated_document.js"></script>
 
     <style>
-#topic_terms_plot .yaxislayer-above {
+.topic_terms .yaxislayer-above {
     cursor: pointer;
     pointer-events: all;
 }
-   #topic_terms_plot g.draglayer g.xy {
+   .topic_terms g.draglayer g.xy {
        display: none;
    }
     </style>
@@ -110,66 +110,61 @@
 	    <div id="apply-filters">
 		<div id="status"></div>
 		<div id="ndocs">60327 results</div>
-		<button type="button" class="subset_button" onclick="updateLdaPca();"> Apply Filters </button>
+		<button type="button" class="subset_button"> Apply Filters </button>
 	    </div>
 	</div>
 
-	<!--Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution
-     <div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
-     <div id="ndocs"> </div>
-     <div id="year distribution"> </div>
-     <div id="author distribution"> </div>
-     <div id="keyword distribution"> </div>
-     <div id="location distribution"> </div>
-     </div>
-	-->
+	<div class="ldavis_container">
 
-	<div class="text-block">
-	    <p>Show top categories in document hover</p>
+	    <div class="ldapca_wrapper">
+		<div style="height: 38px; display: flex; justify-content: space-between; flex-direction: row; margin:auto; width: 100%; margin-bottom: 12px;"> 
 
-	    <form id="category-form">
-		<input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
-		<label for="keywords"><b>Keywords</b></label><br>
-		<input type="radio" id="authors" name="category" value="topAuthors">
-		<label for="authors"><b>Authors</b></label><br>
-		<input type="radio" id="locations" name="category" value="topLocations">
-		<label for="locations"><b>Locations</b></label><br>
-	    </form>
-	</div>
+		    <div style="display: flex; flex-direction: row;"> 
+			<form>
+			    <label for="topic">Topic:</label>
+			    <input name="topic" class="lda-input" id="subset_topic-input" placeholder="25"/>
+			    <label for="term">Term:</label>
+			    <input name="term" class="lda-input"  id="subset_term-input" placeholder="Starting typing a word here"/>
+			</form>
+			<button id="subset_reset-bubbles" style="height: 38px"> Reset</button>
+		    </div>
+
+		    <div style="height: 38px">
+			<form id="subset_category-form" style="height: 14px; margin-top: 7px; margin-bottom: 7px; font-size: 14px">
+			    <input type="radio" id="subset_keywords" name="category" value="topKeywords" checked="checked">
+			    <label for="keywords">Keywords</label>
+			    <input type="radio" id="subset_authors" name="category" value="topAuthors">
+			    <label for="authors">Authors</label>
+			    <input type="radio" id="subset_locations" name="category" value="topLocations">
+			    <label for="locations">Locations</label>
+			</form>
+		    </div>
+		</div>
+
+		<div id="subset_ldapca-plot" class="ldapca"> </div>
+	    </div>
+
+	    <div class="subset_topicdetails" style="display: flex; flex-direction: column; width: 500px">
+		<div style="width: 100%; justify-content: center; height: 38px" >
+		    <ul id="subset_topicdetails_tabs" class="topicdetails_tabs">
+		        <li><a href="#subset_topic_terms">Terms</a></li>
+		        <li><a href="#subset_topic_info">Info</a></li>
+		        <li><a href="#subset_topic_doc">Docs</a></li>
+		    </ul>
+		</div>
+
+		<div id="subset_topic_terms" class="container_test topic_terms"></div>
+		<div id="subset_topic_info" class="container_test topic_info"> info</div>
+		<div id="subset_topic_docs" class="container_test topic_docs"> top docs</div>
+	    </div>
 
 
 
-	<div id="search-bars" style="display: flex; flex-direction: row; margin:auto; width: 1400px;"> 
-	    <form>
-		<label for="topic">Topic:</label>
-		<input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
-		<label for="term">Term:</label>
-		<input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
-	    </form>
-	    <button id="reset-bubbles" style="height: 38px"> Reset</button>
-	</div>
-	<div id="lda_vis_area" name="no_top_docs">
 
-	    <div id="ldapca"> </div>
-
-	    <div id="topic_terms" name="11"></div>
-
-
-
-
-	    <div id="overlay">
-		<div id="text">Loading Data</div>
+	    <div class="overlay" id="subset_overlay">
+		<div class="text">Loading Data</div>
 	    </div>
 	</div>
-
-	<div style="width: 900px; margin-right: auto; margin-left: auto" id="topic_proportion"> </div>
-	<hr id="hideme" style="display: none">
-	<div class="text-block">
-	    <div id="top_docs"> </div>
-	</div>
-
-
-
     </div> <!-- subset -->
 
 

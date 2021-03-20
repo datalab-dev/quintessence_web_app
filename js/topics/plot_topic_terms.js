@@ -91,14 +91,12 @@ function plotTopicTerms(topicId, topterms) {
 
     topicTermsLayout.sliders = slider;
 
-    //topicTermsLayout.title = 'Topic Terms ' + topicId;
-    $('#topic_terms').append('<div id="topic_terms_plot"></div>')
-    Plotly.newPlot('topic_terms_plot', traces, topicTermsLayout);
+    Plotly.newPlot(TOPIC_TERMS_PLOT_NAME, traces, topicTermsLayout, {displayModeBar: false});
 
 
-    var toptermsPlot = document.getElementById('topic_terms_plot');
+    var toptermsPlot = document.getElementById(TOPIC_TERMS_PLOT_NAME);
     toptermsPlot.on('plotly_afterplot', function(data) {
-	Plotly.d3.selectAll("#topic_terms_plot .yaxislayer-above").selectAll('text')
+	Plotly.d3.selectAll('#' + TOPIC_TERMS_PLOT_NAME + " .yaxislayer-above").selectAll('text')
 	    .on("mouseover", function(d) {
 		console.log($(this));
 		$(this).css({"font-size":'24px'});
@@ -117,7 +115,7 @@ function plotTopicTerms(topicId, topterms) {
 			var update = {
 			    'marker.size': [proportions],
 			}
-			Plotly.restyle("ldapca", update, 0);
+			Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 		    }
 		);
 
@@ -129,7 +127,7 @@ function plotTopicTerms(topicId, topterms) {
 			var update = {
 			    'marker.size': [saved_sizes],
 			}
-			Plotly.restyle("ldapca", update, 0);
+			Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 	});
     });
 

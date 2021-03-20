@@ -1,36 +1,30 @@
-#topic_info {
-    height: 400px;
-    width: 1000px;
-    margin:auto;
-    display: flex-row;
-}
-#topic_info_wrapper {
-    width: 100%;
-}
-
-#lda_wrapper {
-    padding-top: 30px;
-}
-
-#lda_area {
-    background-color: rgb(243,243,243);
+.ldavis_container {
     position: relative;
     display: flex;
     flex-direction: row;
     width: 1400px;
+    margin: auto;
     margin-bottom: 20px;
     align-self: center;
 }
 
-#topic_terms {
+.ldapca_wrapper {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+.topic_terms {
     height: 900px;
     width: 500px;
 }
-#ldapca {
+.ldapca {
+    background-color: rgb(243,243,243);
     height: 900px;
     width: 900px;
 }
-#overlay {
+
+.overlay {
     position: absolute;
     display: none;
     width: 100%;
@@ -52,7 +46,65 @@
     padding-right: 10px;
 }
 
+#subset_topic-input {
+    width: 60px;
+}
+
 #topic-input {
     width: 60px;
 }
 
+
+.topicdetails_tabs {
+    height: 38px; 
+    margin-bottom: 12px;
+    margin-top: 0px;
+}
+
+.topicdetails_tabs li {
+    float:left; 
+    width: 140px;
+    height: 38px;
+    list-style:none; 
+    border-top:1px solid #ccc; 
+    border-left:1px solid #ccc; 
+    border-right:1px solid #ccc; 
+    margin-right:5px; 
+    border-top-left-radius:3px;  
+    border-top-right-radius:3px;
+    outline:none;
+}
+
+.topicdetails_tabs li a {
+    font-family:Arial, Helvetica, sans-serif; 
+    font-size: small;
+    font-weight: bold; 
+    color: #5685bc;;
+    padding-top: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 8px; 
+    display:block; 
+    background: #FFF;
+    border-top-left-radius:3px; 
+    border-top-right-radius:3px; 
+    text-decoration:none;
+    outline:none;
+}
+
+.topicdetails_tabs li a.inactive{
+    padding-top:5px;
+    padding-bottom:8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    color:#666666;
+    background: #EEE;
+    outline:none;
+    border-bottom: solid 1px #CCC;
+
+}
+
+.topicdetails_tabs li a:hover, .topicdetails_tabs li a.inactive:hover {
+    color: #5685bc;
+    outline:none;
+}

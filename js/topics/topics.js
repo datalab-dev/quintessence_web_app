@@ -11,12 +11,47 @@ get_subset_options.php
 get_subset_lda.php
 
 */
-const LDA_PCA_PLOT_NAME = 'ldapca';
+var  LDA_PCA_PLOT_NAME = 'subset_ldapca-plot';
+var  TOPIC_TERMS_PLOT_NAME = 'subset_topic_terms';
+var  TOPIC_PROPORTIONS_PLOT_NAME = 'subset_topic_proportions';
+
+var CATEGORY_FORM_NAME = "subset_category-form";
+var TOPIC_FORM_NAME = "subset_topic-input";
+var TERM_FORM_NAME = "subset_term-input";
+var RESET_BUTTON_NAME = "subset_reset-bubbles";
+
+var DETAILS_TAB_NAME = "subset_topicdetails_tabs";
+
 const DEFAULT_TOPIC = 25;
 var saved_sizes = []; // to be accessed and updated anywhere
 var saved_colors = []; // to be accessed and updated anywhere
 
 $(document).ready(function() {
+
+    /* configure tabs */
+    $('#tabs li a:not(:first)').addClass('inactive');
+    $('.container:not(:first)').hide();
+    $('#tabs li a').click(function(){
+	var t = $(this).attr('href');
+	$('#tabs li a').addClass('inactive');
+	$(this).removeClass('inactive');
+	$('.container').hide();
+	$(t).fadeIn('slow');
+	return false;
+    });
+
+    /* configure topicsdetails tabs */
+    $('#' + DETAILS_TAB_NAME + ' li a:not(:first)').addClass('inactive');
+    $('.container_test:not(:first)').hide();
+    $('#' + DETAILS_TAB_NAME + ' li a').click(function(){
+	var t = $(this).attr('href');
+	$('#' + DETAILS_TAB_NAME + ' li a').addClass('inactive');
+	$(this).removeClass('inactive');
+	$('.container_test').hide();
+	$(t).fadeIn('slow');
+	return false;
+    });
+
     /* fills in dropdown menus for subsetting corpus (Locations, Authors...) */
     initSubsetOptions();
 
@@ -26,7 +61,7 @@ $(document).ready(function() {
     });
 
     /* user selects which info to see in hover of bubble plot */
-    $('#category-form input').on('change', function() {
+    $('#' + CATEGORY_FORM_NAME).on('change', function() {
 	var topics = JSON.parse(document.getElementById("topics").innerHTML);
 	var topicNum = document.getElementById("selectedTopic").innerHTML;
 	plotLdaPca(topics, topicNum, annotations = false);
@@ -48,7 +83,7 @@ $(document).ready(function() {
     /* autocomplete for topic */
     $.getJSON('./php/get_topics.php', function(topics) {
 	topics = topics.map(String);
-	$('#topic-input').autocomplete({
+	$('#' + TOPIC_FORM_NAME).autocomplete({
 	    delay: 0,
 	    minLength: 1,
 	    source: function(request, response) {
@@ -73,7 +108,7 @@ $(document).ready(function() {
 
     /* autocomplete for term */
     $.getJSON('./php/get_topics_terms.php', function(terms) {
-	$('#term-input').autocomplete({
+	$('#' + TERM_FORM_NAME).autocomplete({
 	    delay: 0,
 	    minLength: 1,
 	    source: function(request, response) {
@@ -95,7 +130,7 @@ $(document).ready(function() {
 			var update = {
 			    'marker.size': [proportions],
 			}
-			Plotly.restyle("ldapca", update, 0);
+			Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 		    }
 		);
 
@@ -103,11 +138,11 @@ $(document).ready(function() {
 	});
     }); //term autocomplete
 
-    $('#reset-bubbles').on("click", function(d) {
+    $('#' + RESET_BUTTON_NAME).on("click", function(d) {
 	var update = {
 	    'marker.size': [saved_sizes],
 	}
-	Plotly.restyle("ldapca", update, 0);
+	Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 
 
 		document.getElementById("selectedTopic").innerHTML = DEFAULT_TOPIC;
