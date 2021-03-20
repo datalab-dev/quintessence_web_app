@@ -5,7 +5,6 @@ var topicTermsLayout = {
     showlegend: false,
     height: 880,
     width: 400,
-    plot_bgcolor: 'rgb(243,243,243)',
     margin: {
 	l: 130,
 	r: 0,
@@ -37,7 +36,6 @@ var ldaPcaLayout = {
     autosize: "false",
     hovermode: "closest",
     hoverdistance: 20,
-    plot_bgcolor: 'rgb(243,243,243)',
     scrollZoom: "false",
     xaxis : {
 	fixedrange: true,
@@ -49,7 +47,8 @@ var ldaPcaLayout = {
 	fixedrange: true,
 	showgrid: false
     },
-    height: 900,
+    height: 880,
+    width: 880,
     margin: {
 	l: 0,
 	r: 0,

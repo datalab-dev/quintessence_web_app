@@ -9,7 +9,6 @@
 }
 
 .container_details {
-    border: 1px solid #eee;
     padding: 10px;
     height: 900px;
 }
@@ -25,7 +24,7 @@
     width: 500px;
 }
 .ldapca {
-    background-color: rgb(243,243,243);
+    padding: 10px;
     height: 900px;
     width: 900px;
 }
@@ -97,7 +96,7 @@
     color:#666666;
     background: #EEE;
     outline:none;
-    border-bottom: solid 1px #CCC;
+    /*border-bottom: solid 1px #CCC;*/
 
 }
 
