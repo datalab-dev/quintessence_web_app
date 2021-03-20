@@ -11,16 +11,17 @@ get_subset_options.php
 get_subset_lda.php
 
 */
-var  LDA_PCA_PLOT_NAME = 'subset_ldapca-plot';
-var  TOPIC_TERMS_PLOT_NAME = 'subset_topic_terms';
-var  TOPIC_PROPORTIONS_PLOT_NAME = 'subset_topic_proportions';
+var  LDA_PCA_PLOT_NAME = 'ldapca-plot';
+var  TOPIC_TERMS_PLOT_NAME = 'topic_terms_plot';
+var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions';
 
-var CATEGORY_FORM_NAME = "subset_category-form";
-var TOPIC_FORM_NAME = "subset_topic-input";
-var TERM_FORM_NAME = "subset_term-input";
-var RESET_BUTTON_NAME = "subset_reset-bubbles";
+var CATEGORY_FORM_NAME = "category-form";
+var TOPIC_FORM_NAME = "topic-input";
+var TERM_FORM_NAME = "term-input";
+var RESET_BUTTON_NAME = "reset-bubbles";
 
-var DETAILS_TAB_NAME = "subset_topicdetails_tabs";
+var DETAILS_TAB_NAME = "topicdetails_tabs";
+var DETAILS_TAB_CONTAINER_NAME = "container_details";
 
 const DEFAULT_TOPIC = 25;
 var saved_sizes = []; // to be accessed and updated anywhere
@@ -42,12 +43,12 @@ $(document).ready(function() {
 
     /* configure topicsdetails tabs */
     $('#' + DETAILS_TAB_NAME + ' li a:not(:first)').addClass('inactive');
-    $('.container_test:not(:first)').hide();
+    $('.' + DETAILS_TAB_CONTAINER_NAME +':not(:first)').hide();
     $('#' + DETAILS_TAB_NAME + ' li a').click(function(){
 	var t = $(this).attr('href');
 	$('#' + DETAILS_TAB_NAME + ' li a').addClass('inactive');
 	$(this).removeClass('inactive');
-	$('.container_test').hide();
+	$('.' + DETAILS_TAB_CONTAINER_NAME).hide();
 	$(t).fadeIn('slow');
 	return false;
     });

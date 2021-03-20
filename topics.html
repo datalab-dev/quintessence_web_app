@@ -59,19 +59,58 @@
 	</p>
     </div>
 
-    <hr>
+	<div  class="ldavis_container">
 
-    <ul id="tabs" class="button-tabs">
-	<li><a href="#over-time"> Topic Model Over Time </a></li>
-	<li><a href="#subset"> Custom Subset of Model </a></li>
-    </ul>
-    <hr>
+	    <div class="ldapca_wrapper">
+		<div style="padding: 15px; display: flex; justify-content: space-between; flex-direction: row; margin:auto; width: 100%;">
 
-    <div class="container" id="over-time"> 
-	<p> HELLO! </p>
-    </div>
+		    <div style="display: flex; flex-direction: row; height: 38px"> 
+			<form>
+			    <label for="topic">Topic:</label>
+			    <input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
+			    <label for="term">Term:</label>
+			    <input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
+			</form>
+			<button id="reset-bubbles" style="height: 38px"> Reset</button>
+		    </div>
 
-    <div class="container" id="subset"> 
+		    <div style="height: 38px">
+			<form id="category-form" style="height: 14px; margin-top: 7px; margin-bottom: 7px; font-size: 14px">
+			    <input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
+			    <label for="keywords">Keywords</label>
+			    <input type="radio" id="authors" name="category" value="topAuthors">
+			    <label for="authors">Authors</label>
+			    <input type="radio" id="locations" name="category" value="topLocations">
+			    <label for="locations">Locations</label>
+			</form>
+		    </div>
+		</div>
+
+		<div id="ldapca-plot" class="ldapca"> </div>
+	    </div>
+
+	    <div class="topicdetails" style="display: flex; flex-direction: column; width: 550px;">
+		<div style="width: 100%; justify-content: center; padding: 15px; padding-bottom: 0px">
+		    <ul id="topicdetails_tabs" class="topicdetails_tabs">
+		        <li><a href="#topic_terms">Terms</a></li>
+		        <li><a href="#topic_info">Info</a></li>
+		        <li><a href="#topic_docs">Docs</a></li>
+		    </ul>
+		</div>
+
+		<div id="topic_terms" class="container_details topic_terms"> <div id="topic_terms_plot"> </div>  </div>
+		<div id="topic_info" class="container_details topic_info"> info</div>
+		<div id="topic_docs" class="container_details topic_docs"> top docs</div>
+	    </div>
+
+
+
+
+	    <div class="overlay" id="overlay">
+		<div class="text">Loading Data</div>
+	    </div>
+	</div>
+
 
 	<div class="text-block">
 	    <p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
@@ -112,60 +151,7 @@
 		<div id="ndocs">60327 results</div>
 		<button type="button" class="subset_button"> Apply Filters </button>
 	    </div>
-	</div>
-
-	<div class="ldavis_container">
-
-	    <div class="ldapca_wrapper">
-		<div style="height: 38px; display: flex; justify-content: space-between; flex-direction: row; margin:auto; width: 100%; margin-bottom: 12px;"> 
-
-		    <div style="display: flex; flex-direction: row;"> 
-			<form>
-			    <label for="topic">Topic:</label>
-			    <input name="topic" class="lda-input" id="subset_topic-input" placeholder="25"/>
-			    <label for="term">Term:</label>
-			    <input name="term" class="lda-input"  id="subset_term-input" placeholder="Starting typing a word here"/>
-			</form>
-			<button id="subset_reset-bubbles" style="height: 38px"> Reset</button>
-		    </div>
-
-		    <div style="height: 38px">
-			<form id="subset_category-form" style="height: 14px; margin-top: 7px; margin-bottom: 7px; font-size: 14px">
-			    <input type="radio" id="subset_keywords" name="category" value="topKeywords" checked="checked">
-			    <label for="keywords">Keywords</label>
-			    <input type="radio" id="subset_authors" name="category" value="topAuthors">
-			    <label for="authors">Authors</label>
-			    <input type="radio" id="subset_locations" name="category" value="topLocations">
-			    <label for="locations">Locations</label>
-			</form>
-		    </div>
-		</div>
-
-		<div id="subset_ldapca-plot" class="ldapca"> </div>
-	    </div>
-
-	    <div class="subset_topicdetails" style="display: flex; flex-direction: column; width: 500px">
-		<div style="width: 100%; justify-content: center; height: 38px" >
-		    <ul id="subset_topicdetails_tabs" class="topicdetails_tabs">
-		        <li><a href="#subset_topic_terms">Terms</a></li>
-		        <li><a href="#subset_topic_info">Info</a></li>
-		        <li><a href="#subset_topic_doc">Docs</a></li>
-		    </ul>
-		</div>
-
-		<div id="subset_topic_terms" class="container_test topic_terms"></div>
-		<div id="subset_topic_info" class="container_test topic_info"> info</div>
-		<div id="subset_topic_docs" class="container_test topic_docs"> top docs</div>
-	    </div>
-
-
-
-
-	    <div class="overlay" id="subset_overlay">
-		<div class="text">Loading Data</div>
-	    </div>
-	</div>
-    </div> <!-- subset -->
+	</div> <!-- filter -->
 
 
 

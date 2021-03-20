@@ -3,12 +3,12 @@ var topicTermsLayout = {
     staticPlot: false,
     autosize: false,
     showlegend: false,
-    height: 900,
-    width: 500,
+    height: 880,
+    width: 400,
     plot_bgcolor: 'rgb(243,243,243)',
     margin: {
-	l: 120,
-	r: 20,
+	l: 130,
+	r: 0,
 	b: 0,
 	t: 0,
 	pad: 0
