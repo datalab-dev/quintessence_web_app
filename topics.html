@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style/top_documents.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./style/topics_style.css">
     <link rel="stylesheet" type="text/css" href="./style/sidebar.css">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -30,13 +31,20 @@
     <script src="./js/documents/get_full_document.js"></script>
     <script src="./js/documents/get_truncated_document.js"></script>
 
+    <script>
+	$( function() {
+		    $( "#categoryhover" ).selectmenu();
+		});
+    </script>
+
+
     <style>
-   #topic_terms_plot .yaxislayer-above {
-         cursor: pointer;
-	   pointer-events: all;
-       }
-   #topic_terms_plot g.draglayer g.xy {
-         display: none;
+.topic_terms .yaxislayer-above {
+    cursor: pointer;
+    pointer-events: all;
+}
+   .topic_terms g.draglayer g.xy {
+       display: none;
    }
     </style>
 
@@ -58,7 +66,66 @@
 	</p>
     </div>
 
-    <hr>
+
+
+    <div class="controls" >
+
+	<!-- LDA PCA CONTROLS -->
+	<div class="lda_controls">
+	    <div style="display: flex; flex-direction: row; height: 40px"> 
+		<form>
+		    <label for="topic">Topic:</label>
+		    <input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
+		</form>
+		<button class="control_button" style="margin-left: 0px" > &#8592; </button>
+		<button class="control_button" style="margin-left: 10px; margin-right: 10px"> &#8594; </button>
+		<form>
+		    <label for="term">Term:</label>
+		    <input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
+		</form>
+		<button class="control_button" id="reset-bubbles"> Reset</button>
+	    </div>
+
+	    <div id="categoryhover_wrapper" style="margin-left: 10px; height: 40px">
+		<label for="categoryhover"> Hover info:</label>
+		<select name="categoryhover" id="categoryhover">
+		    <option>topAuthors</option>
+		    <option selected="selected">topKeywords</option>
+		    <option>topLocations</option>
+		</select>
+	    </div>
+
+
+	</div>
+	<!-- /LDA PCA CONTROLS -->
+
+	<!-- TOPICDETAILS CONTROLS -->
+	<ul id="topicdetails_tabs" class="topicdetails_tabs">
+	    <li><a href="#topic_terms">Terms</a></li>
+	    <li><a href="#topic_info">Info</a></li>
+	    <li><a href="#topic_docs">Docs</a></li>
+	</ul>
+	<!-- /TOPICDETAILS CONTROLS -->
+
+    </div> <!-- CONTROLS i-->
+
+    <div class="ldavis_container">
+
+
+	<div id="ldapca-plot" class="ldapca"> </div>
+
+	<div class="topicdetails" style="border-left: 2px solid #ccc; display: flex; flex-direction: column; width: 550px;">
+	    <div id="topic_terms" class="container_details topic_terms"> <div id="topic_terms_plot"> </div>  </div>
+	    <div id="topic_info" class="container_details topic_info"> info</div>
+	    <div id="topic_docs" class="container_details topic_docs"> top docs</div>
+	</div>
+
+
+	<div class="overlay" id="overlay">
+	    <div class="text">Loading Data</div>
+	</div>
+    </div>
+
 
     <div class="text-block">
 	<p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
@@ -97,66 +164,14 @@
 	<div id="apply-filters">
 	    <div id="status"></div>
 	    <div id="ndocs">60327 results</div>
-	    <button type="button" class="subset_button" onclick="updateLdaPca();"> Apply Filters </button>
+	    <button type="button" class="subset_button"> Apply Filters </button>
 	</div>
-    </div>
+    </div> <!-- filter -->
 
-    <!--Subset Statistics (e.g ndocs, year distribution, author distriubiton, location distribution, keyword distribtution
-	<div id="corpus_info" style="width: 1000px; margin:auto; color: #f4f4f4">
-	<div id="ndocs"> </div>
-	<div id="year distribution"> </div>
-	<div id="author distribution"> </div>
-	<div id="keyword distribution"> </div>
-	<div id="location distribution"> </div>
-	</div>
-    -->
 
-    <div class="text-block">
-	<p>Show top categories in document hover</p>
-
-	<form id="category-form">
-	    <input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
-	    <label for="keywords"><b>Keywords</b></label><br>
-	    <input type="radio" id="authors" name="category" value="topAuthors">
-	    <label for="authors"><b>Authors</b></label><br>
-	    <input type="radio" id="locations" name="category" value="topLocations">
-	    <label for="locations"><b>Locations</b></label><br>
-	</form>
-    </div>
 
     <div style="display: none" id="topics"></div>
     <div style="display: none" id="selectedTopic"></div>
-
-    <div id="search-bars" style="display: flex; flex-direction: row; margin:auto; width: 1400px;"> 
-	<form>
-	    <label for="topic">Topic:</label>
-		<input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
-	    <label for="term">Term:</label>
-		<input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
-	</form>
-	<button id="reset-bubbles" style="height: 38px"> Reset</button>
-    </div>
-    <div id="lda_area" name="no_top_docs">
-
-	<div id="ldapca"> </div>
-
-	<div id="topic_terms" name="11"></div>
-
-
-
-
-	<div id="overlay">
-	    <div id="text">Loading Data</div>
-	</div>
-    </div>
-
-    <div style="width: 900px; margin-right: auto; margin-left: auto" id="topic_proportion"> </div>
-
-    <hr id="hideme" style="display: none">
-    <div class="text-block">
-	<div id="top_docs"> </div>
-    </div>
-
 
     <!--Footer -->
     <div id="footer-placeholder"></div>

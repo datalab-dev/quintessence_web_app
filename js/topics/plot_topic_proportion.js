@@ -16,5 +16,5 @@ function plot_topic_proportion(proportions) {
 	}
     ];
 
-    Plotly.newPlot('topic_proportion', data, topic_proportion_layout);
+    Plotly.newPlot(TOPIC_PROPORTIONS_PLOT_NAME, data, topic_proportion_layout);
 }

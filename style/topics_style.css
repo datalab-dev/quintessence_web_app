@@ -1,0 +1,148 @@
+.ldavis_container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin-bottom: 100px;
+    align-self: center;
+}
+
+.container_details {
+    padding: 10px;
+    height: 900px;
+}
+
+.ldapca_wrapper {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+.topic_terms {
+    height: 900px;
+    width: 500px;
+}
+.ldapca {
+    padding: 10px;
+    height: 900px;
+    width: 900px;
+}
+
+.overlay {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+/* f7f3f3; */
+.controls {
+	    width: 1400px;
+	    height: 70px;
+	    border-bottom: 2px solid #ccc;
+	    margin: auto; 
+	    margin-top: 100px; 
+	    padding: 15px; 
+	    display:flex;
+	    flex-direction: row;
+}
+
+.lda_controls {
+    display: flex;
+    flex-grow: 1;
+/*    justify-content: space-between; */
+}
+
+.control_button {
+    border-radius: 12px;
+    height: 38px;
+    border: 1px solid #BCBCBC; 
+}
+
+.control_button:active {
+    border: 1px solid steelblue;
+    background-color: #ccc;
+}
+
+.control_button:hover {
+    border: 1px solid steelblue;
+}
+
+.lda-input {
+    width: 200px;
+    border: 1px solid #BCBCBC;
+    border-radius: 12px;
+    height: 38px; /* with border 1px top and bottom total is 40 like the search button next to it */
+    margin: 0;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+#categoryhover_wrapper .ui-selectmenu-button.ui-button {
+    border-radius: 12px;
+    height: 38px;
+    padding: 0px;
+}
+
+#categoryhover_wrapper .ui-selectmenu-text {
+    height: 38px;
+    padding-top: 8px;
+    padding-left: 8px;
+    font-size: 14px;
+}
+
+#topic-input {
+    width: 60px;
+}
+
+.topicdetails_tabs {
+    height: 40px; 
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.topicdetails_tabs li {
+    float:left; 
+    width: 150px;
+    height: 38px;
+    list-style:none; 
+    margin-right: 5px;
+}
+
+.topicdetails_tabs li a {
+    height: 100%;
+    font-family:Arial, Helvetica, sans-serif; 
+    font-size: small;
+    font-weight: bold; 
+    padding: 10px;
+    padding-left: 20px;
+    font-size: 14px;
+    border-radius: 12px;
+    display:block; 
+    text-decoration:none;
+    outline:none;
+    color: white;
+    background-color: steelblue;
+    border: 1px solid steelblue;
+}
+
+.topicdetails_tabs li a.inactive{
+    background-color: white;
+    border: 1px solid steelblue;
+    color: steelblue;
+    outline:none;
+}
+
+.topicdetails_tabs li a:hover, .topicdetails_tabs li a.inactive:hover {
+    color: white;
+    background-color: steelblue;
+    border: 1px solid steelblue;
+    outline:none;
+}

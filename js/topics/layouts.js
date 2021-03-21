@@ -3,14 +3,13 @@ var topicTermsLayout = {
     staticPlot: false,
     autosize: false,
     showlegend: false,
-    height: 900,
-    width: 500,
-    plot_bgcolor: 'rgb(243,243,243)',
+    height: 830,
+    width: 450,
     margin: {
-	l: 120,
-	r: 0,
-	b: 50,
-	t: 50,
+	l: 130,
+	r: 50,
+	b: 0,
+	t: 0,
 	pad: 0
     },
     xaxis: {
@@ -34,27 +33,27 @@ var topicTermsLayout = {
     },
 };
 var ldaPcaLayout = {
-    autosize: "false",
     hovermode: "closest",
     hoverdistance: 20,
-    plot_bgcolor: 'rgb(243,243,243)',
-    scrollZoom: "false",
     xaxis : {
+        zerolinecolor: '#ccc',
 	fixedrange: true,
 	showgrid: false,
 	ticks: '',
 	showticklabels: false,
     },
     yaxis: {
+        zerolinecolor: '#ccc',
 	fixedrange: true,
 	showgrid: false
     },
-    height: 900,
+    height: 880,
+    width: 880,
     margin: {
 	l: 0,
 	r: 0,
-	b: 50,
-	t: 50,
+	b: 0,
+	t: 0,
 	pad: 0
     },
     /* these need to be fixed, x and y coordinates updated; one way is to se the label as the (x,y) and then record the locations 
