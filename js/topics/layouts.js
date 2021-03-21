@@ -3,11 +3,11 @@ var topicTermsLayout = {
     staticPlot: false,
     autosize: false,
     showlegend: false,
-    height: 880,
-    width: 400,
+    height: 830,
+    width: 450,
     margin: {
 	l: 130,
-	r: 0,
+	r: 50,
 	b: 0,
 	t: 0,
 	pad: 0
@@ -33,17 +33,17 @@ var topicTermsLayout = {
     },
 };
 var ldaPcaLayout = {
-    autosize: "false",
     hovermode: "closest",
     hoverdistance: 20,
-    scrollZoom: "false",
     xaxis : {
+        zerolinecolor: '#ccc',
 	fixedrange: true,
 	showgrid: false,
 	ticks: '',
 	showticklabels: false,
     },
     yaxis: {
+        zerolinecolor: '#ccc',
 	fixedrange: true,
 	showgrid: false
     },

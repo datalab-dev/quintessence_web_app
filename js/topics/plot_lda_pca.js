@@ -44,7 +44,7 @@ function topString(arr) {
 
 /* given the topic data draw the lda pca plot */
 function plotLdaPca(topics, topicNum, annotations) {
-    var category = $("input[name='category']:checked").val();
+    var category = $( "#" + CATEGORY_FORM_NAME ).val();
 
     /* generate plot data from topic objects */
     var xs = [], ys = [], sizes = [], ids =[], texts = [], colors = [];

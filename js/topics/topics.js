@@ -15,7 +15,7 @@ var  LDA_PCA_PLOT_NAME = 'ldapca-plot';
 var  TOPIC_TERMS_PLOT_NAME = 'topic_terms_plot';
 var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions';
 
-var CATEGORY_FORM_NAME = "category-form";
+var CATEGORY_FORM_NAME = "categoryhover";
 var TOPIC_FORM_NAME = "topic-input";
 var TERM_FORM_NAME = "term-input";
 var RESET_BUTTON_NAME = "reset-bubbles";
@@ -62,7 +62,7 @@ $(document).ready(function() {
     });
 
     /* user selects which info to see in hover of bubble plot */
-    $('#' + CATEGORY_FORM_NAME).on('change', function() {
+    $('#' + CATEGORY_FORM_NAME).on('selectmenuchange', function(e, ui) {
 	var topics = JSON.parse(document.getElementById("topics").innerHTML);
 	var topicNum = document.getElementById("selectedTopic").innerHTML;
 	plotLdaPca(topics, topicNum, annotations = false);

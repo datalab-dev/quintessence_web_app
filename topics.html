@@ -31,6 +31,13 @@
     <script src="./js/documents/get_full_document.js"></script>
     <script src="./js/documents/get_truncated_document.js"></script>
 
+    <script>
+	$( function() {
+		    $( "#categoryhover" ).selectmenu();
+		});
+    </script>
+
+
     <style>
 .topic_terms .yaxislayer-above {
     cursor: pointer;
@@ -59,99 +66,107 @@
 	</p>
     </div>
 
-	<div  class="ldavis_container">
 
-	    <div class="ldapca_wrapper">
-		<div style="background: #eee; padding: 15px; display: flex; justify-content: space-between; flex-direction: row; margin:auto; width: 100%;">
 
-		    <div style="display: flex; flex-direction: row; height: 38px"> 
-			<form>
-			    <label for="topic">Topic:</label>
-			    <input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
-			    <label for="term">Term:</label>
-			    <input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
-			</form>
-			<button id="reset-bubbles" style="height: 38px"> Reset</button>
-		    </div>
+    <div class="controls" >
 
-		    <div style="height: 38px">
-			<form id="category-form" style="height: 14px; margin-top: 7px; margin-bottom: 7px; font-size: 14px">
-			    <input type="radio" id="keywords" name="category" value="topKeywords" checked="checked">
-			    <label for="keywords">Keywords</label>
-			    <input type="radio" id="authors" name="category" value="topAuthors">
-			    <label for="authors">Authors</label>
-			    <input type="radio" id="locations" name="category" value="topLocations">
-			    <label for="locations">Locations</label>
-			</form>
-		    </div>
-		</div>
-
-		<div id="ldapca-plot" class="ldapca"> </div>
+	<!-- LDA PCA CONTROLS -->
+	<div class="lda_controls">
+	    <div style="display: flex; flex-direction: row; height: 40px"> 
+		<form>
+		    <label for="topic">Topic:</label>
+		    <input name="topic" class="lda-input" id="topic-input" placeholder="25"/>
+		</form>
+		<button class="control_button" style="margin-left: 0px" > &#8592; </button>
+		<button class="control_button" style="margin-left: 10px; margin-right: 10px"> &#8594; </button>
+		<form>
+		    <label for="term">Term:</label>
+		    <input name="term" class="lda-input"  id="term-input" placeholder="Starting typing a word here"/>
+		</form>
+		<button class="control_button" id="reset-bubbles"> Reset</button>
 	    </div>
 
-	    <div class="topicdetails" style="display: flex; flex-direction: column; width: 550px;">
-		<div style="background: #eee; width: 100%; justify-content: center; padding: 15px; padding-bottom: 0px">
-		    <ul id="topicdetails_tabs" class="topicdetails_tabs">
-		        <li><a href="#topic_terms">Terms</a></li>
-		        <li><a href="#topic_info">Info</a></li>
-		        <li><a href="#topic_docs">Docs</a></li>
-		    </ul>
-		</div>
-
-		<div id="topic_terms" class="container_details topic_terms"> <div id="topic_terms_plot"> </div>  </div>
-		<div id="topic_info" class="container_details topic_info"> info</div>
-		<div id="topic_docs" class="container_details topic_docs"> top docs</div>
+	    <div id="categoryhover_wrapper" style="margin-left: 10px; height: 40px">
+		<label for="categoryhover"> Hover info:</label>
+		<select name="categoryhover" id="categoryhover">
+		    <option>topAuthors</option>
+		    <option selected="selected">topKeywords</option>
+		    <option>topLocations</option>
+		</select>
 	    </div>
 
 
+	</div>
+	<!-- /LDA PCA CONTROLS -->
+
+	<!-- TOPICDETAILS CONTROLS -->
+	<ul id="topicdetails_tabs" class="topicdetails_tabs">
+	    <li><a href="#topic_terms">Terms</a></li>
+	    <li><a href="#topic_info">Info</a></li>
+	    <li><a href="#topic_docs">Docs</a></li>
+	</ul>
+	<!-- /TOPICDETAILS CONTROLS -->
+
+    </div> <!-- CONTROLS i-->
+
+    <div class="ldavis_container">
 
 
-	    <div class="overlay" id="overlay">
-		<div class="text">Loading Data</div>
-	    </div>
+	<div id="ldapca-plot" class="ldapca"> </div>
+
+	<div class="topicdetails" style="border-left: 2px solid #ccc; display: flex; flex-direction: column; width: 550px;">
+	    <div id="topic_terms" class="container_details topic_terms"> <div id="topic_terms_plot"> </div>  </div>
+	    <div id="topic_info" class="container_details topic_info"> info</div>
+	    <div id="topic_docs" class="container_details topic_docs"> top docs</div>
 	</div>
 
 
-	<div class="text-block">
-	    <p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
+	<div class="overlay" id="overlay">
+	    <div class="text">Loading Data</div>
+	</div>
+    </div>
 
-	    <!-- Timeline-->
-	    <div style="margin-bottom: 20px">
-		<h3 style="margin-top: 10px" class="selecter-title"> Date Range </h3>
-		<input type="text" id="date-range" class="js-range-slider" name="my_range" value="" />
-	    </div>
-	    <!-- /Timeline-->
 
-	    <!-- /Keywords -->
-	    <div class="subsetter" id="Keywords">
-		<h3 class="selecter-title"> Keywords </h3>
-		<select id="selected-keywords" class="ui fluid search dropdown" multiple="">
-		</select>
-	    </div>
-	    <!-- /Keywords -->
+    <div class="text-block">
+	<p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
 
-	    <!-- Authors -->
-	    <div class="subsetter" id="Authors">
-		<h3 class="selecter-title"> Authors </h3>
-		<select class="ui fluid search dropdown" id="selected-authors" multiple="multiple">
-		</select>
-	    </div>
-	    <!-- /Authors -->
+	<!-- Timeline-->
+	<div style="margin-bottom: 20px">
+	    <h3 style="margin-top: 10px" class="selecter-title"> Date Range </h3>
+	    <input type="text" id="date-range" class="js-range-slider" name="my_range" value="" />
+	</div>
+	<!-- /Timeline-->
 
-	    <!-- Locations -->
-	    <div class="subsetter" id="Locations">
-		<h3 class="selecter-title"> Locations </h3>
-		<select class="ui fluid search dropdown" id="selected-locations" multiple="multiple">
-		</select>
-	    </div>
-	    <!-- /Locations -->
+	<!-- /Keywords -->
+	<div class="subsetter" id="Keywords">
+	    <h3 class="selecter-title"> Keywords </h3>
+	    <select id="selected-keywords" class="ui fluid search dropdown" multiple="">
+	    </select>
+	</div>
+	<!-- /Keywords -->
 
-	    <div id="apply-filters">
-		<div id="status"></div>
-		<div id="ndocs">60327 results</div>
-		<button type="button" class="subset_button"> Apply Filters </button>
-	    </div>
-	</div> <!-- filter -->
+	<!-- Authors -->
+	<div class="subsetter" id="Authors">
+	    <h3 class="selecter-title"> Authors </h3>
+	    <select class="ui fluid search dropdown" id="selected-authors" multiple="multiple">
+	    </select>
+	</div>
+	<!-- /Authors -->
+
+	<!-- Locations -->
+	<div class="subsetter" id="Locations">
+	    <h3 class="selecter-title"> Locations </h3>
+	    <select class="ui fluid search dropdown" id="selected-locations" multiple="multiple">
+	    </select>
+	</div>
+	<!-- /Locations -->
+
+	<div id="apply-filters">
+	    <div id="status"></div>
+	    <div id="ndocs">60327 results</div>
+	    <button type="button" class="subset_button"> Apply Filters </button>
+	</div>
+    </div> <!-- filter -->
 
 
 
