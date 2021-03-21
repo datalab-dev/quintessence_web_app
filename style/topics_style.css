@@ -74,6 +74,7 @@
 .lda-input {
     width: 200px;
     border: 1px solid #BCBCBC;
+    border-radius: 12px;
     height: 38px; /* with border 1px top and bottom total is 40 like the search button next to it */
     margin: 0;
     margin-bottom: 5px;
