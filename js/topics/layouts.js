@@ -37,17 +37,18 @@ var ldaPcaLayout = {
     hoverdistance: 20,
     xaxis : {
         zerolinecolor: '#ccc',
-	fixedrange: true,
+	//fixedrange: true,
+	range: [-80,80],
 	showgrid: false,
 	ticks: '',
 	showticklabels: false,
     },
     yaxis: {
         zerolinecolor: '#ccc',
-	fixedrange: true,
+	range: [-70,80],
 	showgrid: false
     },
-    height: 880,
+    height: 830,
     width: 880,
     margin: {
 	l: 0,

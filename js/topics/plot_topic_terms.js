@@ -98,11 +98,12 @@ function plotTopicTerms(topicId, topterms) {
     toptermsPlot.on('plotly_afterplot', function(data) {
 	Plotly.d3.selectAll('#' + TOPIC_TERMS_PLOT_NAME + " .yaxislayer-above").selectAll('text')
 	    .on("mouseover", function(d) {
-		console.log($(this));
 		$(this).css({"font-size":'24px'});
 		$(this).css({"font-style":'italic'});
 
 		term = d.text;
+
+		ldaPcaPlot = document.getElementById(LDA_PCA_PLOT_NAME);
 
 		// get topics dist
 		$.getJSON('./php/get_topic_terms_dist.php?term=' + term,
@@ -124,8 +125,15 @@ function plotTopicTerms(topicId, topterms) {
 	.on("mouseleave", function(d) {
 		$(this).css({"font-size":'12px'});
 		$(this).css({"font-style":''});
+
+	        
+	        // figure out the decade from slider label
+	        var decade = getDecade();
+	        
+
+	        // revert sizes to cached_sizes for that decade
 			var update = {
-			    'marker.size': [saved_sizes],
+			    'marker.size': [cached_sizes[decade]],
 			}
 			Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 	});
