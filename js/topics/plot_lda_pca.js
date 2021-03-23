@@ -91,15 +91,15 @@ function plotLdaPca(topics_info, topicNum, annotations) {
 	    fullinfo["topAuthors"].push(
 		`Topic: ${i}<br>` +
 		`Proportion: ${prop.toFixed(2)}%<br>` +
-		`topAuthors: <br>${topString(topics_info_record["topAuthors"][i])}`);
+		`Top Authors: <br>${topString(topics_info_record["topAuthors"][i])}`);
 	    fullinfo["topKeywords"].push(
 		`Topic: ${i}<br>` +
 		`Proportion: ${prop.toFixed(2)}%<br>` +
-		`topKeywords: <br>${topString(topics_info_record["topKeywords"][i])}`);
+		`Top Keywords: <br>${topString(topics_info_record["topKeywords"][i])}`);
 	    fullinfo["topLocations"].push(
 		`Topic: ${i}<br>` +
 		`Proportion: ${prop.toFixed(2)}%<br>` +
-		`topLocations: <br>${topString(topics_info_record["topLocations"][i])}`);
+		`Top Locations: <br>${topString(topics_info_record["topLocations"][i])}`);
 	}
 	return fullinfo
     }
