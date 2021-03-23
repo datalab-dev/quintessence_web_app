@@ -1,23 +1,51 @@
 /* 
 
-Plots the lda bubble plot for the full corpus.
+Plots the lda bubble plot for the full corpus and all decades.
 
-Gets everything from init_lda_pca.php
+    /* update hover info of the lda pca plot */
+// THIS DOESN"T WORK WITH THE ANIMATION :(
+// basically if you go back in the animation this wont have been fixed
+// if you play the animation, the future frames will have the wrong hover data
+function updateHoverInfo() {
+    var category = $( "#" + CATEGORY_FORM_NAME ).val();
+    var ldaPcaPlot = document.getElementById(LDA_PCA_PLOT_NAME);
+    var fullinfos = ldaPcaPlot.data[0].customdata;
+    var sizes = ldaPcaPlot.data[0].marker.size;
+    var colors = Array(NTOPICS).fill("#1f77b4");
+    colors[topicnum] = '#a91111';
 
-For each topic needs:
-    id
-    x,
-    y
-    proportion
-    topAuthors,
-    topLocations, 
-    topKeywords
+    var update = {
+	hovertemplate: [fullinfos[0][category]],
+	'marker': {
+	    color: colors,
+	    size: sizes,
+	    line: {
+		color: 'black',
+		width: 2
+	    }
+	}
+    }
 
-*/
+    Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
+
+    // update frames! past and future!
+}
+
+function resetLdaPca() {
+    // oof
+    plotLdaPca(topicsdata, topicnum);
+}
 
 
 /* update the colors of the lda pca plot */
-function updateLdaPcaColors(selected, colors, sizes) {
+function updateColors(selected) {
+    // colors
+    var colors = Array(NTOPICS).fill("#1f77b4");
+
+    // get sizes
+    var ldaPcaPlot = document.getElementById(LDA_PCA_PLOT_NAME);
+    var sizes = ldaPcaPlot.data[0].marker.size;
+
     colors[selected] = '#a91111';
     var update = {
 	'marker': {
@@ -32,43 +60,83 @@ function updateLdaPcaColors(selected, colors, sizes) {
     Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 }
 
-function topString(arr) {
-    const n = 60; // max length of string
-    var s = "";
-    for (const elem of arr) {
-	str = (elem.length > n) ? elem.substr(0, n-1) + '...' : elem;
-	s += `    ${str}<br>`
-    }
-    return s;
-}
 
 /* given the topic data draw the lda pca plot */
-function plotLdaPca(topics, topicNum, annotations) {
+function plotLdaPca(topics_info, topicNum, annotations) {
     var category = $( "#" + CATEGORY_FORM_NAME ).val();
 
-    /* generate plot data from topic objects */
-    var xs = [], ys = [], sizes = [], ids =[], texts = [], colors = [];
-    for (const topic of topics) {
-	var proportion = topic['proportion'] * 100;
-	ids.push(topic['_id']);
-	xs.push(topic['x'] * 100);
-	ys.push(topic['y'] * 100);
-	sizes.push(proportion * 20);
-	texts.push(
-	    `Topic: ${topic['_id']}<br>` +
-	    `Proportion: ${proportion.toFixed(2)}%<br>` +
-	    `${category}: <br>${topString(topic[category])}`);
-	colors.push('#1f77b4');
+    // helper functions
+    function get_xy(coordinates) {
+	// where coordinates is array of [x,y] arrays
+	var x = [];
+	var y = [];
+	for (var i = 0; i < NTOPICS; i++) {
+	    x.push(coordinates[i][0] * 100);
+	    y.push(coordinates[i][1] * 100);
+	}
+	return {
+	    "x": x,
+	    "y": y}
     }
-    saved_sizes = sizes;
-    saved_colors = colors;
 
-    /* plot data */
+    function get_hover_text(topics_info_record) {
+	// gets data for a single timeslot
+	var fullinfo = {};
+	fullinfo["topAuthors"] = [];
+	fullinfo["topKeywords"] = [];
+	fullinfo["topLocations"] = [];
+
+	for (var i=0; i < NTOPICS; i++) {
+	    var prop = topics_info_record["proportions"][i] * 100;
+	    fullinfo["topAuthors"].push(
+		`Topic: ${i}<br>` +
+		`Proportion: ${prop.toFixed(2)}%<br>` +
+		`Top Authors: <br>${topString(topics_info_record["topAuthors"][i])}`);
+	    fullinfo["topKeywords"].push(
+		`Topic: ${i}<br>` +
+		`Proportion: ${prop.toFixed(2)}%<br>` +
+		`Top Keywords: <br>${topString(topics_info_record["topKeywords"][i])}`);
+	    fullinfo["topLocations"].push(
+		`Topic: ${i}<br>` +
+		`Proportion: ${prop.toFixed(2)}%<br>` +
+		`Top Locations: <br>${topString(topics_info_record["topLocations"][i])}`);
+	}
+	return fullinfo
+    }
+
+    function get_timeslot_data(topics_info_record) {
+	// gets data for a single timeslot
+	var bubblesizes = [];
+	var ids = [];
+	for (var i=0; i < NTOPICS; i++) {
+	    bubblesizes.push(topics_info_record["proportions"][i] * 100 * 10);
+	    ids.push(i);
+	}
+
+	var fullinfo = get_hover_text(topics_info_record);
+	var colors = Array(NTOPICS).fill("#1f77b4");
+	return {
+	    "ids": ids,
+	    "fullinfo": fullinfo,
+	    "bubblesizes": bubblesizes, 
+	    "colors": colors}
+    }
+
+    var timeslots = Object.keys(topics_info["timeslots"]);
+    // move "full" to back of array
+    timeslots.push(timeslots.splice(timeslots.indexOf("full"), 1)[0]);
+
+
+    var data = get_timeslot_data(topics_info["timeslots"]["full"]);
+    var coordinates = get_xy(topics_info["coordinates"]);
+
+    // main trace (full corpus)
     var trace = {
-	x: xs,
-	y: ys,
-	text: ids,
-	hovertemplate: texts,
+	x: coordinates["x"],
+	y: coordinates["y"],
+	text: data["ids"],
+	hovertemplate: data["fullinfo"][category],
+	customdata: [data["fullinfo"], 'full'],
 	hoverlabel: {
 	    namelength: 0,
 	    align: 'left'
@@ -77,8 +145,8 @@ function plotLdaPca(topics, topicNum, annotations) {
 	mode: 'markers+text',
 	type: 'scatter',
 	marker: {
-	    size: sizes,
-	    color: '#1f77b4',
+	    size: data["bubblesizes"],
+	    color: data["colors"],
 	    line: {
 		color: 'black',
 		width: 2
@@ -86,31 +154,114 @@ function plotLdaPca(topics, topicNum, annotations) {
 	}
     }
 
+    // frames
+    var frames = [];
+    for (const timeslot in topics_info["timeslots"]) {
+	var ts_data = get_timeslot_data(topics_info["timeslots"][timeslot]);
+
+	frames.push({
+	    name: timeslot,
+	    data: [{
+		hovertemplate: ts_data["fullinfo"][category], 
+		customdata: [ts_data["fullinfo"], timeslot],
+		marker: {size: ts_data["bubblesizes"]}
+	    }]
+	})
+	// cache the sizes
+	// cached_sizes = {
+	// full: [ ]
+	// 
+	cached_sizes[timeslot] = ts_data["bubblesizes"];
+    }
+
+
+    //slider
+    var sliderSteps = [];
+    for (var i = 0; i < timeslots.length; i++){
+	var timeslot = timeslots[i];
+	sliderSteps.push({
+	    method: 'animate',
+	    label: timeslot,
+	    args: [[timeslot], {
+		mode: 'immediate',
+		transition: {duration: 300},
+		frame: {duration: 300, redraw: false},
+	    }]
+	});
+    }
+
+    ldaPcaLayout.updatemenus = [{
+	x: 0,
+	y: 0,
+	yanchor: 'top',
+	xanchor: 'left',
+	showactive: false,
+	direction: 'left',
+	type: 'buttons',
+	pad: {t: 87, r: 10},
+	buttons: [{
+	    method: 'animate',
+	    args: [null, {
+		mode: 'immediate',
+		fromcurrent: true,
+		transition: {duration: 300},
+		frame: {duration: 500, redraw: false}
+	    }],
+	    label: 'Play'
+	}, {
+	    method: 'animate',
+	    args: [[null], {
+		mode: 'immediate',
+		transition: {duration: 0},
+		frame: {duration: 0, redraw: false}
+	    }],
+	    label: 'Pause'
+	},
+	]
+    }, 
+    ];
+
+    ldaPcaLayout.sliders =[{
+	pad: {l: 130, t: 55},
+	currentvalue: {
+	    visible: true,
+	    prefix: 'Decade:',
+	    xanchor: 'right',
+	    font: {size: 20, color: '#666'}
+	},
+	steps: sliderSteps
+    }]
+
     if (annotations == false)
 	ldaPcaLayout.annotations = null;
 
-    Plotly.newPlot(LDA_PCA_PLOT_NAME, [trace], ldaPcaLayout,
+    Plotly.newPlot(LDA_PCA_PLOT_NAME, {
+	data: [trace],
+	layout: ldaPcaLayout,
+	frames: frames,
+    },
 	{displayModeBar: false});
-    updateLdaPcaColors(topicNum, colors.slice(0), sizes);
+
+    updateColors(topicNum);
     document.getElementById("selectedTopic").innerHTML = topicNum;
 
-    /* when a topic is selected update colors and plot topic terms */
+    // when a topic is selected update colors and plot topic terms 
     var ldaPcaPlot = document.getElementById(LDA_PCA_PLOT_NAME);
     ldaPcaPlot.on('plotly_click', function(data) {
 	var pn = data.points[data.points.length - 1].pointNumber;
-	updateLdaPcaColors(pn, colors.slice(0), sizes); // copy of colors
-	document.getElementById("selectedTopic").innerHTML = pn;
+	topicnum = pn;
+	updateColors(pn);
 
 	$.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + pn.toString(),
 	    function(data) {
 		plotTopicTerms(pn,data["topterms"]); // pass topic id 
 	    });
 
-	$.getJSON('./php/get_topic_proportions.php?topicId=' + pn.toString(), 
-	    function(data) {
-		plot_topic_proportion(data);
-	    });
+	//$.getJSON('./php/get_topic_proportions.php?topicId=' + pn.toString(), 
+	//    function(data) {
+	//	plot_topic_proportion(data);
+	//   });
     });
 
-    document.getElementById("topics").innerHTML = JSON.stringify(topics);
+    topicsdata = topics_info;
 }
