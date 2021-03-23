@@ -89,9 +89,9 @@
 	    <div id="categoryhover_wrapper" style="margin-left: 10px; height: 40px">
 		<label for="categoryhover"> Hover info:</label>
 		<select name="categoryhover" id="categoryhover">
-		    <option>topAuthors</option>
-		    <option selected="selected">topKeywords</option>
-		    <option>topLocations</option>
+		    <option>Top Authors</option>
+		    <option selected="selected">Top Keywords</option>
+		    <option>Top Locations</option>
 		</select>
 	    </div>
 
@@ -115,6 +115,8 @@
 	<div id="ldapca-plot" class="ldapca"> </div>
 
 	<div class="topicdetails" style="border-left: 2px solid #ccc; display: flex; flex-direction: column; width: 550px;">
+	   <div class="text-block">
+            <p> These are the most important terms for the selected topic. Adjust the Exclusivity slider to emphasize terms that are only important for the selected topic. </p> </div>
 	    <div id="topic_terms" class="container_details topic_terms"> <div id="topic_terms_plot"> </div>  </div>
 	    <div id="topic_info" class="container_details topic_info"> info</div>
 	    <div id="topic_docs" class="container_details topic_docs"> top docs</div>
