@@ -101,8 +101,8 @@ $cursor = $collection->find(
 $results = $cursor->toArray();
 foreach ($results as $res) {
     $authors["full"][] = $res["topAuthors"];
-    $locations["full"][] = $res["topKeywords"];
-    $keywords["full"][] = $res["topLocations"];
+    $locations["full"][] = $res["topLocations"];
+    $keywords["full"][] = $res["topKeywords"];
 }
 
 // GET INFO DECADES
