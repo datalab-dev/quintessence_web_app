@@ -69,7 +69,7 @@ function plotLdaPca(topics_info, topicNum, annotations) {
     timeslots.push(timeslots.splice(timeslots.indexOf("full"), 1)[0]);
 
 
-    var data = get_timeslot_data(topics_info["timeslots"]["full"]);
+    var data = get_timeslot_data(topics_info["timeslots"]["1470"]);
     var coordinates = get_xy(topics_info["coordinates"]);
 
     // main trace (full corpus)
@@ -78,7 +78,7 @@ function plotLdaPca(topics_info, topicNum, annotations) {
 	y: coordinates["y"],
 	text: data["ids"],
 	hovertemplate: data["fullinfo"][category],
-	customdata: [data["fullinfo"], 'full'],
+	customdata: [data["fullinfo"]['1470']],
 	hoverlabel: {
 	    namelength: 0,
 	    align: 'left'
