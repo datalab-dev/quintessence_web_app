@@ -11,6 +11,7 @@ get_subset_options.php
 get_subset_lda.php
 
 */
+
 var  LDA_PCA_PLOT_NAME = 'ldapca-plot';
 var  TOPIC_TERMS_PLOT_NAME = 'topic_terms_plot';
 var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions';
@@ -32,18 +33,6 @@ var cached_sizes = {};
 
 $(document).ready(function() {
 
-    /* configure tabs */
-    $('#tabs li a:not(:first)').addClass('inactive');
-    $('.container:not(:first)').hide();
-    $('#tabs li a').click(function(){
-	var t = $(this).attr('href');
-	$('#tabs li a').addClass('inactive');
-	$(this).removeClass('inactive');
-	$('.container').hide();
-	$(t).fadeIn('slow');
-	return false;
-    });
-
     /* configure topicsdetails tabs */
     $('#' + DETAILS_TAB_NAME + ' li a:not(:first)').addClass('inactive');
     $('.' + DETAILS_TAB_CONTAINER_NAME +':not(:first)').hide();
@@ -56,8 +45,6 @@ $(document).ready(function() {
 	return false;
     });
 
-    /* fills in dropdown menus for subsetting corpus (Locations, Authors...) */
-    initSubsetOptions();
 
     /* plot lda_pca with initial data and default topic selected */
     $.getJSON('./php/get_topics_info_all.php', function(data) {
@@ -143,7 +130,7 @@ $(document).ready(function() {
 
     $('#' + RESET_BUTTON_NAME).on("click", function(d) {
 	topicnum = DEFAULT_TOPIC;
-	resetLdaPca();
+	resetLdaPcaDecade();
     });
 
 });

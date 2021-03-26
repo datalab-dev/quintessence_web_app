@@ -19,14 +19,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
+    <script src="./js/topics/topics_decades.js"></script>
     <script src="./js/topics/utils.js"></script>
-    <script src="./js/topics/topics.js"></script>
     <script src="./js/topics/layouts.js"></script>
-    <script src="./js/topics/apply_subset_filter.js"></script>
-    <script src="./js/topics/init_subset_options.js"></script>
     <script src="./js/topics/plot_topic_proportion.js"></script>
     <script src="./js/topics/plot_topic_terms.js"></script>
-    <script src="./js/topics/plot_lda_pca.js"></script>
+    <script src="./js/topics/plot_lda_pca_decades.js"></script>
+    <script src="./js/topics/apply_subset_filter.js"></script>
+    <script src="./js/topics/init_subset_options.js"></script>
     <script src="./js/documents/init_document_results.js"></script>
     <script src="./js/documents/get_meta.js"></script>
     <script src="./js/documents/get_full_document.js"></script>
@@ -52,71 +52,7 @@
 </head>
 
 <body>
-    <!-- navigation bar-->
-    <div id="nav-placeholder"></div>
-    <script>
-	$("#nav-placeholder").load("nav.html",function() {
-		    $('a[href$="' + location.pathname.split("/")[1] + '"]').addClass('active');
-		});
-    </script>
 
-    <div class="text-block">
-	<h2> Text Topics </h2>
-	<p>
-	Explore broader themes in a corpus with our topic model. This model identifies common themes across texts by grouping words according to their co-occurrence with other words. If words co-occur in some texts and not others, the model will associate those words and documents with a common topic. Each topic identified in this corpus is represented below as a bubble, sized according to the prevalence of that topic. Click or hover on a bubble for more information.
-	</p>
-    </div>
-
-    <hr>
-    <ul id="tabs" class="button-tabs">
-	<li><a href="#topics-subset">Topic Model</a></li>
-	<li><a href="#topics-overtime"> Topics Over Time</a></li>
-    </ul>
-    <hr>
-
-
-    <div class="container" id="topics-subset">
-
-    <div class="text-block">
-	<p> Categories have all been identified and hand-tagged by the EEBO-TCP team. You can filter by any combination of parameters. </p>
-
-	<!-- Timeline-->
-	<div style="margin-bottom: 20px">
-	    <h3 style="margin-top: 10px" class="selecter-title"> Date Range </h3>
-	    <input type="text" id="date-range" class="js-range-slider" name="my_range" value="" />
-	</div>
-	<!-- /Timeline-->
-
-	<!-- /Keywords -->
-	<div class="subsetter" id="Keywords">
-	    <h3 class="selecter-title"> Keywords </h3>
-	    <select id="selected-keywords" class="ui fluid search dropdown" multiple="">
-	    </select>
-	</div>
-	<!-- /Keywords -->
-
-	<!-- Authors -->
-	<div class="subsetter" id="Authors">
-	    <h3 class="selecter-title"> Authors </h3>
-	    <select class="ui fluid search dropdown" id="selected-authors" multiple="multiple">
-	    </select>
-	</div>
-	<!-- /Authors -->
-
-	<!-- Locations -->
-	<div class="subsetter" id="Locations">
-	    <h3 class="selecter-title"> Locations </h3>
-	    <select class="ui fluid search dropdown" id="selected-locations" multiple="multiple">
-	    </select>
-	</div>
-	<!-- /Locations -->
-
-	<div id="apply-filters">
-	    <div id="status"></div>
-	    <div id="ndocs">60327 results</div>
-	    <button type="button" class="subset_button"> Apply Filters </button>
-	</div>
-    </div> <!-- filter -->
     <div class="controls" >
 
 	<!-- LDA PCA CONTROLS -->
@@ -177,22 +113,7 @@
 	</div>
     </div>
 
-
-    </div>
-    
-    <div style="margin: auto; height: 1300px; width: 1600px"class="container" id="topics-overtime">
-    <iframe style="border: none; width: 100%; min-height: 1300px;" src="overtimetopics.html"> </iframe>
-    </div>
-
-
-
     <div style="display: none" id="topics"></div>
     <div style="display: none" id="selectedTopic"></div>
 
-    <!--Footer -->
-    <div id="footer-placeholder"></div>
-    <script>
-	$("#footer-placeholder").load("footer.html");
-    </script>
-    <!-- Footer -->
 </body>
