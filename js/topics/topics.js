@@ -29,6 +29,7 @@ const DEFAULT_TOPIC = 25;
 var topicsdata = {};
 var topicnum = DEFAULT_TOPIC;
 var cached_sizes = {};
+var cached_topic_data = {};
 
 $(document).ready(function() {
 
@@ -72,8 +73,15 @@ $(document).ready(function() {
     /* plot top terms for the default topic */
     $.getJSON('./php/get_topic_info.php?topicId=' + DEFAULT_TOPIC.toString(),
         function(data) {
+            cached_topic_data = data;
 	    update_topics_info(DEFAULT_TOPIC, data);
+
 	});
+
+            $('#decade_dropdown').on('selectmenuchange', function(e, ui) {
+                var decade = ui.item.value;
+                update_tables(cached_topic_data, decade);
+            });
 
 
     /* autocomplete for topic */
@@ -95,6 +103,7 @@ $(document).ready(function() {
 
                 $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
                     function(data) {
+			cached_topic_data = data;
 	                update_topics_info(topicnum, data);
 	            });
 
@@ -102,6 +111,31 @@ $(document).ready(function() {
 	    }
 	});
     }); //topic autocomplete
+
+    $('#prev').on('click', function() {
+	topicnum = topicnum - 1;
+	document.getElementById("topic-input").setAttribute("placeholder", topicnum);
+	document.getElementById("selectedTopic").innerHTML = topicnum;
+        $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+                function(data) {
+			cached_topic_data = data;
+	                update_topics_info(topicnum, data);
+	            });
+
+		updateColors(topicnum); //pass a copy
+    });
+    $('#next').on('click', function() {
+	topicnum = topicnum + 1;
+	document.getElementById("topic-input").setAttribute("placeholder", topicnum);
+	document.getElementById("selectedTopic").innerHTML = topicnum;
+        $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+                function(data) {
+			cached_topic_data = data;
+	                update_topics_info(topicnum, data);
+	            });
+
+		updateColors(topicnum); //pass a copy
+    });
 
     /* autocomplete for term */
     $.getJSON('./php/get_topics_terms.php', function(terms) {
@@ -137,7 +171,14 @@ $(document).ready(function() {
 
     $('#' + RESET_BUTTON_NAME).on("click", function(d) {
 	topicnum = DEFAULT_TOPIC;
+	$("#topic-input")[0].selectedIndex = 0;
 	resetLdaPca();
+        $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+            function(data) {
+                cached_topic_data = data;
+    	    update_topics_info(topicnum, data);
+    
+    	});
     });
 
 });

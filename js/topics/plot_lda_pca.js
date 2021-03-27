@@ -46,6 +46,7 @@ function plotLdaPca(topics_info, topicNum, annotations) {
     },
 	{displayModeBar: false});
 
+    cached_sizes = data["bubblesizes"];
     updateColors(topicNum);
     document.getElementById("selectedTopic").innerHTML = topicNum;
 

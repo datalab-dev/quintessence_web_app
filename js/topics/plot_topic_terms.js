@@ -131,11 +131,19 @@ function plotTopicTerms(topicId, topterms) {
 	        var decade = getDecade();
 	        
 
+	    if (decade) {
 	        // revert sizes to cached_sizes for that decade
 			var update = {
 			    'marker.size': [cached_sizes[decade]],
 			}
 			Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
+	    }
+	    else {
+			var update = {
+			    'marker.size': [cached_sizes],
+			}
+			Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
+	    }
 	});
     });
 

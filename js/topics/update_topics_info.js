@@ -25,26 +25,9 @@ function update_topics_info(topic, topicdata) {
     // decades
     var decades = Object.keys(topicdata["authors"]);
     var decade_select  = document.getElementById('decade_dropdown');
-    decade_select.innerHTML = "";
-    for (var i = 0; i < decades.length; i++) {
-	var s = document.createElement("option");
-	s.setAttribute('value', decades[i]);
-	s.innerHTML = decades[i];
 
-	if (decades[i] == "full") {
-	    s.setAttribute("selected", "selected");
-	}
-	decade_select.appendChild(s);
-    }
+    update_tables(topicdata, "full");
 
-    var decade = $( "#decade_dropdown option:selected" ).text();
-    update_tables(topicdata, decade);
-
-    $('#decade_dropdown').on('selectmenuchange', function(e, ui) {
-	decade = ui.item.value;
-	console.log(decade);
-	update_tables(topicdata, decade);
-    });
 
     // 3. Similar topics Tab 
     // create table
