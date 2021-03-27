@@ -158,6 +158,7 @@ $(document).ready(function() {
 			for (var i = 0; i < data.length; i++) {
 			    proportions[i] = Math.min(data[i] * 100 * 20, 250);
 			}
+			console.log(proportions);
 			var update = {
 			    'marker.size': [proportions],
 			}

@@ -39,18 +39,23 @@ function updateLdaPca() {
 
     /* replot with new proportions */
     $.getJSON(url, function(data) {
-	console.log(data);
-        var topics = JSON.parse(document.getElementById("topics").innerHTML);
-        var topicNum = document.getElementById("selectedTopic").innerHTML;
-        for (var i = 0; i < topics.length; i++) {
-            topics[i]['proportion'] = data['proportions'][i];
-        }
-        document.getElementById("topics").innerHTML = JSON.stringify(topics);
-        plotLdaPca(topics, topicNum = topicNum, annotations = false);
+	cached_sizes = data["proportions"];
+
+	var proportions = []
+	for (var i = 0; i < data["proportions"].length; i++) {
+	    proportions[i] = data["proportions"][i] * 100 * 20;
+	}
+	var update = {
+	    'marker.size': [proportions],
+	}
+	console.log(proportions);
+	Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
+
+
 
         var ndocs = data["qids"].length;
         ndocs = ndocs < maxdocs ? ndocs : maxdocs;
-        initDocumentResults(data['qids'], ndocs);
+        //initDocumentResults(data['qids'], ndocs);
 
         /* show as loaded */
         document.getElementById("ndocs").innerHTML = `${data["qids"].length} results`;

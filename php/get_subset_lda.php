@@ -197,15 +197,16 @@ $matches[] = subsetString($collection, 'Location', $locationsString);
 $matches[] = subsetString($collection, 'Author', $authorsString);
 $docs = intersectMatches($matches);
 
-/* get topic proportions */
-$proportions = [];
-$collection = $db->{'docs.topics'};
-if (!empty($docs) && $proportion)
-    $proportions = getTopicProportions($collection, $docs);
 
-$result = array(
-    'qids' => $docs,
-    'proportions' => $proportions
-);
-echo json_encode($result);
+/* get topic proportions */
+//$proportions = [];
+//$collection = $db->{'docs.topics'};
+//if (!empty($docs) && $proportion)
+//    $proportions = getTopicProportions($collection, $docs);
+//
+//$result = array(
+//    'qids' => $docs,
+//    'proportions' => $proportions
+//);
+//echo json_encode($result);
 ?>
