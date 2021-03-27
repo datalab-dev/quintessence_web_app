@@ -13,7 +13,7 @@ get_subset_lda.php
 */
 var  LDA_PCA_PLOT_NAME = 'ldapca-plot';
 var  TOPIC_TERMS_PLOT_NAME = 'topic_terms_plot';
-var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions';
+var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions_plot';
 
 var CATEGORY_FORM_NAME = "categoryhover";
 var TOPIC_FORM_NAME = "topic-input";
@@ -70,17 +70,11 @@ $(document).ready(function() {
     });
 
     /* plot top terms for the default topic */
-    //$.getJSON('./php/get_top_topic_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
-    $.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
-	function(data) {
-            plotTopicTerms(DEFAULT_TOPIC, data["topterms"]);
-    })
-    /* plot topic proportions time series for the default topic */
-    $.getJSON('./php/get_topic_proportions.php?topicId=' + DEFAULT_TOPIC.toString(),
-	function(data) {
-            plot_topic_proportion(data);
-	}
-    );
+    $.getJSON('./php/get_topic_info.php?topicId=' + DEFAULT_TOPIC.toString(),
+        function(data) {
+	    update_topics_info(DEFAULT_TOPIC, data);
+	});
+
 
     /* autocomplete for topic */
     $.getJSON('./php/get_topics.php', function(topics) {
@@ -99,10 +93,10 @@ $(document).ready(function() {
 		topicnum = topic;
 		document.getElementById("selectedTopic").innerHTML = topic;
 
-		$.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + topic,
-		    function(data) {
-			plotTopicTerms(topic, data["topterms"]);
-		    });
+                $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+                    function(data) {
+	                update_topics_info(topicnum, data);
+	            });
 
 		updateColors(topic); //pass a copy
 	    }

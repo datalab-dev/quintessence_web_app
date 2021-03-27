@@ -56,15 +56,11 @@ function plotLdaPca(topics_info, topicNum, annotations) {
 	topicnum = pn;
 	updateColors(pn);
 
-	$.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + pn.toString(),
+	$.getJSON('./php/get_topic_info.php?topicId=' + pn.toString(),
 	    function(data) {
-		plotTopicTerms(pn,data["topterms"]); // pass topic id 
+		update_topics_info(pn,data); // pass topic id 
 	    });
 
-	//$.getJSON('./php/get_topic_proportions.php?topicId=' + pn.toString(), 
-	//    function(data) {
-	//	plot_topic_proportion(data);
-	//   });
     });
 
     topicsdata = topics_info;

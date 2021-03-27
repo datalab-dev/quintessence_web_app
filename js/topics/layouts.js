@@ -120,7 +120,7 @@ var ldaPcaLayout = {
 
 var topic_proportion_layout = {
     title: ' ',
-    autosize: false,
+    autosize: true,
     xaxis: {
         title: 'Year',
         gridcolor: 'rgb(243, 243, 243)',
@@ -144,6 +144,6 @@ var topic_proportion_layout = {
     plot_bgcolor: 'rgb(243, 243, 243)',
     showlegend: false,
     hovermode: 'closest',
-    width: 1024,
-    height: 600
+    width: 500,
+    height: 300
 };

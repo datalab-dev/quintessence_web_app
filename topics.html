@@ -20,6 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
     <script src="./js/topics/utils.js"></script>
+    <script src="./js/topics/update_topics_info.js"></script>
     <script src="./js/topics/topics.js"></script>
     <script src="./js/topics/layouts.js"></script>
     <script src="./js/topics/apply_subset_filter.js"></script>
@@ -35,11 +36,17 @@
     <script>
 	$( function() {
 		    $( "#categoryhover" ).selectmenu();
+		    $( "#decade_dropdown" ).selectmenu();
 		});
     </script>
 
 
     <style>
+#decade_dropdown
+    {
+       height: 50px;
+          overflow: auto;
+}
 .topic_terms .yaxislayer-above {
     cursor: pointer;
     pointer-events: all;
@@ -152,7 +159,6 @@
 	<ul id="topicdetails_tabs" class="topicdetails_tabs">
 	    <li><a href="#topic_terms">Terms</a></li>
 	    <li><a href="#topic_info">Info</a></li>
-	    <li><a href="#topic_docs">Docs</a></li>
 	</ul>
 	<!-- /TOPICDETAILS CONTROLS -->
 
@@ -164,11 +170,34 @@
 	<div id="ldapca-plot" class="ldapca"> </div>
 
 	<div class="topicdetails" style="border-left: 2px solid #ccc; display: flex; flex-direction: column; width: 550px;">
-	   <div class="text-block">
-            <p> These are the most important terms for the selected topic. Adjust the Exclusivity slider to emphasize terms that are only important for the selected topic. </p> </div>
+	    <h2 id="selected_topic"> </h2>
 	    <div id="topic_terms" class="container_details topic_terms"> <div id="topic_terms_plot"> </div>  </div>
-	    <div id="topic_info" class="container_details topic_info"> info</div>
-	    <div id="topic_docs" class="container_details topic_docs"> top docs</div>
+
+	    <div id="topic_info" class="container_details topic_info"> 
+
+		<div style="margin: 20px;" id="topic_proportions_plot"> </div>
+
+		<div id="decade_dropdown_wrapper" style="margin-bottom: 20px;">
+	            <select size="5" name="decade_dropdown" id="decade_dropdown">
+	            </select>
+	        </div>
+
+		<div id="info" style="display: flex; flex-direction: row">
+		    <div>
+		<h3> Top Authors: </h3>
+		<div id="topAuthorsDecade"> </div>
+		    </div>
+		    <div>
+		<h3> Top Keywords: </h3>
+		<div id="topKeywordsDecade"> </div>
+		    </div>
+		    <div>
+		<h3> Top Locations: </h3>
+		<div id="topLocationsDecade"> </div>
+		    </div>
+		</div>
+	    </div>
+
 	</div>
 
 
