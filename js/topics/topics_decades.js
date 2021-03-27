@@ -11,10 +11,9 @@ get_subset_options.php
 get_subset_lda.php
 
 */
-
 var  LDA_PCA_PLOT_NAME = 'ldapca-plot';
 var  TOPIC_TERMS_PLOT_NAME = 'topic_terms_plot';
-var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions';
+var  TOPIC_PROPORTIONS_PLOT_NAME = 'topic_proportions_plot';
 
 var CATEGORY_FORM_NAME = "categoryhover";
 var TOPIC_FORM_NAME = "topic-input";
@@ -30,8 +29,21 @@ const DEFAULT_TOPIC = 25;
 var topicsdata = {};
 var topicnum = DEFAULT_TOPIC;
 var cached_sizes = {};
+var cached_topic_data = {};
 
 $(document).ready(function() {
+
+    /* configure tabs */
+    $('#tabs li a:not(:first)').addClass('inactive');
+    $('.container:not(:first)').hide();
+    $('#tabs li a').click(function(){
+	var t = $(this).attr('href');
+	$('#tabs li a').addClass('inactive');
+	$(this).removeClass('inactive');
+	$('.container').hide();
+	$(t).fadeIn('slow');
+	return false;
+    });
 
     /* configure topicsdetails tabs */
     $('#' + DETAILS_TAB_NAME + ' li a:not(:first)').addClass('inactive');
@@ -45,10 +57,9 @@ $(document).ready(function() {
 	return false;
     });
 
-
     /* plot lda_pca with initial data and default topic selected */
     $.getJSON('./php/get_topics_info_all.php', function(data) {
-	plotLdaPca(data, DEFAULT_TOPIC, annotations=true);
+	plotLdaPcaDecades(data, DEFAULT_TOPIC, annotations=true);
     });
 
     /* user selects which info to see in hover of bubble plot */
@@ -57,17 +68,18 @@ $(document).ready(function() {
     });
 
     /* plot top terms for the default topic */
-    //$.getJSON('./php/get_top_topic_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
-    $.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + DEFAULT_TOPIC.toString(),
-	function(data) {
-            plotTopicTerms(DEFAULT_TOPIC, data["topterms"]);
-    })
-    /* plot topic proportions time series for the default topic */
-    $.getJSON('./php/get_topic_proportions.php?topicId=' + DEFAULT_TOPIC.toString(),
-	function(data) {
-            plot_topic_proportion(data);
-	}
-    );
+    $.getJSON('./php/get_topic_info.php?topicId=' + DEFAULT_TOPIC.toString(),
+        function(data) {
+            cached_topic_data = data;
+	    update_topics_info(DEFAULT_TOPIC, data);
+
+	});
+
+            $('#decade_dropdown').on('selectmenuchange', function(e, ui) {
+                var decade = ui.item.value;
+                update_tables(cached_topic_data, decade);
+            });
+
 
     /* autocomplete for topic */
     $.getJSON('./php/get_topics.php', function(topics) {
@@ -86,15 +98,41 @@ $(document).ready(function() {
 		topicnum = topic;
 		document.getElementById("selectedTopic").innerHTML = topic;
 
-		$.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + topic,
-		    function(data) {
-			plotTopicTerms(topic, data["topterms"]);
-		    });
+                $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+                    function(data) {
+			cached_topic_data = data;
+	                update_topics_info(topicnum, data);
+	            });
 
 		updateColors(topic); //pass a copy
 	    }
 	});
     }); //topic autocomplete
+
+    $('#prev').on('click', function() {
+	topicnum = topicnum - 1;
+	document.getElementById("topic-input").setAttribute("placeholder", topicnum);
+	document.getElementById("selectedTopic").innerHTML = topicnum;
+        $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+                function(data) {
+			cached_topic_data = data;
+	                update_topics_info(topicnum, data);
+	            });
+
+		updateColors(topicnum); //pass a copy
+    });
+    $('#next').on('click', function() {
+	topicnum = topicnum + 1;
+	document.getElementById("topic-input").setAttribute("placeholder", topicnum);
+	document.getElementById("selectedTopic").innerHTML = topicnum;
+        $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+                function(data) {
+			cached_topic_data = data;
+	                update_topics_info(topicnum, data);
+	            });
+
+		updateColors(topicnum); //pass a copy
+    });
 
     /* autocomplete for term */
     $.getJSON('./php/get_topics_terms.php', function(terms) {
@@ -130,7 +168,14 @@ $(document).ready(function() {
 
     $('#' + RESET_BUTTON_NAME).on("click", function(d) {
 	topicnum = DEFAULT_TOPIC;
-	resetLdaPcaDecade();
+	$("#topic-input")[0].selectedIndex = 0;
+	resetLdaPcaDecades();
+        $.getJSON('./php/get_topic_info.php?topicId=' + topicnum.toString(),
+            function(data) {
+                cached_topic_data = data;
+    	    update_topics_info(topicnum, data);
+    
+    	});
     });
 
 });

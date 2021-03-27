@@ -59,6 +59,7 @@ function plotLdaPca(topics_info, topicNum, annotations) {
 
 	$.getJSON('./php/get_topic_info.php?topicId=' + pn.toString(),
 	    function(data) {
+		cached_topic_data = data;
 		update_topics_info(pn,data); // pass topic id 
 	    });
 

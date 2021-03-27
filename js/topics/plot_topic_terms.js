@@ -80,7 +80,7 @@ function plotTopicTerms(topicId, topterms) {
 	active: 10,
 	currentvalue: {
 	    xanchor: 'right',
-	    prefix: 'Exclusivity: ',
+	    prefix: 'Relevance Metric: ',
 	    font: {
 		color: '#888',
 		size: 20

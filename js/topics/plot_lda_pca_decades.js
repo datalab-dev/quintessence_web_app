@@ -4,7 +4,7 @@ Plots the lda bubble plot for the full corpus and all decades.
 
 
 /* given the topic data draw the lda pca plot */
-function plotLdaPca(topics_info, topicNum, annotations) {
+function plotLdaPcaDecades(topics_info, topicNum, annotations) {
     var category = $( "#" + CATEGORY_FORM_NAME ).val();
 
     // helper functions
@@ -194,15 +194,11 @@ function plotLdaPca(topics_info, topicNum, annotations) {
 	topicnum = pn;
 	updateColors(pn);
 
-	$.getJSON('./php/get_top_topic_relevance_terms.php?topicId=' + pn.toString(),
+	$.getJSON('./php/get_topic_info.php?topicId=' + pn.toString(),
 	    function(data) {
-		plotTopicTerms(pn,data["topterms"]); // pass topic id 
+		cached_topic_data = data;
+		update_topics_info(pn,data); // pass topic id 
 	    });
-
-	//$.getJSON('./php/get_topic_proportions.php?topicId=' + pn.toString(), 
-	//    function(data) {
-	//	plot_topic_proportion(data);
-	//   });
     });
 
     topicsdata = topics_info;
