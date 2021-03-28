@@ -10,68 +10,90 @@ authors:    Arthur Koehl, Chandni Nagda
 require 'vendor/autoload.php';
 require 'config.php';
 
-$MAX = 2000;
-
-function get_distinct($collection, $field, $count) {
-
-    $cursor = $collection->aggregate(
-	[[
-	    '$match'=> [
-		$field=> [
-		    '$not'=> [
-			'$size'=> 0
-		    ]
-		]
-	    ]
-	], 
-	[
-	    '$unwind' => '$'.$field,
-	],
-	[
-	    '$group'=> [
-		'_id'=> '$'.$field,
-		'count'=> [
-		    '$sum' => 1
-		]
-	    ]
-	],
-	[
-	    '$match'=> [
-		'count'=> [
-		    '$gte'=> 2
-		]
-	    ]
-	],
-	[
-	    '$sort'=> [
-		'count'=> -1
-	    ]
-	],
-	[ '$limit' => $count ],
-	[ '$project' => [ 'id_' => 1] ],
-	]);
-
-    $results = $cursor ->toArray();
-    $values = array();
-    foreach ($results as $res) {
-	$values[] = $res["_id"];
-    }
-    return ($values);
-}
 
 $db = getMongoCon();
-$collection = $db->{'docs.meta'};
 
-/* unique authors, locations, and keywords */
-$authors = get_distinct($collection, "Author", $MAX);
-$locations = get_distinct($collection, "Location", $MAX);
-$keywords = get_distinct($collection, "Keywords", $MAX);
+/* unique authors, locations, and keywords sorted*/
+//authors
+$collection = $db->{'topics.authors'};
+$authors = [];
+$cursor = $collection->aggregate(
+    [
+	[
+	    '$group' => [
+	        '_id'=> '$Author',
+	        'count'=> [
+	    	'$sum' => 1,
+	        ]	
+	    ]
+	],
+	[
+	    '$sort' => [
+		'count'=> -1,
+	    ]
+	]
+    ]
+);
+foreach ($cursor as $doc) {
+    $authors[] = $doc["_id"];
+}
+
+
+//keywords
+$collection = $db->{'topics.keywords'};
+$keywords = [];
+$cursor = $collection->aggregate(
+    [
+	[
+	    '$group' => [
+	        '_id'=> '$Keywords',
+	        'count'=> [
+	    	'$sum' => 1,
+	        ]	
+	    ]
+	],
+	[
+	    '$sort' => [
+		'count'=> -1,
+	    ]
+	]
+    ]
+);
+foreach ($cursor as $doc) {
+    $keywords[] = $doc["_id"];
+}
+
+
+
+//locations
+$collection = $db->{'topics.locations'};
+$locations = [];
+$cursor = $collection->aggregate(
+    [
+	[
+	    '$group' => [
+	        '_id'=> '$Location',
+	        'count'=> [
+	    	'$sum' => 1,
+	        ]	
+	    ]
+	],
+	[
+	    '$sort' => [
+		'count'=> -1,
+	    ]
+	]
+    ]
+);
+foreach ($cursor as $doc) {
+    $locations[] = $doc["_id"];
+}
 
 
 $result = array(
     'authors'=> $authors,
     'locations' => $locations,
-    'keywords' => $keywords
+    'keywords' => $keywords,
 );
 echo json_encode($result);
 ?>

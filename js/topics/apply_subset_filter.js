@@ -48,6 +48,8 @@ function updateLdaPca() {
 	var update = {
 	    'marker.size': [proportions],
 	}
+	console.log(data["qids"]);
+	console.log(data["proportions"]);
 	console.log(proportions);
 	Plotly.restyle(LDA_PCA_PLOT_NAME, update, 0);
 

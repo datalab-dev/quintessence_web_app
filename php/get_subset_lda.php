@@ -67,35 +67,6 @@ function subsetDates($collection, $boundsString) {
 }
 
 
-/* returns a subset of qids given string which appears in metadata field
- * if string is empty returns empty array */
-function subsetString($collection, $field, $string) {
-    if ($string == '') {
-	return [];
-    }
-
-    $searchTerms = explode(',', str_replace('\'', '', $string));
-    $regexStrings = [];
-    foreach ($searchTerms as $searchTerm) {
-	$regexStrings[] = [
-	    $field => ['$regex' => new MongoDB\BSON\Regex(".*{$searchTerm}.*")]
-	];
-    }
-
-    $cursor = $collection->find(
-	['$or' => $regexStrings],
-	['projection' => ['_id' => 1]]
-    );
-
-    $subset = [];
-    foreach ($cursor as $doc) {
-	$subset[] = $doc['_id'];
-    }
-
-    return $subset;
-}
-
-
 /* given an array of match arrays return the intersection */
 function intersectMatches($matches) {
     $nquery = count(array_filter($matches)); // nonempty arrays
@@ -128,7 +99,7 @@ function getTopicProportions($collection, $docs) {
 	    ],
 	    [
 		'$unwind' => [
-		    'path' => '$topics', 
+		    'path' => '$topic_distribution', 
 		    'includeArrayIndex' => "topicId"
 		]
 	    ],
@@ -142,30 +113,39 @@ function getTopicProportions($collection, $docs) {
 	    [
 		'$project' => [
 		    'topicId' => 1,
+		    'topic_distribution' => 1,
+		    'word_count_preprocessed' => 1,
 		    'freq' => ['$multiply' => [
-			'$topics',
-			'$word_count_raw']
+			'$topic_distribution',
+			'$word_count_preprocessed']
 		    ]
 		]
 	    ],
 	    [
 		'$group' => [
 		    '_id' => '$topicId',
-		    'topicFreq' => ['$sum' => '$freq']
+		    'topicFreq' => ['$sum' => '$freq'],
 		]
 	    ]
 	]
     );
     $res = $cursor->toArray();
 
+    $sum = 0;
+    $topicFreqs = [];
+    $ntopics = 0;
     foreach ($res as $freq) {
-	$topicFreqs[] = $freq['topicFreq'];
+	$id = $freq["_id"];
+	$tf = $freq["topicFreq"];
+	$topicFreqs[$id] = $tf;
+	$sum = $sum + $tf;
+	$ntopics = $ntopics + 1;
     }
-    $sum = array_sum($topicFreqs);
 
     $topicProportions = [];
-    foreach ($topicFreqs as $topicFreq) {
-	$topicProportions[] = ($topicFreq) / $sum;
+    $topicProportions = array_fill(0, $ntopics, 0.0);
+    foreach ($topicFreqs as $topicId => $topicFreq) {
+	$topicProportions[intval($topicId)] = ($topicFreq) / $sum;
     }
 
     return $topicProportions;
@@ -180,9 +160,9 @@ if ($_GET) {
     $proportion = (bool)$_GET['proportion']; // set true to calculate proportion
 } else {
     $datesString = "'1490','1700'";
-    $keywordsString = "'Description and travel', 'Early works to 1800'";
-    $locationsString = "";
-    $authorsString = "";
+    $keywordsString = "'description and travel', 'early works to 1800'";
+    $locationsString = "'london','paris'";
+    $authorsString = "'charles i king england', 'charles ii king england'";
     $proportion = True;
 }
 
@@ -191,22 +171,85 @@ $collection = $db->{'docs.meta'};
 
 /* get qids of subset */
 $matches = [];
-$matches[] = subsetDates($collection, $datesString);
-$matches[] = subsetString($collection, 'Keywords', $keywordsString);
-$matches[] = subsetString($collection, 'Location', $locationsString);
-$matches[] = subsetString($collection, 'Author', $authorsString);
+$matches[0] = [];
+$matches[0] = subsetDates($collection, $datesString);
+
+// authors
+$collection = $db->{'topics.authors'};
+$authorsString = str_replace("'", "", $authorsString);
+$authors = explode(',', $authorsString);
+$authors=array_map('trim',$authors);
+$matches[1] = [];
+$cursor = $collection->find(
+    ['Author' =>  ['$in' => $authors]],
+    ['projection' => ["_id"=> 0, "docId"=> 1 ]] 
+);
+$results = $cursor->toArray();
+foreach ($results as $res) {
+    $matches[1][] = $res["docId"];
+}
+
+// locations
+$collection = $db->{'topics.locations'};
+$locationsString = str_replace("'", "", $locationsString);
+$locations = explode(',', $locationsString);
+$locations=array_map('trim',$locations);
+$matches[2] = [];
+$cursor = $collection->find(
+    ['Location' =>  ['$in' => $locations]],
+    ['projection' => ["_id"=> 0, "docId"=> 1 ]] 
+);
+$results = $cursor->toArray();
+foreach ($results as $res) {
+    $matches[2][] = $res["docId"];
+}
+
+// keywords
+$collection = $db->{'topics.keywords'};
+$keywordsString = str_replace("'", "", $keywordsString);
+$keywords = explode(',', $keywordsString);
+$keywords=array_map('trim',$keywords);
+$matches[3] = [];
+$cursor = $collection->find(
+    ['Keywords' =>  ['$in' => $keywords]],
+    ['projection' => ["_id"=> 0, "docId"=> 1 ]] 
+);
+$results = $cursor->toArray();
+foreach ($results as $res) {
+    $matches[3][] = $res["docId"];
+}
+
+
+
+/*
+echo ($datesString."\n");
+echo count($matches[0]);
+echo "\n\n";
+
+echo (json_encode($authors)."\n");
+echo count($matches[1]);
+echo "\n\n";
+
+echo (json_encode($locations)."\n");
+echo count($matches[2]);
+echo "\n\n";
+
+echo (json_encode($keywords)."\n");
+echo count($matches[3]);
+echo "\n";
+ */
+
 $docs = intersectMatches($matches);
 
-
 /* get topic proportions */
-//$proportions = [];
-//$collection = $db->{'docs.topics'};
-//if (!empty($docs) && $proportion)
-//    $proportions = getTopicProportions($collection, $docs);
-//
-//$result = array(
-//    'qids' => $docs,
-//    'proportions' => $proportions
-//);
-//echo json_encode($result);
+$proportions = [];
+$collection = $db->{'topics.doctopics'};
+if (!empty($docs) && $proportion)
+    $proportions = getTopicProportions($collection, $docs);
+
+$result = array(
+    'qids' => $docs,
+    'proportions' => $proportions
+);
+echo json_encode($result);
 ?>
