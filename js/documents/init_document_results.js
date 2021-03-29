@@ -51,7 +51,9 @@ function initDocumentResults(qids, NDOCS, kwics) {
                 this.id.split("_")[1]).style.display = "block";
         });
         $(`#fullbtn_${qid}`).click(function() {
-            buttonGetFullDocument(qid);
+	    var id = $(this).attr('id');
+	    var q = id.split('_')[1];
+            buttonGetFullDocument(q);
         });
 
         /* close buttons */
