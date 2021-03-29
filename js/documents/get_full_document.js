@@ -1,6 +1,6 @@
 function buttonGetFullDocument(qid) {
     $.getJSON(`./php/get_meta.php?qid=${qid}`, function(data) {
-        window.open(`/xml/${data['fileId']}.headed.xml`)
+        window.open(`http://quintessence.ds.lib.ucdavis.edu/xml/${data['File_ID']}.headed.xml`)
     });
 }
 

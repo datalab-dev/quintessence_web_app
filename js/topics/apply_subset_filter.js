@@ -21,7 +21,7 @@ function getDropdownString(field) {
 }
 
 function updateLdaPca() {
-    var maxdocs = 5; // number of top docs to display
+    var maxdocs = 15; // number of top docs to display
 
     /* params from dropdown and timeline */
     var slider = $("#date-range").data("ionRangeSlider");
@@ -57,7 +57,7 @@ function updateLdaPca() {
 
         var ndocs = data["qids"].length;
         ndocs = ndocs < maxdocs ? ndocs : maxdocs;
-        //initDocumentResults(data['qids'], ndocs);
+        initDocumentResults(data['qids'], ndocs);
 
         /* show as loaded */
         document.getElementById("ndocs").innerHTML = `${data["qids"].length} results`;
