@@ -21,7 +21,7 @@ function plotWordChange(timeseries) {
 	decades.push(parseInt(key));
 	sims.push(1 - value.similarity);
 
-	for (var j = 0; j < value.terms.length; j++) {
+	for (var j = 0; j < 10; j++) {
 	    var n = value.terms[j];
 	    var p = (value.scores[j] * 100).toFixed(2);
 	    res = res.concat(n, " - ", p, "%<br>");
