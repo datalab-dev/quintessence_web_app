@@ -1,59 +1,83 @@
 function nn_network() {
 
-        // create an array with nodes
-        var nodes = new vis.DataSet([
-	        { id: 1, label: "Node 1", value: 100 },
-	        { id: 2, label: "Node 2", value: 7},
-	        { id: 3, label: "Node 3", value: 200 },
-	        { id: 4, label: "Node 4", value: 1000 },
-	        { id: 5, label: "Node 5", value: 200 }
-	        ]);
+    var processed_data = preprocess_recursive_neighbors_data();
 
-        // create an array with edges
-        var edges = new vis.DataSet([
-	        { from: 1, to: 3 },
-	        { from: 1, to: 2 },
-	        { from: 2, to: 4 },
-	        { from: 2, to: 5 }
-	        ]);
+    // create a network
+    var container = document.getElementById("mynetwork");
+    container.innerHTML = ""; // clear if exists
+    var data = {
+	nodes: processed_data["nodes"],
+	edges: processed_data["edges"]
+    };
 
-        // create a network
-        var container = document.getElementById("mynetwork");
-        container.innerHTML = ""; // clear if exists
-        var data = {
-	        nodes: nodes,
-	        edges: edges
-	        };
+    // node options
+    var node_opts = {
+	shape: "dot", // so scaling is easy
+	scaling: {
+	    customScalingFunction: function (min, max, total, value) {
+		return value / total;
+	    },
+	    min: 5,
+	    max: 150,
+	},
+    };
 
-        // node options
-        var node_opts = {
-	        shape: "dot", // so scaling is easy
-	        scaling: {
-		            customScalingFunction: function (min, max, total, value) {
-				        return value / total;
-				        },
-		            min: 5,
-		            max: 150,
-		        },
-	        };
+    // interaction options
+    var interaction_opts = {
+	hover:  true,
+	dragNodes: false,
+	dragView: false,
+	zoomView: false
+    };
 
-        // interaction options
-        var interaction_opts = {
-	        hover:  true,
-	        dragNodes: false,
-	        dragView: false,
-	        zoomView: false
-	        };
+    var options = {
+	interaction: interaction_opts,
+	nodes: node_opts
+    };
 
-        var options = {
-	        interaction: interaction_opts,
-	        nodes: node_opts
-	        };
-
-        var network = new vis.Network(container, data, options);
+    var network = new vis.Network(container, data, options);
 }
 
 function preprocess_recursive_neighbors_data() {
     var data = sample;
+    var threshold = 0.2;
 
+    // create nodes
+    var node_names = Object.keys(data);
+    var nodes = [];
+    for (const key of node_names) {
+	var node= {
+	    label: key,
+	    id: key,
+	}
+	nodes.push(node);
+    }// for each neighbor 
+
+    // create edges
+    var edges = [];
+    var count = 0;
+    for (const [key, value] of Object.entries(data)){
+	for (var i = 0; i < value["terms"].length; i++) {
+	    var target = value["terms"][i];  
+	    var score = value["scores"][i];
+
+	    if (node_names.includes(target) && score >= threshold) {
+
+		var edge = {
+		    from: key,
+		    to: target,
+		    weight: score
+		}; // create edge
+		count = count + 1;
+		edges.push(edge);
+	    }
+	} // for each of the neighbors neighbors
+    }// for each entry
+
+    return(
+	{
+	    edges: edges,
+	    nodes: nodes,
+	}
+    );
 }
