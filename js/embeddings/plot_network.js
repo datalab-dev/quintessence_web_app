@@ -1,4 +1,5 @@
 function nn_network(rn_data) {
+    console.log("draw network");
 
     var processed_data = preprocess_recursive_neighbors_data(rn_data);
 
@@ -59,7 +60,6 @@ function preprocess_recursive_neighbors_data(rn_data) {
 	}
 	nodes.push(node);
     }// for each neighbor 
-    console.log(nodes);
 
     // create edges
     var edges = [];
