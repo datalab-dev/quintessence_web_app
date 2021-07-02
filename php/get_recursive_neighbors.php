@@ -28,21 +28,34 @@ function get_neighbors($term, $modelname, $modeltype, $db, $topn) {
 
     $terms = array();
     $scores = array();
+    $freqs = array();
 
     # Get list of neighbors
     if ($modeltype == "full") {
 	$terms = array_slice($res[$modeltype]["terms"], 0, $topn);
 	$scores = array_slice($res[$modeltype]["scores"], 0, $topn);
+	$freqs = array_slice($res[$modeltype]["freqs"], 0, $topn);
     }
     else {
 	$terms = array_slice($res[$modeltype][$modelname]["terms"], 0, $topn);
 	$scores = array_slice($res[$modeltype][$modelname]["scores"], 0, $topn);
+	$freqs = array_slice($res[$modeltype][$modelname]["freqs"], 0, $topn);
     }
 
 
     return(
-	array("terms" => $terms, "scores" => $scores)
+	array("terms" => $terms, "scores" => $scores, "freqs" => $freqs)
     );
+}
+
+function get_freq($term, $db) {
+    $collection = $db->{'terms.neighbors'};
+    $res = $collection->findOne(
+	[
+	    '_id' => $term
+	]
+    );
+    return ($res["full"]["freq"]);
 }
 
 $db = getMongoCon();
@@ -62,6 +75,7 @@ if ($_GET) {
 $all_neighbors = array();
 $neighbors = get_neighbors($term, $modelname, $modeltype, $db, $topn);
 $all_neighbors[$term] = $neighbors;
+$all_neighbors[$term]["freq"] = get_freq($term, $db);
 
 # foreach neighbor get similarity to the other neighbors
 foreach ($neighbors["terms"] as $n) {
