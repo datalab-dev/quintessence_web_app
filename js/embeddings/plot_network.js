@@ -1,11 +1,11 @@
-function nn_network() {
+function nn_network(rn_data) {
 
-    var processed_data = preprocess_recursive_neighbors_data();
+    var processed_data = preprocess_recursive_neighbors_data(rn_data);
 
     // create a network
     var container = document.getElementById("mynetwork");
     container.innerHTML = ""; // clear if exists
-    var data = {
+    var n_data = {
 	nodes: processed_data["nodes"],
 	edges: processed_data["edges"]
     };
@@ -35,15 +35,14 @@ function nn_network() {
 	nodes: node_opts
     };
 
-    var network = new vis.Network(container, data, options);
+    var network = new vis.Network(container, n_data, options);
 }
 
-function preprocess_recursive_neighbors_data() {
-    var data = sample;
+function preprocess_recursive_neighbors_data(rn_data) {
     var threshold = 0.2;
 
     // create nodes
-    var node_names = Object.keys(data);
+    var node_names = Object.keys(rn_data);
     var nodes = [];
     for (const key of node_names) {
 	var node= {
@@ -56,7 +55,7 @@ function preprocess_recursive_neighbors_data() {
     // create edges
     var edges = [];
     var count = 0;
-    for (const [key, value] of Object.entries(data)){
+    for (const [key, value] of Object.entries(rn_data)){
 	for (var i = 0; i < value["terms"].length; i++) {
 	    var target = value["terms"][i];  
 	    var score = value["scores"][i];
