@@ -85,8 +85,8 @@ $(document).ready(function() {
 
 		    if (category == "full") {
 		        nn = nndata[category];
-		        let tbl = make_table_from_neighbors_data(nn);
-		        $('#result').append(tbl);
+		        //let tbl = make_table_from_neighbors_data(nn);
+		        //$('#result').append(tbl);
 		        $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=full&modeltype=full`, function(data) {
 			    nn_network(data);
 			});
@@ -104,11 +104,11 @@ $(document).ready(function() {
 		            let model = $( "#model-select option:selected" ).text();
 		            $('#result').empty();
 			    nn = nndata[category][model];
-		            let tbl = make_table_from_neighbors_data(nn);
+		            //let tbl = make_table_from_neighbors_data(nn);
+		            //$('#result').append(tbl);
 		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${model}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
-		            $('#result').append(tbl);
 		    }
 
 		    $('#category-select').show();
@@ -132,22 +132,22 @@ $(document).ready(function() {
 		            let model = $( "#model-select option:selected" ).text();
 		            $('#result').empty();
 			    nn = nndata[category][model];
-		            let tbl = make_table_from_neighbors_data(nn);
+		            // let tbl = make_table_from_neighbors_data(nn);
+		            // $('#result').append(tbl);
 		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${model}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
-		            $('#result').append(tbl);
 
 			} else {
 			    $('#model-select').empty();
 		            $('#result').empty();
 			    $('#model-select').hide();
 		            nn = nndata[category];
-		            let tbl = make_table_from_neighbors_data(nn);
+		            //let tbl = make_table_from_neighbors_data(nn);
+		            //$('#result').append(tbl);
 		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${model}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
-		            $('#result').append(tbl);
 			}
 		    }); // select category
 
@@ -157,11 +157,11 @@ $(document).ready(function() {
 		        let category = $( "#category-select option:selected" ).text();
 			console.log(category, this.value);
 			nn = nndata[category][this.value];
-		        let tbl = make_table_from_neighbors_data(nn);
+		        //let tbl = make_table_from_neighbors_data(nn);
+		        // $('#result').append(tbl);
 		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${this.value}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
-		        $('#result').append(tbl);
 		    }); //select model
 
 
