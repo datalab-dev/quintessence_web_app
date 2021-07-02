@@ -65,7 +65,7 @@ function preprocess_recursive_neighbors_data(rn_data) {
 		var edge = {
 		    from: key,
 		    to: target,
-		    weight: score
+		    value: score
 		}; // create edge
 		count = count + 1;
 		edges.push(edge);
