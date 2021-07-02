@@ -35,16 +35,19 @@ function get_neighbors($term, $modelname, $modeltype, $db, $topn) {
 	$terms = array_slice($res[$modeltype]["terms"], 0, $topn);
 	$scores = array_slice($res[$modeltype]["scores"], 0, $topn);
 	$freqs = array_slice($res[$modeltype]["freqs"], 0, $topn);
+        $freq = $res[$modeltype]["freq"];
     }
     else {
 	$terms = array_slice($res[$modeltype][$modelname]["terms"], 0, $topn);
 	$scores = array_slice($res[$modeltype][$modelname]["scores"], 0, $topn);
 	$freqs = array_slice($res[$modeltype][$modelname]["freqs"], 0, $topn);
+        $freq = $res[$modeltype][$modelname]["freq"];
     }
 
 
     return(
-	array("terms" => $terms, "scores" => $scores, "freqs" => $freqs)
+	array("terms" => $terms, "scores" => $scores, "freqs" => $freqs, 
+	"freq" => $freq)
     );
 }
 
@@ -80,6 +83,7 @@ $all_neighbors[$term]["freq"] = get_freq($term, $db);
 # foreach neighbor get similarity to the other neighbors
 foreach ($neighbors["terms"] as $n) {
     $all_neighbors[$n] = get_neighbors($n, $modelname, $modeltype, $db, $topn);
+    $all_neighbors[$term]["freq"] = get_freq($term, $db);
 }
 
 echo json_encode($all_neighbors);
