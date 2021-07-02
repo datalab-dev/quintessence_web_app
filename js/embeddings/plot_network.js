@@ -52,3 +52,8 @@ function nn_network() {
 
         var network = new vis.Network(container, data, options);
 }
+
+function preprocess_recursive_neighbors_data() {
+    var data = sample;
+
+}
