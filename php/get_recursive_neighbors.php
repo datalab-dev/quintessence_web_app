@@ -18,6 +18,7 @@ require 'vendor/autoload.php';
 require 'config.php';
 
 function get_neighbors($term, $modelname, $modeltype, $db, $topn) {
+
     $collection = $db->{'terms.neighbors'};
     $res = $collection->findOne(
 	[
@@ -31,7 +32,7 @@ function get_neighbors($term, $modelname, $modeltype, $db, $topn) {
     # Get list of neighbors
     if ($modeltype == "full") {
 	$terms = array_slice($res[$modeltype]["terms"], 0, $topn);
-	$terms = array_slice($res[$modeltype]["scores"], 0, $topn);
+	$scores = array_slice($res[$modeltype]["scores"], 0, $topn);
     }
     else {
 	$terms = array_slice($res[$modeltype][$modelname]["terms"], 0, $topn);
