@@ -1,4 +1,5 @@
 var nndata;  // global variable
+var topn=9;
 $(document).ready(function() {
 
 
@@ -87,7 +88,7 @@ $(document).ready(function() {
 		        nn = nndata[category];
 		        //let tbl = make_table_from_neighbors_data(nn);
 		        //$('#result').append(tbl);
-		        $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=full&modeltype=full`, function(data) {
+		        $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=full&modeltype=full`, function(data) {
 			    nn_network(data);
 			});
 		    } else {
@@ -106,7 +107,7 @@ $(document).ready(function() {
 			    nn = nndata[category][model];
 		            //let tbl = make_table_from_neighbors_data(nn);
 		            //$('#result').append(tbl);
-		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${model}&modeltype=${category}`, function(data) {
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${model}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
 		    }
@@ -134,7 +135,7 @@ $(document).ready(function() {
 			    nn = nndata[category][model];
 		            // let tbl = make_table_from_neighbors_data(nn);
 		            // $('#result').append(tbl);
-		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${model}&modeltype=${category}`, function(data) {
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${model}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
 
@@ -145,7 +146,7 @@ $(document).ready(function() {
 		            nn = nndata[category];
 		            //let tbl = make_table_from_neighbors_data(nn);
 		            //$('#result').append(tbl);
-		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${model}&modeltype=${category}`, function(data) {
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${model}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
 			}
@@ -159,7 +160,7 @@ $(document).ready(function() {
 			nn = nndata[category][this.value];
 		        //let tbl = make_table_from_neighbors_data(nn);
 		        // $('#result').append(tbl);
-		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=10&modelname=${this.value}&modeltype=${category}`, function(data) {
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${this.value}&modeltype=${category}`, function(data) {
 			        nn_network(data);
 			    });
 		    }); //select model

@@ -55,6 +55,7 @@ function preprocess_recursive_neighbors_data(rn_data) {
     // create edges
     var edges = [];
     var count = 0;
+    var elist = [];
     for (const [key, value] of Object.entries(rn_data)){
 	for (var i = 0; i < value["terms"].length; i++) {
 	    var target = value["terms"][i];  
@@ -62,13 +63,17 @@ function preprocess_recursive_neighbors_data(rn_data) {
 
 	    if (node_names.includes(target) && score >= threshold) {
 
-		var edge = {
-		    from: key,
-		    to: target,
-		    value: score
-		}; // create edge
-		count = count + 1;
-		edges.push(edge);
+		if (!elist.includes(target+":"+key)) {
+
+		    var edge = {
+			from: key,
+			to: target,
+			value: score
+		    }; // create edge
+		    count = count + 1;
+		    edges.push(edge);
+		    elist.push(key +":"+ target);
+		}
 	    }
 	} // for each of the neighbors neighbors
     }// for each entry
