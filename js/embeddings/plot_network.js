@@ -25,7 +25,7 @@ function nn_network(rn_data) {
     // interaction options
     var interaction_opts = {
 	hover:  true,
-	dragNodes: false,
+	dragNodes: true,
 	dragView: false,
 	zoomView: false
     };
@@ -36,6 +36,9 @@ function nn_network(rn_data) {
     };
 
     var network = new vis.Network(container, n_data, options);
+    // to add hover info...
+    network.on("hoverNode", function(params) {
+    });
 }
 
 function preprocess_recursive_neighbors_data(rn_data) {
@@ -44,13 +47,19 @@ function preprocess_recursive_neighbors_data(rn_data) {
     // create nodes
     var node_names = Object.keys(rn_data);
     var nodes = [];
-    for (const key of node_names) {
+    for (const [key,value] of Object.entries(rn_data)) {
+	var color = "#97C2FC";
+	if (key == node_names[0]) { color = "#ED2939"}
 	var node= {
 	    label: key,
 	    id: key,
+	    title: value["freq"],
+	    value: value["freq"],
+	    color: color
 	}
 	nodes.push(node);
     }// for each neighbor 
+    console.log(nodes);
 
     // create edges
     var edges = [];
@@ -68,7 +77,8 @@ function preprocess_recursive_neighbors_data(rn_data) {
 		    var edge = {
 			from: key,
 			to: target,
-			value: score
+			value: score,
+			title: score
 		    }; // create edge
 		    count = count + 1;
 		    edges.push(edge);
