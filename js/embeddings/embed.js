@@ -1,5 +1,8 @@
 var nndata;  // global variable
+var topn=9;
 $(document).ready(function() {
+
+
     /* configure tabs */
     $('#tabs a:not(:first)').addClass('inactive');
     $('.container:not(:first)').hide();
@@ -83,8 +86,11 @@ $(document).ready(function() {
 
 		    if (category == "full") {
 		        nn = nndata[category];
-		        let tbl = make_table_from_neighbors_data(nn);
-		        $('#result').append(tbl);
+		        //let tbl = make_table_from_neighbors_data(nn);
+		        //$('#result').append(tbl);
+		        $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=full&modeltype=full`, function(data) {
+			    nn_network(data);
+			});
 		    } else {
 			    $('#model-select').empty()
 			    let models = Object.keys(nndata[category]);
@@ -99,8 +105,11 @@ $(document).ready(function() {
 		            let model = $( "#model-select option:selected" ).text();
 		            $('#result').empty();
 			    nn = nndata[category][model];
-		            let tbl = make_table_from_neighbors_data(nn);
-		            $('#result').append(tbl);
+		            //let tbl = make_table_from_neighbors_data(nn);
+		            //$('#result').append(tbl);
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${model}&modeltype=${category}`, function(data) {
+			        nn_network(data);
+			    });
 		    }
 
 		    $('#category-select').show();
@@ -124,16 +133,22 @@ $(document).ready(function() {
 		            let model = $( "#model-select option:selected" ).text();
 		            $('#result').empty();
 			    nn = nndata[category][model];
-		            let tbl = make_table_from_neighbors_data(nn);
-		            $('#result').append(tbl);
+		            // let tbl = make_table_from_neighbors_data(nn);
+		            // $('#result').append(tbl);
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${model}&modeltype=${category}`, function(data) {
+			        nn_network(data);
+			    });
 
 			} else {
 			    $('#model-select').empty();
 		            $('#result').empty();
 			    $('#model-select').hide();
 		            nn = nndata[category];
-		            let tbl = make_table_from_neighbors_data(nn);
-		            $('#result').append(tbl);
+		            //let tbl = make_table_from_neighbors_data(nn);
+		            //$('#result').append(tbl);
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${model}&modeltype=${category}`, function(data) {
+			        nn_network(data);
+			    });
 			}
 		    }); // select category
 
@@ -143,8 +158,11 @@ $(document).ready(function() {
 		        let category = $( "#category-select option:selected" ).text();
 			console.log(category, this.value);
 			nn = nndata[category][this.value];
-		        let tbl = make_table_from_neighbors_data(nn);
-		        $('#result').append(tbl);
+		        //let tbl = make_table_from_neighbors_data(nn);
+		        // $('#result').append(tbl);
+		            $.getJSON(`./php/get_recursive_neighbors.php?term=${term}&topn=${topn}&modelname=${this.value}&modeltype=${category}`, function(data) {
+			        nn_network(data);
+			    });
 		    }); //select model
 
 

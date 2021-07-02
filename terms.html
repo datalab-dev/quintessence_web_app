@@ -14,7 +14,10 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
+    <script src="./js/embeddings/sample.js"></script>
+    <script src="./js/embeddings/plot_network.js"></script>
     <script src="./js/embeddings/embed.js"></script>
     <script src="./js/embeddings/layouts.js"></script>
     <script src="./js/embeddings/get_kwic.js"></script>
@@ -86,7 +89,9 @@
 
 	    </div> <!-- controls -->
 
+            <div id="mynetwork" style="height: 600px"> </div>
 	    <div style="min-height: 200px; padding-top: 20px;" id="result"> </div>
+	    
 	</div> <!-- text-block -->
 
     </div> <!-- container all-nn -->
